@@ -45,7 +45,10 @@ app.get("/register", (req, res) => {
 app.post("/register", async(req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-
+    const fullName = req.body.fullName;
+    const major = req.body.major;
+    const year = req.body.year;
+    const cycle = req.body.cycle;
 
     try {
         if (!email.endsWith("@univ-blida.dz")) {
@@ -58,11 +61,10 @@ app.post("/register", async(req, res) => {
             if (checkResult.rows.length > 0) {
                 res.send("email already exists. try logging in.");
             } else {
-                const result = await db.query(
-                    "INSERT INTO users (email, password) VALUES ($1, $2)", [email, password]
-                );
-                //more infos to fill the database
-                console.log(result);
+                const result1 = await db.query(
+                    "INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3)", [email, password, fullName]);
+                const result2 = await db.query("INSERT INTO students (major, year, cycle) VALUES ($1, $2, $3, $4)", [major, year, cycle])
+                    //more infos to fill the database
                 res.render("homepage.ejs");
             }
         }
