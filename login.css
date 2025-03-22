@@ -188,18 +188,7 @@ body{
      transition: 0.3s;
     
 }
-.input-group label {
-    font-size: 100%;
-    position: absolute;
-    left: 0;
-    padding: 0.8em;
-    margin-top: 10px;
-    margin-left: 0.5em;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    
-  }
-  
+ 
   .input-group :is(input:focus, input:valid)~label {
     font-size: 100%;
     transform: translateY(20%) scale(.5);
@@ -405,10 +394,63 @@ body.theme-teacher .btn.bn21 {
   background-image: linear-gradient(to right, #65418f, #492e96);
   
 }
+body.theme-teacher .toggle{
+  background-color: #65418f;
+}
+body.theme-teacher .toggle button{
+  background-image: linear-gradient(to right, #65418f, #492e96);
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.75);
+  
+}
 
 
 body.theme-teacher .toggle-panel.toggle-left {
   background-color: rgba(255, 255, 255, 0);
-  color: #ffcc00;
+  color: #65418f;
+}
+body.theme-teacher .input-icon {
+  background-color: #e8e8e8;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+body.theme-teacher .input-group:has(input:focus) .input-icon {
+  box-shadow: inset 20px 20px 60px #c5c5c5,
+  inset -20px -20px 60px #ffffff;
+  transition: background-color 0.3s ease;
+}
+body.theme-teacher .social-icons a:hover{
+ transform: scale(1.1);
+ background-color: #65418f;
+  box-shadow:
+  0 0 8px rgba(212, 212, 212, 0.5),
+  0 0 16px rgba(208, 75, 241, 0.5),
+  0 0 24px rgba(211, 22, 211, 0.5),
+}
+body.theme-teacher .container input{
+  background-color: #e8e8e8;
+  border: none;
+  margin: 8px 0;
+  padding: 1rem 3rem 1rem 1rem;
+  font-size: 15px;
+  border-radius: 16px;
+  width: 100%;
+  outline: none;
+  box-shadow: #65418f 0px 10px 10px -5px;
+  border-inline-start: 2px solid transparent;
+  border-inline-end:  2px solid transparent;
+  transition: 0.3s;
+}
+
+body.theme-teacher .container input:focus {
+  background: #e8e8e8;
+  outline-color: #e8e8e8;
+  border-inline-start: 2px solid #65418f;
+  border-inline-end:  2px solid #65418f;
+  box-shadow: inset 20px 20px 60px #c5c5c5,
+  inset -20px -20px 60px #ffffff;
+   transition: 0.3s;
+  
 }
 
