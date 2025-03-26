@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up">
+            <form id="signup-form">
+                <h1 id="signup-title">Create Account</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span id="signup-subtitle">or use your email for registration</span>
+                <div class="input-group">
+                    <input type="text" placeholder="Name" required autocomplete="off">
+                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---profile.svg" />
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required autocomplete="off">
+                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---email.svg" />
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required autocomplete="off" id="signup-password">
+                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/general---lock.svg" />
+                    <i class="fa-solid fa-eye toggle-password" data-target="signup-password"></i>
+                </div>
+                <button class="btn bn21">Sign Up</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form>
+                <h1 id="signin-title">Sign In</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <span id="signin-subtitle">or use your email password</span>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required autocomplete="off">
+                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---email.svg" />
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required autocomplete="off" id="signin-password">
+                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/general---lock.svg" />
+                    <i class="fa-solid fa-eye toggle-password" data-target="signin-password"></i>
+                </div>
+                <a href="#">Forgot Your Password?</a>
+                <button class="btn bn21">Sign In</button>
+            </form>
+        </div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1 id="toggle-left-title">Hello, Student!</h1>
+                    <p id="toggle-left-text">Register with your personal details to use all of site features</p>
+                    <button class="hidden bn21" id="login">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1 id="toggle-right-title">Welcome Back!</h1>
+                    <p id="toggle-right-text">Enter your personal details to use all of site features</p>
+                    <button class="hidden bn21" id="register">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
