@@ -8,8 +8,10 @@ if (loginContainer) {
   const loginBtn = document.getElementById('login');
   const signupForm = document.getElementById('signup-form');
 
+
   registerBtn?.addEventListener('click', () => loginContainer.classList.add("active"));
   loginBtn?.addEventListener('click', () => loginContainer.classList.remove("active"));
+
 
   signupForm?.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -37,6 +39,7 @@ if (loginContainer) {
     alert("Sign up successful!");
   });
 
+
   document.querySelectorAll('.toggle-password').forEach(icon => {
     icon.addEventListener('click', () => {
       const input = document.getElementById(icon.getAttribute('data-target'));
@@ -49,6 +52,7 @@ if (loginContainer) {
       }
     });
   });
+
 }
 
 // PRELOGIN PAGE LOGIC
@@ -81,5 +85,6 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = "login.html";
   });
 
-  console.log("✅ Prelogin hover logic ready");
+
+  
 });
