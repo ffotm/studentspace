@@ -3,39 +3,48 @@ import bodyParser from "body-parser";
 import pg from "pg";
 import bcrypt from "bcrypt"; //still havent added pw incryption
 import env from "dotenv";
-
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const port = 3000;
 const saltRounds = 10;
 env.config();
 
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: true,
-    })
-);
+const __filename = fileURLToPath(
+    import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const db = new pg.Client({
+
+/*const db = new pg.Client({
     user: "student_space",
     host: "localhost",
     database: "postgres",
     password: process.env.dbpw,
     port: 5432,
 });
-db.connect();
+db.connect();*/
+
+const db = new pg.Client({
+    connectionString: "postgresql://postgres.cbrcntexlumhvfkqzhlz:dq3X*4yFvfH3haB@aws-0-eu-west-3.pooler.supabase.com:6543/postgres"
+});
+
+db.connect()
+    .then(() => console.log("Connected to PostgreSQL!"))
+    .catch(err => console.error("Connection error:", err));
+
+db.end();
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
 app.get("/", (req, res) => {
     res.render("homepage.ejs");
 });
 
 app.get("/login", (req, res) => {
-    res.render("login.ejs");
+    res.sendFile(path.join(__dirname, "../../frontend", "login.html"));
 });
 
 app.get("/register", (req, res) => {
@@ -52,7 +61,7 @@ app.post("/register", async(req, res) => {
 
     try {
         if (!email.endsWith("@univ-blida.dz")) {
-            return res.send("Only university emails (@univ-blida.dz) are allowed.");
+            return res.send("not allowed");
         } else {
             const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
                 email,
