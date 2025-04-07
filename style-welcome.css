@@ -537,7 +537,7 @@ opacity: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
- position: relative; 
+  position: absolute; 
     left: 63.4375rem;
     bottom: 12.5000rem;  
     transform: translateX(-15%);
