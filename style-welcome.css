@@ -17,6 +17,10 @@
   --color6: #07051b;
 }
 
+ .dark-mode {
+    background-color:var(--color3);
+ 
+}
 
   
   body {
