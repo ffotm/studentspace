@@ -689,4 +689,33 @@ transition: background-color 0.5s ease, color 0.3s ease;
         
     }
 
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .infomation, .infomation1, .description, .team-roles, .supervisor, .our-review {
+    width: 95% !important;
+    left: 2.5% !important;
+    flex-direction: column;
+  }
+
+  .add-logo, .add-file {
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+
+  .notification, .choose-avatar, .Myinfo {
+    width: 90% !important;
+    left: 5% !important;
+  }
+
+  .username, #email {
+    width: 90% !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+}
 
