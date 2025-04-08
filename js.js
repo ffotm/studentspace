@@ -123,7 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.addEventListener("click", function(event) {
-        // التحقق مما إذا كان العنصر الذي تم النقر عليه خارج الصورة والقائمة
         if (!myInfo.contains(event.target) && !profileLink.contains(event.target)) {
             if (!event.target.closest("#notification")) { 
                 myInfo.classList.remove("open-menu");
