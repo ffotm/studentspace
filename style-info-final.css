@@ -1127,7 +1127,7 @@ border: 0.0625rem solid transparent;
     font-size: 0.9375rem;
 }
 .send input {
-    color: var(--send);
+    color: var(--send) !important;
     font-weight: 500;
     font-size: 1.25rem;
     gap: 0.5rem;
