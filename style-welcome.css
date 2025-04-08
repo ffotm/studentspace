@@ -42,10 +42,20 @@ nav {
     justify-content: space-between;
     position: relative;
 }
-.logo img{    
-    width: 12.5000rem;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
+.logo 
+{
+    background: #cfcced;
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+}
+.logo img{ 
+    position: relative;
+    top: 3px;   
+    background: #cfcced;
+    width: 199px;
+    height: 35px;
+    border-radius: 10px;
 }
 .profile-pic {
     width: 2.5000rem;
