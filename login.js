@@ -29,11 +29,7 @@ const db = new pg.Client({
     connectionString: process.env.dblink,
 });
 
-db.connect()
-    .then(() => console.log("Connected to PostgreSQL!"))
-    .catch(err => console.error("Connection error:", err));
-
-db.end();
+db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
