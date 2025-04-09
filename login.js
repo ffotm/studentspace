@@ -26,7 +26,7 @@ const __dirname = path.dirname(__filename);
 db.connect();*/
 
 const db = new pg.Client({
-    connectionString: "postgresql://postgres.cbrcntexlumhvfkqzhlz:dq3X*4yFvfH3haB@aws-0-eu-west-3.pooler.supabase.com:6543/postgres"
+    connectionString: process.env.dblink,
 });
 
 db.connect()
