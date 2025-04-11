@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div class="container" id="container">
         <div class="form-container sign-up">
             <form id="signup-form">
@@ -22,18 +21,43 @@
                     <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
                 <span id="signup-subtitle">or use your email for registration</span>
-                <div class="input-group">
-                    <input type="text" placeholder="Name" required autocomplete="off">
-                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---profile.svg" />
-                </div>
-                <div class="input-group">
-                    <input type="email" placeholder="Email" required autocomplete="off">
-                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---email.svg" />
-                </div>
-                <div class="input-group">
-                    <input type="password" placeholder="Password" required autocomplete="off" id="signup-password">
-                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/general---lock.svg" />
-                    <i class="fa-solid fa-eye toggle-password" data-target="signup-password"></i>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <input type="text" placeholder="Name" required autocomplete="off">
+                        <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---profile.svg" />
+                    </div>
+                    <div class="input-group">
+                        <input type="email" placeholder="Email" required autocomplete="off">
+                        <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/communication---email.svg" />
+                    </div>
+                    <div class="input-group">
+                        <input type="password" placeholder="Password" required autocomplete="off" id="signup-password">
+                        <i class="fa-solid fa-eye toggle-password" data-target="signup-password"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" placeholder="Major" required autocomplete="off">
+
+                    </div>
+                    <div class="input-group">
+
+                        <select required id="signup-year">
+                    <option value="" disabled selected hidden>Year</option>
+                      <option value="1" >1st Year</option>
+                      <option value="2">2nd Year</option>
+                      <option value="3">3rd Year</option>
+                      <option value="4">4th Year</option>
+                      <option value="5">5th Year</option>
+                    </select>
+
+                    </div>
+                    <div class="input-group">
+                        <select required>
+                      <option value="" disabled selected hidden>Cycle</option>
+                      <option value="1">Engineer</option>
+                      <option value="2">Lmd</option>
+                      </select>
+
+                    </div>
                 </div>
                 <button class="btn bn21">Sign Up</button>
             </form>
@@ -55,7 +79,7 @@
                 </div>
                 <div class="input-group">
                     <input type="password" placeholder="Password" required autocomplete="off" id="signin-password">
-                    <img class="input-icon" src="https://c.animaapp.com/m8bt79v1MKAd8U/img/general---lock.svg" />
+
                     <i class="fa-solid fa-eye toggle-password" data-target="signin-password"></i>
                 </div>
                 <a href="#">Forgot Your Password?</a>
