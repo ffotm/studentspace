@@ -5,6 +5,7 @@ import bcrypt from "bcrypt"; //still havent added pw incryption
 import env from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import axios from "axios";
 
 const app = express();
 const port = 3000;
@@ -29,11 +30,9 @@ const db = new pg.Client({
     connectionString: "postgresql://postgres.cbrcntexlumhvfkqzhlz:dq3X*4yFvfH3haB@aws-0-eu-west-3.pooler.supabase.com:6543/postgres"
 });
 
-db.connect()
-    .then(() => console.log("Connected to PostgreSQL!"))
-    .catch(err => console.error("Connection error:", err));
+db.connect();
 
-db.end();
+app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -72,7 +71,7 @@ app.post("/register", async(req, res) => {
             } else {
                 const result1 = await db.query(
                     "INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3)", [email, password, fullName]);
-                const result2 = await db.query("INSERT INTO students (major, year, cycle) VALUES ($1, $2, $3, $4)", [major, year, cycle])
+                const result2 = await db.query("INSERT INTO students (major, year, cycle) VALUES ($1, $2, $3)", [major, year, cycle])
                     //more infos to fill the database
                 res.render("homepage.ejs");
             }
