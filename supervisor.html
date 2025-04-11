@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>supervisor</title>
+   <style>
+    @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Raleway:300,400,500,700");
+
+*{
+    margin:0 ;
+    padding:0 ;
+    font-family: 'poppins',sans-serif;
+    box-sizing: border-box;
+}
+:root {
+  font-size: 1.0rem;
+  --color1: #07051b31;
+  --color2: #07051b1a;
+  --color3: #020a25e8;
+  --color5: #000000dc;
+  --color4: #cfcced;
+  --color6: #07051b;
+  --color7:  #fff;
+  --send:#fff;
+  --send-bac:#07051b;
+  --logo:#333;
+  --text-color:#07051b;
+  --text-color2:#fff;
+  --text-color3:#07051b;
+  --btn:var(--color3);
+  --notifi:var(--color3);
+  --notif2:#07051b4f;
+  --card:#0f0d24;
+ --super:#020a25e5;
+
+}
+ .dark-mode {
+    --super:#cfcced;
+ --color4:#020a25;
+ --color6:white;
+ --color5:var(--color7);
+ --send:var(--color3);
+ --send-bac:#cfcced;
+ --logo:#fff;
+--text-color:#fff;
+--text-color2:#07051b;
+--text-color3:#cfcced;
+--btn:#d8d6f0;
+--notifi:#c8c5ec;
+--card:#cfcced;
+}
+
+
+  
+  body {
+    background-color: var(--color4) !important;
+    transition: background-color 0.3s, color 0.3s;
+    overflow-x: hidden;
+    color: var(--text-color);
+  
+  }
+body .dark-mode {
+    background: var(--color3);
+    color: var(--text-color);
+}
+ input {
+    color: var(--text-color);
+ }
+ body.dark-mode input {
+    color: var(--text-color);
+ }
+
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    background-color:var(--color4);
+    color: aliceblue;
+}
+nav {
+    
+    background: #020a25e8;
+    width: 100%;
+    height: 5.0000rem;  
+    padding: 0.6250rem 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+.logo 
+{
+    background: var(--color4);
+    width: 12.5rem;
+    height: 2.5rem;
+    border-radius: 0.625rem;
+}
+.logo img{ 
+    position: relative;
+    top: 0.1875rem;   
+    background: var(--color4);
+    width: 12.4375rem;
+    height: 2.1875rem;
+    border-radius: 0.625rem;
+}
+.profile-pic {
+    width: 2.5000rem;
+    border-radius: 100;
+    cursor: pointer;
+    margin-left: 0.3125rem;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+}
+.profile-pic:hover {
+    transform: scale(1.1);
+    opacity: 0.9; 
+}
+nav ul {
+    width: 60%;
+    text-align: right;
+}
+nav ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 0.6250rem 1.2500rem;
+
+}
+nav ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0.1250rem;
+    background: #cfcced;
+    left: 0;
+    bottom: -0.2500rem;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+nav ul li a:hover {
+    color: aliceblue;
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1);
+}
+.sub-menu-wrap {
+    position: absolute;
+    top: 100%;
+    right: 10%;
+    width: 18.7500rem;
+    max-height: 0.0000rem;
+    overflow: hidden;
+    transition: max-height 0.5s;
+    z-index: 1;
+}
+.sub-menu-wrap.open-menu {
+    max-height: 21.8750rem;
+}
+.sub-menu {
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    border: 0.0625rem solid black;
+    border-radius: 0.6250rem;
+    background: #07051b1a;
+    padding: 1.2500rem;
+    margin: 0.6250rem;
+   
+    backdrop-filter: blur(0.5000rem);
+    -webkit-backdrop-filter: blur(0.5000rem);
+    z-index: 1;
+  
+}
+.sub-menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 0.7500rem 0;
+   
+}
+.sub-menu-link p {
+    width: 100%;
+}
+.sub-menu-link span {
+    font-size: 1.3750rem;
+   
+    transition: transform 0.3s ease-in-out;
+}
+.sub-menu-wrap.open-menu .sub-menu-link span {
+    transform: rotate(90deg);
+}
+.sub-menu-link:hover span {
+    transform: translateX(0.3125rem);
+}
+.sub-menu-link:hover p {
+    font-weight: 600;
+}
+.sub-menu-link i {
+    width: 2.5000rem;
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    padding: 0.5000rem;
+    margin-right: 0.9375rem;
+    transition: transform 0.3s ease-in;
+}
+.sub-menu-link:hover i {
+    transform: rotate(8deg);
+}
+    
+.profile-pic:active {
+    animation: pulse 0.4s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.notification-icon {
+    position: relative;
+    color: rgb(226 226 226);
+    cursor: pointer;
+    margin-right: 1.4375rem;
+    transition: transform 0.3s ease-in-out;
+    font-size: 1.0625rem;
+    margin-top: -0.1250rem;
+}
+
+.notification-icon:hover {
+    transform: scale(1.1);
+}
+
+.notification-icon .badge {
+    position: absolute;
+    top: -0.3125rem;
+    right: -0.3125rem;
+
+    color: white;
+    font-size: 0.6250rem;
+    font-weight: 50;
+    width: 0.6250rem;
+    height: 1.1250rem;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 1.1250rem;
+}
+.container {
+    width: 100%;
+    position: absolute;
+    top: 20%;  
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+form {
+    background: #fff;
+    width: 37.5000rem;
+    height: 3.4375rem;
+    display: flex;
+
+}
+form input {
+    flex: 1;
+    border:none;
+    outline: none;
+}
+form button {
+background: #020a25e8;
+    padding:0.6250rem 3.1250rem;
+    border:none;
+    
+    outline:none;
+    color:#fff;
+    letter-spacing: 0.0625rem;
+
+}
+form #icone {
+    align-self: center;
+    padding: 0.6250rem 1.2500rem;
+    bottom: 50%;
+    color: #777;
+}
+
+.Unihive {
+    width: 8.3125rem;
+    height: auto;
+display: block;
+}
+
+.Unihive-page {
+    display: inline-block;
+    width: fit-content; 
+width: auto;
+height: auto;
+padding: 0;
+margin: 0;
+line-height: 0;
+}
+.dark-mode {
+   
+    color: rgb(235, 231, 231);
+    font-weight: 50;
+}
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 2.8125rem;
+    cursor: pointer;
+    margin: 0.9375rem;
+    margin-right: 1.1875rem;
+    margin-top: 0.8125rem;
+}
+#theme-icon {
+    color: rgb(235, 233, 233); 
+    font-size: 1.5625rem;
+    transition: color 0.3s;
+    font-weight: 50;
+    padding-top: 0.3125rem;
+    margin-bottom: 1.5625rem;
+}
+
+
+.avatar img {
+    width: 4.3750rem;
+    border-radius: 6.2500rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    margin-bottom: 0.6250rem;
+}
+
+.avatar img:hover {
+    transform: scale(1.1);
+    opacity: 0.9; 
+} 
+
+ .Myinfo {
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    border: 0.0625rem solid black;
+    border-radius: 0.6250rem;
+     background:#07051b1a; 
+    
+    padding: 1.2500rem;
+    margin: 0.6250rem;
+    width: 18.7500rem;
+    height: 15.6250rem;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute; 
+    left: 50%;
+    bottom: 12.5000rem;  
+    transform: translateX(-50%);
+    z-index: 100;
+    text-align: center;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.1);
+    /* border-radius: 1.0000rem; */
+    backdrop-filter: blur(0.5000rem);
+    -webkit-backdrop-filter: blur(0.5000rem);
+    /* border: 0.0625rem solid rgba(255, 255, 255, 0.2); */
+   
+   
+ }
+.Myinfo.open-menu {
+    display: flex;
+opacity: 1;
+} 
+
+
+
+.avatar img {
+    width: 4.3750rem;
+    border-radius: 6.2500rem;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, opacity 0.3s;
+    margin-bottom: 6.8750rem;
+}
+
+.avatar img:hover {
+    transform: scale(1.1);
+    opacity: 0.9; 
+}  
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0.6250rem;
+   
+}
+
+.username {
+    display: flex;
+    align-items: center;
+    font-size: 1.1250rem;
+    font-weight: bold;
+    position: fixed;  
+    left: 50%;
+    top: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 9999; 
+    border: 0.1250rem solid transparent;
+    background: #07051b31;
+    margin-bottom: 1.2500rem;
+    border-radius: 0.9375rem;
+    width: 16.2500rem;
+    height: 2.8125rem;
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    z-index: 9999;
+    
+}
+
+#username-input {
+    border: none;
+    background: transparent;
+    font-size: 1.1250rem;
+    text-align: center;
+    outline: none;
+    width: 9.3750rem;
+    cursor: default;
+ color: rgba(0, 0, 0, 0.877);
+ margin-left: 0.6250rem;
+ font-weight: 100;
+}
+
+#username-input:disabled {
+    color: rgb(255, 255, 255);
+}
+
+#edit-icon {
+    margin-left: 3.1250rem;
+    cursor: pointer;
+    font-size: 1.3750rem;
+    color: #f7f7f7;
+    transition: color 0.3s ease;
+}
+
+#edit-icon:hover {
+    color: #07051b;
+}
+
+#email {
+    display: flex;
+    align-items: center;
+    font-size: 1.1250rem;
+    font-weight: bold;
+    position: fixed; 
+    left: 50%;
+    top: 74%; 
+    transform: translate(-50%, -50%); 
+    z-index: 9999; 
+    border: 0.1250rem solid transparent;
+    background: #07051b31;
+    margin-bottom: 1.2500rem;
+    border-radius: 0.9375rem;
+    width: 16.2500rem;
+    height: 2.8125rem;
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    z-index: 9999;
+}
+#email::placeholder {
+    color: #ffffff; 
+    font-size: 0.9375rem; 
+    font-weight: 100; 
+    opacity: 0.9; 
+    left: 0.3125rem;
+   
+}
+.edit-icon {
+   
+    position: absolute;
+    border: transparent;
+    bottom: 9.7500rem;
+    right: 6.7500rem;
+    background-color: #07051bb9;
+    color: white;
+    width: 1.5625rem;
+    height: 1.6875rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.7500rem;
+    transition: background 0.3s ease-in-out;
+    box-shadow: inset 0 0.5000rem 0.3125rem #bebccd96;
+    opacity: 1;
+}
+.edit-icon:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+}
+
+.choose-avatar {
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    border: 0.0625rem solid black;
+    border-radius: 0.6250rem;
+    background: #07051b4b;
+    padding: 1.2500rem;
+    margin: 3.1250rem 3.1250rem 3.1250rem 2.5000rem;
+    width: 25.0000rem;
+    height: 6.7500rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute; 
+    left: 54%;
+    bottom: 12.5000rem;  
+    transform: translateX(-10%);
+    top: 5.9375rem;
+    
+    z-index: 1000;
+    text-align: center;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 0;
+    /* background: rgba(255, 255, 255, 0.1); */
+    /* border-radius: 1.0000rem; */
+    backdrop-filter: blur(0.5000rem);
+    -webkit-backdrop-filter: blur(0.5000rem);
+    /* border: 0.0625rem solid rgba(255, 255, 255, 0.2); */
+
+ 
+}
+.choose-avatar p {
+    font-weight: 500;
+    color: black;
+    
+}
+.list {
+    display: flex;
+
+}
+  .suggestions {
+    list-style-type: none;
+    margin-left: 0.4375rem;
+    margin-top: 0.5000rem;
+ 
+  }
+ .suggestions img {
+    border-radius: 6.2500rem;
+    width: 3.1250rem;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.suggestions button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
+  }
+ 
+  .avatar-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    cursor: pointer;
+  }
+ .suggestions img:hover {
+    transform: scale(1.1);
+    opacity: 1;
+ }
+ .choose-avatar.open-menu {
+    display: flex;
+opacity: 1;
+} 
+ 
+
+
+.notification {
+    box-shadow: inset 0 0.3125rem 0.3125rem rgba(0, 0, 0, 0.74);
+    border: 0.0625rem solid black;
+    border-radius: 0.6250rem;
+    background: #07051b18;
+    padding: 1.2500rem;
+    width: 18.7500rem;
+    height: 24.8750rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  position: absolute; 
+    left: 62rem;
+    bottom: 12.5000rem;  
+    transform: translateX(-15%);
+    top: 2.8125rem;
+    z-index: 1000;
+    text-align: center;
+    transition: transform 0.5s ease-out, opacity 0.3s ease-out;
+    opacity: 0;  
+    margin: 3.1250rem 3.1250rem 3.1250rem 2.5000rem;
+    opacity: 0; 
+    transform: translateY(-1.2500rem);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    visibility: hidden; 
+    /* background: rgba(255, 255, 255, 0.1); */
+    /* border-radius: 1.0000rem; */
+    backdrop-filter: blur(0.9000rem);
+    -webkit-backdrop-filter: blur(0.5000rem);
+    /* border: 0.0625rem solid rgba(255, 255, 255, 0.2); */
+   
+}
+.notification.open-menu {
+    opacity: 1;
+    transform: translateY(0); 
+    visibility: visible;
+}
+
+
+.type-notification {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.type-notification li {
+    list-style-type: none;
+    color: white;
+    font-size: 0.9375rem;
+    margin: 1.2500rem 1.0625rem;
+}
+
+.type-notification button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.list-img-notification {
+    list-style-type: none;
+    padding: 0;
+    margin: 1.2500rem 0;
+    align-self: flex-start; 
+    display: flex;
+    flex-direction: column;
+    gap: 0.6250rem; 
+}
+
+/* .type-notification li {
+    background: none;
+    border: none;
+    padding: 0.1875rem 0.5000rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5.0000rem; 
+    display: inline-block;
+   
+} */
+
+/* .type-notification li:hover {
+    background-color: var(--send-bac); 
+ color: var(--text-color2);
+    
+} */
+.notification-content a {
+    text-decoration: none;
+    color: white;
+    font-weight: 100;
+    background: #07051b2c;
+    height: 3.1250rem;
+    width: 13.7500rem;
+    border: none;
+    border-radius: 0.7500rem;
+    box-shadow: 0.1250rem 0.3125rem 0.6250rem -0.3125rem rgba(0, 0, 0, 0.479);
+    display: flex;
+    padding-top: 0.3125rem;
+    padding-left: 0.5000rem;
+margin-bottom: 0.6250rem;
+position: relative;
+left: 3.1250rem;
+transition: background-color 0.5s ease, color 0.3s ease;
+}
+     .notification-content  img {
+        border-radius: 50%;
+        width: 3.1250rem;
+        transition: transform 0.3s ease;
+     margin: -1.2500rem;
+        position: absolute;
+        left: 1.8750rem;
+        margin-top: -0.0625rem;
+   
+
+
+        
+    } 
+    .notification-content a:hover {
+        background:var(--notifi);
+        color: var(--text-color2);
+      
+    }
+    
+  
+    .notification-content a span {
+        color:var(--notifi2);
+        position: absolute;
+        top: 0.0312rem;
+      
+    }
+
+
+
+
+    form {
+        background: var(--color4);
+        margin: 0;
+        padding: 0;
+        display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; 
+  max-width: 37.5rem; 
+  margin-top: auto; 
+        
+    
+    }    
+    .container .input {
+        border: 0;
+        outline: none;
+        color: #07051b;
+        display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+
+  margin-top: 1.25rem;
+      }
+     
+      
+     
+      
+      /*  */
+      
+       .search-wrap {
+        width: 31.25rem;
+        margin: 1.875rem auto;
+      }
+      
+      .search-wrap .search-box {
+        position: relative;
+        width: 31.25rem;
+        height: 3.75rem;
+       
+      }
+      
+      .search-wrap .search-box .input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        padding: 0.625rem 1.25rem;
+        border-radius: 3.125rem;
+        font-size: 1.125rem;
+      }
+      .search-wrap .search-box .input {
+        padding-right: 5.0rem;
+        border-radius: 3.125rem;
+      }
+      
+      .search-wrap .search-box .btn {
+        position: absolute;
+        top: 73%;
+        right: 0;
+        width: 3.25rem;
+        height: 80%;
+        background: var(--btn);
+        z-index: 1;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        transform: translateY(-50%);
+        transition: background 0.3s ease, transform 0.1s ease;
+      }
+      .search-wrap .search-box .btn button {
+        background: none;
+        border: none;
+        outline: none;
+        width: 100%;
+        height: 100%;
+      }
+      .search-wrap .search-box .input:focus {
+        box-shadow: inset 0 0 0.625rem #07051b57;
+      }
+     
+    
+
+      
+      
+    
+      .search-wrap .search-box .btn:hover {
+        background: #34344a;
+        box-shadow: 0 0.25rem 0.625rem var(--btn);
+      }
+      
+     
+      .search-wrap .search-box .btn:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+      .search-wrap .search-box .btn  button i  {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% ,-50%);
+        color: var(--text-color2);
+        font-size: 1.25rem;
+      }
+      .supervisor {
+        position: absolute;
+        top: 142px; 
+        left: 11%; 
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        flex-wrap: wrap;
+       
+    }
+    
+    .super {
+        display: flex;
+        background-color: var(--super);
+        border: 0.125rem solid var(--super);
+        border-radius: 0.5rem;
+        width: 49.5rem;
+        height: 5.25rem;
+        box-shadow: inset -0.5px 1px var(--color4);
+        position: relative;
+        left: 114px;
+    top: 87px;
+    }
+.image {
+    background: var(--color4);
+    border: none;
+    width: 40px;
+    height: 32px;
+    border-radius: 50%;
+    position: relative;
+    bottom: -13px;
+    left: 10px;
+    overflow: hidden;
+
+ 
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+}
+.image a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.image  img {
+   
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+        border-radius: 50%; 
+        text-decoration: none;
+    
+}
+.teacher-name {
+    color: var(--text-color2);
+    position: relative;
+    top: 10px;
+    left: 28px;
+    display: inline-block;
+    cursor: pointer;
+}
+.email-super {
+    color: var(--text-color2);
+    position: relative;
+    top: 32px;
+    left: -84px;
+    font-weight: 100;
+    font-size: 12px;
+    display: inline-block;
+}
+.Departement{
+    color: var(--text-color2);
+    position: relative;
+    top: 35px;
+    left: 197px;
+    font-weight: 200;
+    font-size: 14px;
+    display: inline-block;
+}
+.star {
+    font-size: 18px;
+    color: var(--color4);
+    position: relative;
+    left: 15.9375rem;
+    top: 31px;
+    display: inline-block;
+  }
+  
+  .star.filled {
+    color: gold;
+  }
+  
+  .project-page i {
+    text-decoration: none;
+    position: relative;
+    color: var(--text-color2);
+    top: -3px;
+    left: 289px;
+    font-size: 20px;
+    display: inline-block;
+
+  }
+   </style>
+   
+</head>
+<body>
+    <header>
+      
+        <div class="hero">
+       <nav>
+           <div class="logo">
+               <img src="logo.png" alt="" >
+               
+           </div>
+          
+           <ul>
+               <li><a href="#">Home</a></li>
+               <li><a href="#">Tasks</a></li>
+               <li><a href="#">Projects</a></li>
+               <li><a href="#">Supervisors</a></li>
+           </ul>
+           <a href="" class="Unihive-page">
+             <img src="bee.png" alt="" class="Unihive">
+           </a>
+           <button id="theme-toggle">
+             <i class='bx bx-moon' id="theme-icon"></i>
+         </button>
+           <div class="notification-icon" >
+             <i class="fa-solid fa-bell" id="icon-notification"></i>
+               <span class="badge"></span> 
+           </div>
+           
+           <img src="Teen_Titans_3.jpg" alt="User image" class="profile-pic" onclick="toggleMenu()">
+       <div class="sub-menu-wrap" id="subMenu">
+           <div class="sub-menu">
+              <a href="#" class="sub-menu-link" >
+               <i class="fa-solid fa-user"></i>
+               
+               <p  id="profile-link" >Profile</p>
+               <span>></span>
+              </a>
+              <a href="#" class="sub-menu-link">
+               <i class="fa-solid fa-gear"></i>
+       
+               <p>Settings</p>
+               <span>></span>
+              </a>
+              <a href="#" class="sub-menu-link">
+               <i class="fa-solid fa-right-left"></i> 
+               <p>Switch Account</p>
+               <span>></span>
+              </a>
+              <a href="#" class="sub-menu-link">
+               <i class="fa-solid fa-right-from-bracket"></i>
+       
+               <p>Log Out</p>
+               <span>></span>
+              </a>
+       
+           </div>
+       </div>
+       </nav>
+        </div> 
+       </header> 
+       
+       <div class="Myinfo" id="myInfo">
+         <div class="avatar">
+             <img src="Teen_Titans_3.jpg"  id="avatar-img">
+             <label for="file-input" class="edit-icon">
+               <i class="fa-solid fa-camera"></i>
+             </label>
+             <input type="file" id="file-input" accept="image/*" hidden>
+         </div>
+         <div class="user-info">
+           <div class="username">
+               <input type="text" id="username-input" value="Myusername " disabled>
+               <i class='bx bx-edit-alt' id="edit-icon"></i>
+           </div>
+           <input type="email" id="email" placeholder="myemailuser@etu.blida.univ" disabled>
+       </div>
+       </div>
+         </div>
+         <div class="choose-avatar" id="choose-avatar" >
+       <p>Choose your Titan,Shape your Tech destiny <p>
+       <ul class="list">
+         <ul class="list">
+           <li class="suggestions">
+             <button class="avatar-buttom" >
+               <img src="Teen_Titans.jpg" alt="Teen Titans" >
+             </button>
+           </li>
+           <li class="suggestions">
+             <button class="avatar-buttom">
+               <img src="Teen_Titans_1.jpg" alt="Teen Titans 1" >
+             </button>
+           </li>
+           <li class="suggestions">
+             <button >
+               <img src="Teen_Titans_2.jpg" alt="Teen Titans 2" >
+             </button>
+           </li>
+           <li class="suggestions">
+             <button class="avatar-buttom">
+               <img src="Teen_Titans_3.jpg" alt="Teen Titans 3" >
+             </button>
+           </li>
+           <li class="suggestions">
+             <button class="avatar-buttom" >
+               <img src="Teen_Titans_4.jpg" alt="Teen Titans 4"  >
+             </button>
+           </li>
+         </ul>
+         </div>
+         <div class="notification" id="notification">
+           <!-- <ul class="type-notification">
+             <button><li>Unread</li></button>
+             <button><li>Read</li></button>
+             <button><li>Archived</li></button>
+           </ul>
+        -->
+           <ul class="list-img-notification">
+              <li class="notification-content">
+              <img src="Teen_Titans_1.jpg" alt="">
+               
+               <a href="#" >Username 
+                  <span > <br>notifacatin topic</span></a>
+             </li></a>
+             </li>
+            
+              <li class="notification-content">
+              <img src="Teen_Titans_4.jpg" alt="">
+               <a href="#" >Username 
+                    <span> <br>notifacatin topic</span>
+                 </a>
+             </li>
+         <li class="notification-content">
+         <img src="Teen_Titans_2.jpg" alt="">
+           <a href="#" >Username
+              <span>  <br>notifacatin topic</span>
+             </a>
+         </li> </a>
+         </li>
+                <li class="notification-content">
+                 <img src="Teen_Titans_3.jpg" alt="">
+                   <a href="#" >  Username
+                      <span> <br>notifacatin topic</span>
+                     </a>
+                 </li></a>
+                </li>
+           </ul>
+         </div>
+       
+       <form action="" method="get">
+ <div class="container">
+ <div class="search-wrap">
+   <div class="search-box">
+     <input type="text" class="input" placeholder="Search...">
+     <div  class="btn btn-common">
+       <button type="submit">
+         <i class='bx bx-search'></i>
+       </button>
+       
+     </div>
+     
+     
+   </div>
+ </div>
+ </div>
+       </form>
+
+       <div class="supervisor" id="supervisor-list">
+
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        <div class="super">
+            <div class="image">
+                <a href="#">
+                    <img src="Teen_Titans_2.jpg" alt="Teacher">
+                </a>
+            </div>
+            
+            <h5 class="teacher-name">Teacher's Name</h5>
+            <p class="email-super">hisemail@etu-blida.univ</p>
+            <p class="Departement">Depertement</p>
+            <div class="rating-display" data-rating="1">
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+                <span class="star">&#9733;</span>
+              </div>
+              <a href="#" class="project-page"> <i class='bx bx-right-arrow-circle'></i></a>
+        </div>
+        
+         
+        
+        
+        
+       
+    
+
+
+
+
+
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () { 
+ 
+    let subMenu = document.getElementById("subMenu");
+    let profilePic = document.querySelector(".profile-pic");
+
+    if (subMenu && profilePic) {
+        profilePic.addEventListener("click", function () {
+            subMenu.classList.toggle("open-menu");
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!subMenu.contains(event.target) && !profilePic.contains(event.target)) {
+                subMenu.classList.remove("open-menu");
+            }
+        });
+    }
+
+   
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+
+    if (themeToggle && themeIcon) {
+        themeToggle.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode"); 
+            themeIcon.classList.replace(
+                document.body.classList.contains("dark-mode") ? "bx-moon" : "bx-sun",
+                document.body.classList.contains("dark-mode") ? "bx-sun" : "bx-moon"
+            );
+        });
+    }
+
+    
+    const editIcon = document.getElementById("edit-icon");
+    const inputField = document.getElementById("username-input");
+
+    if (editIcon && inputField) {
+        editIcon.addEventListener("click", function () {
+            let oldValue = inputField.value; 
+            inputField.value = ""; 
+            inputField.removeAttribute("disabled"); 
+            inputField.focus(); 
+            inputField.style.cursor = "text"; 
+
+            inputField.addEventListener("blur", function () {
+                if (inputField.value.trim() === "") {
+                    inputField.value = oldValue;
+                }
+                inputField.setAttribute("disabled", "true");
+                inputField.style.cursor = "default";
+            }, { once: true });
+        });
+    }
+
+   
+    let profileLink = document.getElementById("profile-link");
+    let myInfo = document.getElementById("myInfo");
+    let avatarImg = document.getElementById("avatar-img");
+    let chooseAvatar = document.getElementById("choose-avatar");
+
+    if (profileLink && myInfo) {
+        profileLink.addEventListener("click", function(event) {
+            event.preventDefault();
+            myInfo.classList.toggle("open-menu");
+        });
+
+        document.addEventListener("click", function(event) {
+            if (!myInfo.contains(event.target) && !profileLink.contains(event.target) && !chooseAvatar.contains(event.target)) {
+                myInfo.classList.remove("open-menu");
+            }
+        });
+    }
+
+   
+    if (avatarImg && chooseAvatar) {
+        avatarImg.addEventListener("click", function(event) {
+            event.preventDefault();
+            chooseAvatar.classList.toggle("open-menu");
+        });
+
+        document.addEventListener("click", function(event) {
+            if (!chooseAvatar.contains(event.target) && !avatarImg.contains(event.target)) {
+                chooseAvatar.classList.remove("open-menu");
+            }
+        });
+
+       
+        chooseAvatar.addEventListener("click", function(event) {
+            event.stopPropagation();
+        });
+    }
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var profileLink = document.getElementById("icon-notificaion");
+    var myInfo = document.getElementById("notification");
+
+    profileLink.addEventListener("click", function(event) {
+        event.preventDefault();
+        myInfo.classList.toggle("open-menu");
+    });
+
+    document.addEventListener("click", function(event) {
+       
+        if (!myInfo.contains(event.target) && !profileLink.contains(event.target)) {
+            if (!event.target.closest("#notification")) { 
+                myInfo.classList.remove("open-menu");
+            }
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function() {
+    var notificationIcon = document.getElementById("icon-notification");
+    var notificationMenu = document.getElementById("notification");
+
+    notificationIcon.addEventListener("click", function(event) {
+        event.preventDefault();
+        notificationMenu.classList.toggle("open-menu");
+    });
+
+    document.addEventListener("click", function(event) {
+        if (!notificationMenu.contains(event.target) && !notificationIcon.contains(event.target)) {
+            notificationMenu.classList.remove("open-menu");
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+// for  creat the card of supervisor dynamic
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+
+    const container = document.getElementById("supervisor-list");
+
+    supervisors.forEach(supervisor => {
+      const card = document.createElement("div");
+      card.className = "super";
+      card.innerHTML = `
+        <div class="image">
+          <a href="#"><img src="${supervisor.image}" alt="${supervisor.name}"></a>
+        </div>
+        <h5 class="teacher-name">${supervisor.name}</h5>
+        <p class="email-super">${supervisor.email}</p>
+        <p class="Departement">${supervisor.department}</p>
+        <div class="rating-display">
+          ${"<span class='star'>&#9733;</span>".repeat(supervisor.rating)}
+          ${"<span class='star'>&#9734;</span>".repeat(5 - supervisor.rating)}
+        </div>
+        <a href="${supervisor.projectLink}" class="project-page">
+          <i class='bx bx-right-arrow-circle'></i>
+        </a>
+      `;
+      container.appendChild(card);
+    });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+  </script>
+</body>
+</html>
