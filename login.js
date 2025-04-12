@@ -1,11 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
-import bcrypt from "bcrypt"; //still havent added pw incryption
+//import bcrypt from "bcrypt"; //still havent added pw incryption
 import env from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import axios from "axios";
+//import axios from "axios";
 
 const app = express();
 const port = 3000;
@@ -32,15 +32,12 @@ const db = new pg.Client({
 
 db.connect();
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "../../frontend")));
 
-app.get("/", (req, res) => {
-    res.render("homepage.ejs");
-});
 
 app.get("/login", (req, res) => {
     res.sendFile(path.join(__dirname, "../../frontend", "login.html"));
@@ -73,6 +70,7 @@ app.post("/register", async(req, res) => {
                     "INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3)", [email, password, fullName]);
                 const result2 = await db.query("INSERT INTO students (major, year, cycle) VALUES ($1, $2, $3)", [major, year, cycle])
                     //more infos to fill the database
+                res.send("user created successfully. you can now log in.");
                 res.render("homepage.ejs");
             }
         }
@@ -94,7 +92,7 @@ app.post("/login", async(req, res) => {
             const storedPassword = user.password;
 
             if (password === storedPassword) {
-                res.render("homepage.ejs");
+                res.send("logged in successfully"); //or redirect to homepage
             } else {
                 res.send("incorrect password");
             }
