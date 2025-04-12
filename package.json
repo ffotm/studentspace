@@ -1,0 +1,19 @@
+{
+  "name": "studentspace-copy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "homepage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ffotm/studentspace.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ffotm/studentspace/issues"
+  },
+  "homepage": "https://github.com/ffotm/studentspace#readme"
+}
