@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UniHive</title>
+
+    <!-- Google Fonts (Poppins) -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    />
+
+    <!-- Font Awesome (for icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="frame">
+      <main class="main-content">
+        <!-- HEADER -->
+        <header>
+          <img
+            class="logo"
+            src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/1742586172225-1.png"
+            alt="UniHive Logo"
+          />
+          <h1 class="site-title">UniHive</h1>
+          <nav class="main-nav">
+            <ul>
+              <li><a href="#" class="active">Feed</a></li>
+              <li><a href="#">Lost&Found</a></li>
+              <li><a href="#" class="Books">BooksShop</a></li>
+            </ul>
+          </nav>
+          <div class="user-actions">
+            <!-- Search icon -->
+            <img
+              class="search"
+              src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-8.png"
+              alt="Search"
+            />
+            <!-- Notification bell -->
+            <button class="notification" aria-label="Notifications">
+              <i class="fas fa-bell"></i>
+            </button>
+            <div class="profile" aria-label="User profile"></div>
+          </div>
+        </header>
+        <!-- END HEADER -->
+
+        <!-- ANNOUNCEMENTS SECTION -->
+        <section class="announcements">
+          <h2>Announcements</h2>
+        </section>
+
+        <!-- MAIN FEED -->
+        <section class="main-feed">
+          <p class="cta-text">Don't wait and start buzzing <br />with the others</p>
+
+          <!-- Redesigned Post Form -->
+          <form class="post-form" action="#" method="post">
+            <!-- Form Header: Username + Topic Dropdown on the right -->
+            <div class="form-header">
+              <div class="username-container">
+                <img
+                  class="user-avatar"
+                  src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png"
+                  alt="User avatar"
+                />
+                <input
+                  type="text"
+                  class="username-input"
+                  placeholder="username_"
+                  aria-label="Username"
+                  readonly
+                />
+              </div>
+
+              <div class="topic-dropdown">
+                <label for="topic-select" class="visually-hidden">Select Topic</label>
+                <select id="topic-select" aria-label="Select topic">
+                  <option value="" disabled selected hidden>Topic</option>
+                  <option value="tips">Tips</option>
+                  <option value="general">General</option>
+                  <option value="events">Events</option>
+                  <!-- Add more topics here -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Post content area -->
+            <textarea
+              class="post-textarea"
+              placeholder="Say something..."
+              aria-label="Post content"
+            ></textarea>
+
+            <!-- Form Footer: File Upload + Post Button -->
+            <div class="form-footer">
+              <!-- Custom file label + hidden file input -->
+              <label class="custom-file-button" for="image-upload">
+                <i class="fas fa-image"></i> Image
+              </label>
+              <!-- Show selected file name here -->
+              <span id="selected-file-name"></span>
+
+              <input
+                id="image-upload"
+                type="file"
+                aria-label="Upload image"
+                accept="image/*"
+                hidden
+              />
+
+              <button class="submit-post" type="submit">
+                Post <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </form>
+          <!-- END Post Form -->
+        </section>
+        <!-- END MAIN FEED -->
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <section class="clubs">
+            <h2>Clubs</h2>
+            <div class="clubs-content"></div>
+          </section>
+
+          <div class="additional-content-1"></div>
+          <div class="additional-content-2"></div>
+          <div class="additional-content-2"></div>
+          <div class="additional-content-2"></div>
+        </aside>
+        <!-- END SIDEBAR -->
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

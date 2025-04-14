@@ -1,0 +1,520 @@
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #000511; 
+  margin: 0;
+  color: #fff; 
+}
+
+.frame {
+  background-color: #000511;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.main-feed {
+  width: 60%;
+  padding: 0 20px;
+  position: relative;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  top: 20px;
+  right: 16%;
+  z-index: 100;
+  background-color: #000511;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.announcements {
+  color: #000511;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 60px 16% 16% 16%;
+  margin-bottom: 20px;
+  border: 1px solid #121528;
+  position: relative;
+  min-width: 300px;
+}
+
+/* Add media query for responsive positioning */
+@media screen and (max-width: 1200px) {
+  .user-actions {
+    right: 20px; 
+  }
+}
+
+.announcements {
+  color: #000511;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 16%;
+  margin-bottom: 20px;
+  border: 1px solid #121528;
+  position: relative;
+}
+
+.sidebar {
+  width: 40%;
+}
+
+/****************************************************
+  HEADER
+*/
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #000511;
+}
+
+.logo {
+  width: 89px;
+  height: 89px;
+  margin-right: 15px;
+}
+
+.site-title {
+  font-size: 36px;
+  color: #fea303;
+  margin-right: 30px;
+  font-weight: 600;
+}
+
+.main-nav {
+  margin-left: auto;
+  padding-left: 31%;
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  color: #fea303;
+  font-weight: 800;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 18px;
+  transition: background-color 0.2s ease;
+}
+
+.main-nav a.active {
+  background-color: #fea303;
+  color: #000511;
+}
+
+.main-nav a:hover {
+  background-color: #fea30333;
+}
+
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  top: 55px;
+  right: 480px; 
+  z-index: 100; 
+}
+
+.announcements {
+  color: #000511;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 60px 16% 16% 16%; 
+  margin-bottom: 20px;
+  border: 1px solid #121528;
+  position: relative;
+}
+
+.search {
+  width: 40px;
+  height: 40px;
+}
+
+.notification {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notification i {
+  color: #fea303;
+  font-size: 1.7rem;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+}
+
+/****************************************************
+  ANNOUNCEMENTS
+*****************************************************/
+.announcements {
+  color: #000511;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 16%;
+  margin-bottom: 20px;
+  border: 1px solid #121528; 
+  position: relative; 
+}
+
+.announcements h2 {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #fea303;
+}
+
+/*
+  CTA TEXT
+*/
+.cta-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 20px 0;
+}
+
+/*
+  POST FORM
+*/
+.post-form {
+  background-color: #fefefe; 
+  padding: 16px;
+  margin-bottom: 20px;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 15px;
+
+}
+
+/* Top row: Username + Topic */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Remove border from the username input */
+.username-input {
+  background: #fff;
+  border: none; 
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Topic dropdown */
+.topic-dropdown select {
+  background: #e2dddd;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Middle: textarea */
+.post-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+/* Bottom row: Choose Image + File Name + Post, right-aligned */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Custom "Choose Image" button */
+.custom-file-button {
+  background: #e1e1e1;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 12px;
+  size: 50%;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #ccc;
+  transition: background 0.2s ease;
+}
+
+.custom-file-button:hover {
+  background: #5e5d5d;
+}
+
+.img-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#selected-file-name {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+/* "Post" button */
+.submit-post {
+  background-color: #000511;
+  color: #fea303;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/*
+  POSTS + COMMENTS
+*/
+.post {
+  background-color: #fff;
+  color: #333;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.post header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+}
+
+.post header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.post-tag {
+  background-color: #d0325a;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 16px;
+  font-size: 19.25px;
+  margin-left: 10px;
+}
+
+/* Make the bottom orange */
+.post footer {
+  background-color: #fea303;
+  color: #000;
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+
+.like-button,
+.comment-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  flex: 1;          /* each gets half the row */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center icon + text */
+  gap: 6px;
+  color: #000; /* text color on orange background */
+}
+
+.like-button.liked {
+  color: #1877f2;
+  font-weight: bold;
+}
+
+.more-options-wrapper {
+  margin-left: auto;
+  position: relative;
+}
+
+.more-options {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #999;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* Smaller font-size and padding for the delete/report menu */
+.options-menu {
+  position: absolute;
+  top: 1.8rem;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: none;
+}
+
+.options-menu li {
+  padding: 4px 8px;        /* smaller padding than before */
+  font-size: 0.8rem;       /* smaller font size */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.options-menu li:hover {
+  background-color: #f0f0f0;
+}
+
+.more-options-wrapper:hover .options-menu {
+  display: block;
+}
+
+.comment-section {
+  margin-top: 0.75rem;
+  border-top: 1px solid #ccc;
+  padding-top: 0.75rem;
+  display: none;
+}
+
+.comment-input {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.submit-comment {
+  padding: 8px 14px;
+  background-color: #fea303;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #000511;
+}
+
+.comments-list .comment-entry {
+  background: #f5f5f5;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 6px 0;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.comment-body {
+  flex: 1;
+}
+
+.comment-time {
+  font-size: 0.75rem;
+  color: #888;
+  margin-left: 6px;
+}
+
+.comment-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.comment-actions button {
+  background: none;
+  border: none;
+  font-size: 0.8rem;
+  color: #444;
+  cursor: pointer;
+}
+.comment-actions button:hover {
+  color: #222;
+}
+
+/*
+  SIDEBAR & EXTRA
+*/
+.sidebar .clubs h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.additional-content-1,
+.additional-content-2 {
+  background-color: #d9d9d9;
+  margin-bottom: 20px;
+  padding: 15%;
+  margin-top: 7%;
+}
