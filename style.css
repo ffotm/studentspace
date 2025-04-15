@@ -1,4 +1,3 @@
-
 body {
   font-family: "Poppins", sans-serif;
   background-color: #000511; 
@@ -29,17 +28,17 @@ body {
 
 .user-actions {
   display: flex;
-  align-items: center;
+  align-items: right;
   gap: 12px;
   position: absolute;
-  top: 20px;
-  right: 16%;
+  top: 55px;
+  right: 1%;
+  left: auto;
   z-index: 100;
   background-color: #000511;
   padding: 8px;
   border-radius: 8px;
 }
-
 .announcements {
   color: #000511;
   width: 100%;
@@ -48,7 +47,7 @@ body {
   margin-bottom: 20px;
   border: 1px solid #121528;
   position: relative;
-  min-width: 300px;
+  min-width: 900px;
 }
 
 /* Add media query for responsive positioning */
@@ -107,7 +106,8 @@ header {
   list-style: none;
   gap: 24px;
   margin: 0;
-  padding: 0;
+  padding-left: auto;
+  padding-left: 20%;
 }
 
 .main-nav a {
@@ -130,15 +130,6 @@ header {
 }
 
 
-.user-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: absolute;
-  top: 55px;
-  right: 480px; 
-  z-index: 100; 
-}
 
 .announcements {
   color: #000511;
@@ -517,4 +508,8 @@ header {
   margin-bottom: 20px;
   padding: 15%;
   margin-top: 7%;
+}
+.Books {
+  white-space: nowrap;
+  display: inline-block;
 }
