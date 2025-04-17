@@ -26,15 +26,15 @@ const db = new pg.Client({
 
 db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false }
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 passport.use(new Strategy(
@@ -87,7 +87,7 @@ app.get("/logout", (req, res) => {
 });
 app.get('/homepage', async(req, res) => {
     if (!req.isAuthenticated()) {
-        return res.redirect('/login');
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     try {
@@ -105,8 +105,10 @@ app.get('/homepage', async(req, res) => {
             ORDER BY post_date DESC
         `);
 
-        // render with data or send JSON depending on your frontend
-        res.send("homepage.html", { posts: result.rows, user: req.user });
+        res.json({
+            user: req.user,
+            posts: result.rows
+        });
 
     } catch (err) {
         console.error('Error getting posts:', err);
