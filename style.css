@@ -21,23 +21,17 @@ body {
 }
 
 .main-feed {
-  width: 60%;
+  width: 100%;
+  max-width: 1300px;  /* You can adjust this if needed */
+  margin: 0 auto;
   padding: 0 20px;
-  position: relative;
+  box-sizing: border-box;
 }
 
 .user-actions {
   display: flex;
-  align-items: right;
+  align-items: center;
   gap: 12px;
-  position: absolute;
-  top: 55px;
-  right: 1%;
-  left: auto;
-  z-index: 100;
-  background-color: #000511;
-  padding: 8px;
-  border-radius: 8px;
 }
 .announcements {
   color: #000511;
@@ -80,34 +74,41 @@ header {
   justify-content: space-between;
   padding: 10px 20px;
   background-color: #000511;
+  width: 100%;
+  font-family: "Poppins",sans-serif;
+  text-decoration: none;
+
+}
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .logo {
   width: 89px;
   height: 89px;
-  margin-right: 15px;
 }
 
 .site-title {
   font-size: 36px;
   color: #fea303;
-  margin-right: 30px;
   font-weight: 600;
 }
 
+
 .main-nav {
-  margin-left: auto;
-  padding-left: 31%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .main-nav ul {
   display: flex;
-  align-items: center;
-  list-style: none;
   gap: 24px;
+  list-style: none;
   margin: 0;
-  padding-left: auto;
-  padding-left: 20%;
+  padding: 0;
 }
 
 .main-nav a {
@@ -128,6 +129,7 @@ header {
 .main-nav a:hover {
   background-color: #fea30333;
 }
+
 
 
 
@@ -163,7 +165,6 @@ header {
   background-color: #d9d9d9;
   border-radius: 50%;
 }
-
 /****************************************************
   ANNOUNCEMENTS
 *****************************************************/
@@ -207,6 +208,15 @@ header {
   gap: 12px;
   border-radius: 15px;
 
+}
+.post-form,
+.post {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
 }
 
 /* Top row: Username + Topic */
@@ -264,14 +274,19 @@ header {
 /* Bottom row: Choose Image + File Name + Post, right-aligned */
 .form-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  background-color: #ffffff;
+  padding: 10px 16px;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 12px 12px; /* rounded bottom only */
+  margin-top: auto;
+  gap: 10px;
 }
 
 /* Custom "Choose Image" button */
 .custom-file-button {
-  background: #e1e1e1;
+  background: #d4d4d4;
   border-radius: 4px;
   padding: 8px 12px;
   font-size: 12px;
@@ -301,12 +316,14 @@ header {
 
 /* "Post" button */
 .submit-post {
-  background-color: #000511;
-  color: #fea303;
+  background-color: #fea303;
+  color: #000;
+  padding: 10px 18px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
   cursor: pointer;
 }
 
@@ -336,12 +353,13 @@ header {
 }
 
 .post-tag {
+  font-size: 0.75rem;
   background-color: #d0325a;
-  color: #fff;
+  color: white;
   padding: 2px 8px;
-  border-radius: 16px;
-  font-size: 19.25px;
-  margin-left: 10px;
+  border-radius: 12px;
+  margin-top: 2px;
+  width: fit-content;
 }
 
 /* Make the bottom orange */
@@ -373,7 +391,7 @@ header {
 }
 
 .like-button.liked {
-  color: #1877f2;
+  color: #000000;
   font-weight: bold;
 }
 
@@ -385,12 +403,12 @@ header {
 .more-options {
   background: none;
   border: none;
-  font-size: 1.2rem;
-  color: #999;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #000000;
   cursor: pointer;
   margin-left: auto;
 }
-
 /* Smaller font-size and padding for the delete/report menu */
 .options-menu {
   position: absolute;
@@ -419,15 +437,19 @@ header {
   background-color: #f0f0f0;
 }
 
-.more-options-wrapper:hover .options-menu {
-  display: block;
-}
+
 
 .comment-section {
   margin-top: 0.75rem;
   border-top: 1px solid #ccc;
   padding-top: 0.75rem;
   display: none;
+  background-color: #f7f7f7;
+  border-left: 4px solid #fea303;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .comment-input {
@@ -511,5 +533,136 @@ header {
 }
 .Books {
   white-space: nowrap;
-  display: inline-block;
+  display: inline;
+  vertical-align: middle;
+}
+/* Footer */
+.page-footer {
+  background-color: #DC9F3DDC;
+  color: black;
+  padding: 60px 5% 30px;
+  border-radius: 100px;
+  font-family: 'Noto Sans', serif;
+  margin-top:300px;
+  width: 92%;
+  }
+
+  .footer-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 50px;
+  }
+
+  .footer-logo {
+  font-family: 'Noto Sans', serif;
+  font-size: 18px;
+  margin-bottom: 15px;
+  background: linear-gradient(45deg, #ff7eb3, #f26ba3, #ef476f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: black;
+  }
+
+  .footer-about {
+  max-width: 300px;
+  }
+
+  .social-links {
+  display: flex;
+  gap: 15px;
+  }
+
+  .social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #DC9F3DDC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: background-color 0.3s, transform 0.3s;
+  }
+
+  .social-icon:hover {
+  background-color:#FF9D23;
+  transform: translateY(-3px);
+  }
+
+  .footer-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+  }
+
+  .footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: black;
+  }
+
+  .footer-links {
+  list-style: none;
+  }
+
+  .footer-links li {
+  margin-bottom: 10px;
+  }
+
+  .footer-links a {
+  color:black;
+  text-decoration: none;
+  transition: color 0.3s;
+  }
+
+  .footer-links a:hover {
+  color: #481E14;
+  }
+
+  .contact-info {
+  color: black;
+  }
+
+  .contact-info p {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  }
+
+  .contact-info svg {
+  margin-right: 10px;
+  min-width: 20px;
+  }
+
+  .footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  text-align: center;
+  color: black;
+  font-size: 14px;
+  }
+
+  .post-content {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    max-width: 100%;
+    overflow: hidden;
+  }
+.post-content, .comment-text {
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+.post-form, .post, .comment-section {
+  max-width: 100%;
+  overflow-x: hidden;
 }

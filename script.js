@@ -35,31 +35,8 @@ function createPost(postText, imageURL, topic) {
   const timestamp = new Date().toLocaleString();
 
   postContainer.innerHTML = `
-    <header>
-      <img class="user-avatar" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-10-2.png" alt="User avatar" />
-      <h3>username_</h3>
-      <div class="more-options-wrapper">
-        <button class="more-options" aria-label="More options">
-          <i class="fas fa-cog"></i>
-        </button>
-        <ul class="options-menu">
-          <li>
-            <button class="remove-post">
-              <i class="fas fa-minus-circle"></i>
-              Delete
-            </button>
-          </li>
-          <li>
-            <button class="report-post">
-              <i class="fas fa-ban"></i>
-              Report
-            </button>
-          </li>
-        </ul>
-      </div>
-      <span class="post-tag">${topic}</span>
-    </header>
-    <p class="post-content">${postText}</p>
+    <header><img class="user-avatar" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-10-2.png" alt="User avatar" /><div class="post-header-text"><h3>username_</h3><span class="post-tag">${topic}</span></div><div class="more-options-wrapper"><button class="more-options" aria-label="More options"><span class="dot-dot-dot">...</span></button><ul class="options-menu"><li><button class="remove-post">Delete</button></li><li><button class="report-post">Report</button></li></ul></div></header>
+    <p class="post-content">${postText.replace(/\n/g, "<br>")}</p>
     ${
       imageURL
         ? `<img src="${imageURL}" class="uploaded-image" alt="User post image"
@@ -82,7 +59,7 @@ function createPost(postText, imageURL, topic) {
         We'll let CSS handle placing the button on the right,
         see style.css .comment-section for details.
       -->
-      <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+      <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
       <button class="submit-comment">
         <i class="far fa-paper-plane"></i> Comment
       </button>
@@ -132,7 +109,7 @@ function createPost(postText, imageURL, topic) {
           <strong>user_01</strong>
           <span class="comment-time">${new Date().toLocaleString()}</span>
           <br>
-          <span class="comment-text">${text}</span>
+          <span class="comment-text">${text.replace(/\n/g, "<br>")}</span>
           <div class="comment-actions">
             <button class="edit-comment">Edit</button>
             <button class="delete-comment">Delete</button>
@@ -170,6 +147,21 @@ function createPost(postText, imageURL, topic) {
   });
 
   // Finally, append the new post to the main feed
+  
+  const moreOptionsBtn = postContainer.querySelector(".more-options");
+  const optionsMenu = postContainer.querySelector(".options-menu");
+
+  moreOptionsBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    optionsMenu.style.display =
+      optionsMenu.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", () => {
+    optionsMenu.style.display = "none";
+  });
+
+
   document.querySelector(".main-feed").appendChild(postContainer);
 }
 
