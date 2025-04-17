@@ -1,19 +1,31 @@
 {
-  "name": "studentspace-copy",
-  "version": "1.0.0",
-  "description": "",
-  "main": "homepage.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ffotm/studentspace.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ffotm/studentspace/issues"
-  },
-  "homepage": "https://github.com/ffotm/studentspace#readme"
+    "name": "studentspace-copy",
+    "version": "1.0.0",
+    "description": "",
+    "main": "homepage.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ffotm/studentspace.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ffotm/studentspace/issues"
+    },
+    "homepage": "https://github.com/ffotm/studentspace#readme",
+    "dependencies": {
+        "body-parser": "^2.2.0",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "express-session": "^1.18.1",
+        "passport": "^0.7.0",
+        "passport-local": "^1.0.0",
+        "path": "^0.12.7",
+        "pg": "^8.14.1",
+        "url": "^0.11.4"
+    }
 }
