@@ -6,6 +6,16 @@ import env from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 //import axios from "axios";
+import session from "express-session";
+
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+    }
+}));
 
 const app = express();
 const port = 3000;
@@ -92,7 +102,8 @@ app.post("/login", async(req, res) => {
             const storedPassword = user.password;
 
             if (password === storedPassword) {
-                res.send("logged in successfully"); //or redirect to homepage
+                res.json({ success: true, message: "logged in successfully" });
+
             } else {
                 res.send("incorrect password");
             }

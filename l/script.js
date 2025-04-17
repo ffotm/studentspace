@@ -51,7 +51,19 @@
               });
       });
   }
-
+  fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+          if (data.success) {
+              window.location.href = "/homepage"; // ✅ redirect from frontend
+          } else {
+              alert(data.message);
+          }
+      });
   // Handle signin form submission
   if (signinForm) {
       signinForm.addEventListener('submit', function(e) {
