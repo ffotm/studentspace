@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UniHive</title>
+
+    <!-- Google Fonts (Poppins) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background-color: #000511;
+        margin: 0;
+        color: #fff;
+    }
+    
+    .frame {
+        background-color: #000511;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .main-content {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .main-feed {
+        width: 100%;
+        max-width: 1300px;
+        /* You can adjust this if needed */
+        margin: 0 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .announcements {
+        color: #000511;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 60px 16% 16% 16%;
+        margin-bottom: 20px;
+        border: 1px solid #121528;
+        position: relative;
+        min-width: 900px;
+    }
+    /* Add media query for responsive positioning */
+    
+    @media screen and (max-width: 1200px) {
+        .user-actions {
+            right: 20px;
+        }
+    }
+    
+    .announcements {
+        color: #000511;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 16%;
+        margin-bottom: 20px;
+        border: 1px solid #121528;
+        position: relative;
+    }
+    
+    .sidebar {
+        width: 40%;
+    }
+    /****************************************************
+  HEADER
+*/
+    
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #000511;
+        width: 100%;
+        font-family: "Poppins", sans-serif;
+        text-decoration: none;
+    }
+    
+    .branding {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .logo {
+        width: 89px;
+        height: 89px;
+    }
+    
+    .site-title {
+        font-size: 36px;
+        color: #fea303;
+        font-weight: 600;
+    }
+    
+    .main-nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .main-nav ul {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .main-nav a {
+        color: #fea303;
+        font-weight: 800;
+        font-size: 18px;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 18px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .main-nav a.active {
+        background-color: #fea303;
+        color: #000511;
+    }
+    
+    .main-nav a:hover {
+        background-color: #fea30333;
+    }
+    
+    .announcements {
+        color: #000511;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 60px 16% 16% 16%;
+        margin-bottom: 20px;
+        border: 1px solid #121528;
+        position: relative;
+    }
+    
+    .search {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .notification {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .notification i {
+        color: #fea303;
+        font-size: 1.7rem;
+    }
+    
+    .profile {
+        width: 40px;
+        height: 40px;
+        background-color: #d9d9d9;
+        border-radius: 50%;
+    }
+    /****************************************************
+  ANNOUNCEMENTS
+*****************************************************/
+    
+    .announcements {
+        color: #000511;
+        width: 100%;
+        background-color: #ffffff;
+        padding: 16%;
+        margin-bottom: 20px;
+        border: 1px solid #121528;
+        position: relative;
+    }
+    
+    .announcements h2 {
+        font-size: 3rem;
+        font-weight: 600;
+        color: #fea303;
+    }
+    /*
+  CTA TEXT
+*/
+    
+    .cta-text {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 20px 0;
+    }
+    /*
+  POST FORM
+*/
+    
+    .post-form {
+        background-color: #fefefe;
+        padding: 16px;
+        margin-bottom: 20px;
+        color: #333;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 15px;
+    }
+    
+    .post-form,
+    .post {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+    }
+    /* Top row: Username + Topic */
+    
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .username-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    /* Remove border from the username input */
+    
+    .username-input {
+        background: #fff;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: #333;
+    }
+    /* Topic dropdown */
+    
+    .topic-dropdown select {
+        background: #e2dddd;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        color: #333;
+        cursor: pointer;
+    }
+    /* Middle: textarea */
+    
+    .post-textarea {
+        width: 100%;
+        min-height: 80px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        resize: none;
+        font-size: 0.95rem;
+        color: #333;
+    }
+    /* Bottom row: Choose Image + File Name + Post, right-aligned */
+    
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 10px 16px;
+        border-top: 1px solid #ddd;
+        border-radius: 0 0 12px 12px;
+        /* rounded bottom only */
+        margin-top: auto;
+        gap: 10px;
+    }
+    /* Custom "Choose Image" button */
+    
+    .custom-file-button {
+        background: #d4d4d4;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 12px;
+        size: 50%;
+        color: #333;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #ccc;
+        transition: background 0.2s ease;
+    }
+    
+    .custom-file-button:hover {
+        background: #5e5d5d;
+    }
+    
+    .img-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    #selected-file-name {
+        font-size: 0.85rem;
+        color: #555;
+    }
+    /* "Post" button */
+    
+    .submit-post {
+        background-color: #fea303;
+        color: #000;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+    }
+    /*
+  POSTS + COMMENTS
+*/
+    
+    .post {
+        background-color: #fff;
+        color: #333;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        padding: 1rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+    
+    .post header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #ffffff;
+    }
+    
+    .post header h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+    
+    .post-tag {
+        font-size: 0.75rem;
+        background-color: #d0325a;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-top: 2px;
+        width: fit-content;
+    }
+    /* Make the bottom orange */
+    
+    .post footer {
+        background-color: #fea303;
+        color: #000;
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .like-button,
+    .comment-button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        flex: 1;
+        /* each gets half the row */
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* center icon + text */
+        gap: 6px;
+        color: #000;
+        /* text color on orange background */
+    }
+    
+    .like-button.liked {
+        color: #000000;
+        font-weight: bold;
+    }
+    
+    .more-options-wrapper {
+        margin-left: auto;
+        position: relative;
+    }
+    
+    .more-options {
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #000000;
+        cursor: pointer;
+        margin-left: auto;
+    }
+    /* Smaller font-size and padding for the delete/report menu */
+    
+    .options-menu {
+        position: absolute;
+        top: 1.8rem;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ddd;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        border-radius: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        display: none;
+    }
+    
+    .options-menu li {
+        padding: 4px 8px;
+        /* smaller padding than before */
+        font-size: 0.8rem;
+        /* smaller font size */
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .options-menu li:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .comment-section {
+        margin-top: 0.75rem;
+        border-top: 1px solid #ccc;
+        padding-top: 0.75rem;
+        display: none;
+        background-color: #f7f7f7;
+        border-left: 4px solid #fea303;
+        padding: 1rem;
+        border-radius: 6px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+    .comment-input {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        padding: 8px;
+        font-size: 0.9rem;
+        color: #333;
+    }
+    
+    .submit-comment {
+        padding: 8px 14px;
+        background-color: #fea303;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        color: #000511;
+    }
+    
+    .comments-list .comment-entry {
+        background: #f5f5f5;
+        border-radius: 4px;
+        padding: 8px;
+        margin: 6px 0;
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+    }
+    
+    .comment-body {
+        flex: 1;
+    }
+    
+    .comment-time {
+        font-size: 0.75rem;
+        color: #888;
+        margin-left: 6px;
+    }
+    
+    .comment-actions {
+        margin-top: 6px;
+        display: flex;
+        gap: 10px;
+    }
+    
+    .comment-actions button {
+        background: none;
+        border: none;
+        font-size: 0.8rem;
+        color: #444;
+        cursor: pointer;
+    }
+    
+    .comment-actions button:hover {
+        color: #222;
+    }
+    /*
+  SIDEBAR & EXTRA
+*/
+    
+    .sidebar .clubs h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+    
+    .additional-content-1,
+    .additional-content-2 {
+        background-color: #d9d9d9;
+        margin-bottom: 20px;
+        padding: 15%;
+        margin-top: 7%;
+    }
+    
+    .Books {
+        white-space: nowrap;
+        display: inline;
+        vertical-align: middle;
+    }
+    /* Footer */
+    
+    .page-footer {
+        background-color: #DC9F3DDC;
+        color: black;
+        padding: 60px 5% 30px;
+        border-radius: 100px;
+        font-family: 'Noto Sans', serif;
+        margin-top: 300px;
+        width: 92%;
+    }
+    
+    .footer-top {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 50px;
+    }
+    
+    .footer-logo {
+        font-family: 'Noto Sans', serif;
+        font-size: 18px;
+        margin-bottom: 15px;
+        background: linear-gradient(45deg, #ff7eb3, #f26ba3, #ef476f);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: black;
+    }
+    
+    .footer-about {
+        max-width: 300px;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #DC9F3DDC;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .social-icon:hover {
+        background-color: #FF9D23;
+        transform: translateY(-3px);
+    }
+    
+    .footer-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: black;
+    }
+    
+    .footer-links {
+        list-style: none;
+    }
+    
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+        color: black;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+        color: #481E14;
+    }
+    
+    .contact-info {
+        color: black;
+    }
+    
+    .contact-info p {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .contact-info svg {
+        margin-right: 10px;
+        min-width: 20px;
+    }
+    
+    .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 20px;
+        text-align: center;
+        color: black;
+        font-size: 14px;
+    }
+    
+    .post-content {
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .post-content,
+    .comment-text {
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+        max-width: 100%;
+    }
+    
+    .post-form,
+    .post,
+    .comment-section {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+     :root {
+        --icons-color: rgba(41, 41, 41, 1);
+    }
+    
+    * {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+    }
+    
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+    }
+    
+    body {
+        color: #333;
+        line-height: 1.5;
+        font-family: "Poppins", sans-serif;
+    }
+    
+    html {
+        font-size: 16px;
+    }
+    
+    a:focus,
+    button:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    
+    button:active,
+    a:active {
+        outline: none;
+        box-shadow: none;
+    }
+    
+    button:focus-visible {
+        outline: none !important;
+    }
+    
+    .visually-hidden {
+        position: absolute !important;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(1px 1px 1px 1px);
+        clip: rect(1px, 1px, 1px, 1px);
+        white-space: nowrap;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+    <div class="frame">
+        <main class="main-content">
+            <!-- HEADER -->
+            <header>
+                <img class="logo" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/1742586172225-1.png" alt="UniHive Logo" />
+                <h1 class="site-title">UniHive</h1>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="#" class="active">Feed</a></li>
+                        <li><a href="#">Lost&Found</a></li>
+                        <li><a href="#" class="Books">Books Shop</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <!-- Search icon -->
+                    <img class="search" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-8.png" alt="Search" />
+                    <!-- Notification bell -->
+                    <button class="notification" aria-label="Notifications">
+              <i class="fas fa-bell"></i>
+            </button>
+                    <div class="profile" aria-label="User profile"></div>
+                </div>
+            </header>
+            <!-- END HEADER -->
+
+            <!-- ANNOUNCEMENTS SECTION -->
+            <section class="announcements">
+                <h2>Announcements</h2>
+            </section>
+
+            <!-- MAIN FEED -->
+            <section class="main-feed">
+                <p class="cta-text">Don't wait and start buzzing <br />with the others</p>
+
+                <!-- Redesigned Post Form -->
+                <form class="post-form" action="#" method="post">
+                    <!-- Form Header: Username + Topic Dropdown on the right -->
+                    <div class="form-header">
+                        <div class="username-container">
+                            <img class="user-avatar" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png" alt="User avatar" />
+                            <input type="text" class="username-input" placeholder="username_" aria-label="Username" readonly />
+                        </div>
+
+                        <div class="topic-dropdown">
+                            <label for="topic-select" class="visually-hidden">Select Topic</label>
+                            <select id="topic-select" aria-label="Select topic">
+                  <option value="" disabled selected hidden>Topic</option>
+                  <option value="tips">Tips</option>
+                  <option value="general">General</option>
+                  <option value="events">Events</option>
+                  <!-- Add more topics here -->
+                </select>
+                        </div>
+                    </div>
+
+                    <!-- Post content area -->
+                    <textarea class="post-textarea" maxlength="500" placeholder="Say something..." aria-label="Post content"></textarea>
+
+                    <!-- Form Footer: File Upload + Post Button -->
+                    <div class="form-footer">
+                        <!-- Custom file label + hidden file input -->
+                        <label class="custom-file-button" for="image-upload">
+                <i class="fas fa-image"></i> Image
+              </label>
+                        <!-- Show selected file name here -->
+                        <span id="selected-file-name"></span>
+
+                        <input id="image-upload" type="file" aria-label="Upload image" accept="image/*" hidden />
+
+                        <button class="submit-post" type="submit">
+                Post <i class="fas fa-plus"></i>
+              </button>
+                    </div>
+                </form>
+                <!-- END Post Form -->
+            </section>
+            <!-- END MAIN FEED -->
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <section class="clubs">
+                    <h2>Clubs</h2>
+                    <div class="clubs-content"></div>
+                </section>
+
+                <div class="additional-content-1"></div>
+                <div class="additional-content-2"></div>
+                <div class="additional-content-2"></div>
+                <div class="additional-content-2"></div>
+            </aside>
+            <!-- END SIDEBAR -->
+        </main>
+    </div>
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-top">
+            <div class="footer-about">
+                <h3 class="footer-logo">Helping students connect, share, and thrive</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Fast Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Feed</a></li>
+                    <li><a href="#">Lost&Found</a></li>
+                    <li><a href="#">Book Shop</a></li>
+                    <li><a href="#">Switch to UniVerse</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Informations</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Report a Bug</a></li>
+                    <li><a href="#">UniHiVerse@univ-blida.dz</a></li>
+                    <li><a href="#">Support:14h-18h</Hours:14h-18h></a></li>
+                    <li><a href="#">Conditions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3 class="footer-title">Contactez-nous</h3>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg> University Of Saad Dahleb
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg> By TeenTechTitans
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 UniHive. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        console.log("Navbar JS loaded"); // Add this at the top
+
+        // Global variable to store user data
+        let currentUser = null;
+
+        // Fetch user data on page load
+        window.addEventListener("DOMContentLoaded", () => {
+            fetch("/profile", {
+                    credentials: "include"
+                })
+                .then((res) => {
+                    if (!res.ok) throw new Error("Not logged in");
+                    return res.json();
+                })
+                .then((user) => {
+                    // Store user data globally
+                    currentUser = user;
+
+                    // Update navbar profile
+                    const profileDiv = document.querySelector(".profile");
+                    if (profileDiv) {
+                        const imagePath = `/${user.pfp}`;
+                        profileDiv.innerHTML = `
+                <img src="${imagePath}" alt="Profile Picture" class="navbar-pfp profile" />
+                <span class="profile-name">${user.full_name}</span>
+            `;
+                    }
+                    // Update form header username and avatar
+                    const formUserAvatar = document.querySelector(".form-header .user-avatar");
+                    const usernameInput = document.querySelector(".form-header .username-input");
+
+                    if (formUserAvatar) {
+                        formUserAvatar.src = `/${user.pfp}`;
+                    }
+
+                    if (usernameInput) {
+                        usernameInput.value = user.username || user.full_name;
+                    };
+                })
+                .catch((err) => {
+                    console.warn("Could not load profile:", err);
+                });
+
+            // Set up form submission
+            setupPostForm();
+        });
+
+        // Set up the post form event listener
+        function setupPostForm() {
+            const postForm = document.querySelector(".post-form");
+            if (postForm) {
+                postForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+
+                    const textarea = this.querySelector(".post-textarea");
+                    const imageInput = document.getElementById("image-upload");
+                    const topicSelect = document.getElementById("topic-select");
+                    const postText = textarea.value.trim();
+
+                    if (!postText) return;
+
+                    // Capture the selected topic
+                    const chosenTopic = topicSelect ? (topicSelect.value || "General") : "General";
+
+                    const file = imageInput ? imageInput.files[0] : null;
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            createPost(postText, event.target.result, chosenTopic);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        createPost(postText, null, chosenTopic);
+                    }
+
+                    // Clear out the form + file name after posting
+                    textarea.value = "";
+                    if (imageInput) imageInput.value = "";
+
+                    const fileNameDisplay = document.getElementById("selected-file-name");
+                    if (fileNameDisplay) fileNameDisplay.textContent = "";
+                });
+            }
+        }
+
+        // Function to create a new post
+        function createPost(postText, imageURL, topic) {
+            const postContainer = document.createElement("article");
+            postContainer.classList.add("post");
+
+            const timestamp = new Date().toLocaleString();
+
+            // Use currentUser if available, otherwise use placeholder
+            const userPfp = currentUser ? `/${currentUser.pfp}` : "https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-10-2.png";
+            const userName = currentUser ? (currentUser.username || currentUser.full_name) : "username_";
+
+            postContainer.innerHTML = `
+        <header>
+            <img class="user-avatar" src="${userPfp}" alt="User avatar" />
+            <div class="post-header-text">
+                <h3>${userName}</h3>
+                <span class="post-tag">${topic}</span>
+            </div>
+            <div class="more-options-wrapper">
+                <button class="more-options" aria-label="More options">
+                    <span class="dot-dot-dot">...</span>
+                </button>
+                <ul class="options-menu">
+                    <li><button class="remove-post">Delete</button></li>
+                    <li><button class="report-post">Report</button></li>
+                </ul>
+            </div>
+        </header>
+        <p class="post-content">${postText.replace(/\n/g, "<br>")}</p>
+        ${imageURL ? `<img src="${imageURL}" class="uploaded-image profile" alt="User post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ""}
+        <p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
+            Posted on ${timestamp}
+        </p>
+        <footer>
+            <button class="like-button" aria-label="Like post">
+                <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+            </button>
+            <button class="comment-button" aria-label="Comment on post">
+                <i class="far fa-comment-dots"></i>
+            </button>
+        </footer>
+        <div class="comment-section">
+            <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
+            <button class="submit-comment">
+                <i class="far fa-paper-plane"></i> Comment
+            </button>
+            <div class="comments-list"></div>
+        </div>
+    `;
+
+    // Like logic
+    const likeButton = postContainer.querySelector(".like-button");
+    const likeCount = postContainer.querySelector(".like-count");
+    let liked = false;
+    likeButton.addEventListener("click", () => {
+        liked = !liked;
+        likeCount.textContent = liked ? 1 : 0;
+        likeButton.classList.toggle("liked", liked);
+        // Switch icon from regular to solid thumbs-up
+        likeButton.querySelector("i").className = liked ?
+            "fas fa-thumbs-up" :
+            "far fa-thumbs-up";
+    });
+
+    // Comment logic
+    const commentButton = postContainer.querySelector(".comment-button");
+    const commentSection = postContainer.querySelector(".comment-section");
+    const commentInput = postContainer.querySelector(".comment-input");
+    const submitComment = postContainer.querySelector(".submit-comment");
+    const commentsList = postContainer.querySelector(".comments-list");
+
+    commentButton.addEventListener("click", () => {
+        commentSection.style.display =
+            commentSection.style.display === "none" ? "block" : "none";
+    });
+
+    submitComment.addEventListener("click", () => {
+        const text = commentInput.value.trim();
+        if (text) {
+            const comment = document.createElement("div");
+            comment.classList.add("comment-entry");
+            // Include user avatar here
+            comment.innerHTML = `
+                <img
+                  src="${userPfp}"
+                  alt="Commenter avatar"
+                  class="comment-avatar"
+                />
+                <div class="comment-body">
+                  <strong>${userName}</strong>
+                  <span class="comment-time">${new Date().toLocaleString()}</span>
+                  <br>
+                  <span class="comment-text">${text.replace(/\n/g, "<br>")}</span>
+                  <div class="comment-actions">
+                    <button class="edit-comment">Edit</button>
+                    <button class="delete-comment">Delete</button>
+                  </div>
+                </div>
+            `;
+
+            // Edit
+            comment.querySelector(".edit-comment").addEventListener("click", () => {
+                const textSpan = comment.querySelector(".comment-text");
+                const newText = prompt("Edit your comment:", textSpan.textContent);
+                if (newText !== null) {
+                    textSpan.textContent = newText;
+                }
+            });
+
+            // Delete
+            comment.querySelector(".delete-comment").addEventListener("click", () => {
+                comment.remove();
+            });
+
+            commentsList.appendChild(comment);
+            commentInput.value = "";
+        }
+    });
+
+    // Remove post
+    postContainer.querySelector(".remove-post").addEventListener("click", () => {
+        postContainer.remove();
+    });
+
+    // Report post
+    postContainer.querySelector(".report-post").addEventListener("click", () => {
+        alert("🚩 This post has been reported.");
+    });
+
+    // Options menu dropdown
+    const moreOptionsBtn = postContainer.querySelector(".more-options");
+    const optionsMenu = postContainer.querySelector(".options-menu");
+
+    moreOptionsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        optionsMenu.style.display =
+            optionsMenu.style.display === "block" ? "none" : "block";
+    });
+
+    // Close menus when clicking elsewhere
+    document.addEventListener("click", () => {
+        const allMenus = document.querySelectorAll(".options-menu");
+        allMenus.forEach(menu => {
+            menu.style.display = "none";
+        });
+    });
+
+    // Finally, append the new post to the main feed
+    const mainFeed = document.querySelector(".main-feed");
+    if (mainFeed) {
+        mainFeed.appendChild(postContainer);
+    } else {
+        console.error("Main feed not found in the DOM");
+    }
+}
+
+// Display selected file name in the post form
+const imageUpload = document.getElementById("image-upload");
+if (imageUpload) {
+    imageUpload.addEventListener("change", function() {
+        const fileNameDisplay = document.getElementById("selected-file-name");
+        if (fileNameDisplay) {
+            if (this.files && this.files[0]) {
+                fileNameDisplay.textContent = this.files[0].name;
+            } else {
+                fileNameDisplay.textContent = "";
+            }
+        }
+    });
+}
+    </script>
+</body>
+
+</html>
