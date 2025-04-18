@@ -1,120 +1,54 @@
-import express from "express";
-import bodyParser from "body-parser";
-import pg from "pg";
-//import bcrypt from "bcrypt"; //still havent added pw incryption
-import env from "dotenv";
+// l/login.js
 import path from "path";
-import { fileURLToPath } from "url";
-//import axios from "axios";
-import session from "express-session";
 
-app.use(session({
-    secret: process.env.SESSION_SECRET || 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false,
-    }
-}));
+export default function(app, db, passport, bcrypt, saltRounds, __dirname) {
+    const loginDir = path.join(__dirname, "l");
 
-const app = express();
-const port = 3000;
-const saltRounds = 10;
-env.config();
+    app.get("/login", (req, res) => {
+        res.sendFile(path.join(loginDir, "login.html"));
+    });
 
-const __filename = fileURLToPath(
-    import.meta.url);
-const __dirname = path.dirname(__filename);
+    app.post("/login", (req, res, next) => {
+        passport.authenticate("local", (err, user, info) => {
+            if (err) return next(err);
+            if (!user) return res.status(401).json({ success: false, message: info.message });
 
+            req.logIn(user, err => {
+                if (err) return next(err);
+                res.json({ success: true, message: "Logged in" });
+            });
+        })(req, res, next);
+    });
 
-/*const db = new pg.Client({
-    user: "postgres.cbrcntexlumhvfkqzhlz",
-    host: "aws-0-eu-west-3.pooler.supabase.com",
-    database: "postgres",
-    password: process.env.DB_PASSWORD,
-    port: 6543,
-    ssl: {
-        rejectUnauthorized: false
-    }
-});*/
-console.log(typeof "dq3X*4yFvfH3haB"); // should be "string"
+    app.get("/logout", (req, res, next) => {
+        req.logout(err => {
+            if (err) return next(err);
+            res.redirect("/login");
+        });
+    });
 
+    app.post("/register", async(req, res) => {
+        const { email, password, fullName, major, year, cycle } = req.body;
 
-const db = new pg.Client({
-    connectionString: "postgresql://postgres.cbrcntexlumhvfkqzhlz:dq3X*4yFvfH3haB@aws-0-eu-west-3.pooler.supabase.com:6543/postgres",
-    ssl: { rejectUnauthorized: false }
-});
-
-db.connect();
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-
-app.use(express.static(path.join(__dirname, "/../frontend")));
-
-
-app.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, "/../frontend", "login.html"));
-});
-
-app.get("/register", (req, res) => {
-    res.sendFile(path.join(__dirname, "/../frontend", "login.html"));
-});
-
-app.post("/register", async(req, res) => {
-    console.log("Registration request received:", req.body);
-    const { email, password, fullName, major, year, cycle } = req.body;
-    console.log(req.body);
-    try {
         if (!email.endsWith("@univ-blida.dz")) {
-            return res.send("not allowed");
-        } else {
-            const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-
-            if (checkResult.rows.length > 0) {
-                res.send("email already exists. try logging in.");
-            } else {
-                const result1 = await db.query(
-                    "INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3) RETURNING id", [email, password, fullName]);
-                const userId = result1.rows[0].id;
-                const result2 = await db.query("INSERT INTO students (u_id, major, year, cycle) VALUES ($1, $2, $3, $4)", [userId, major, year, cycle])
-                    //more infos to fill the database
-                res.send("user created successfully. you can now log in.");
-                //res.render("homepage.ejs");
-            }
+            return res.status(400).json({ success: false, message: "Use a university email" });
         }
-    } catch (err) {
-        console.log(err);
-    }
-});
 
-app.post("/login", async(req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    try {
-        const result = await db.query("SELECT * FROM users WHERE email = $1", [
-            email,
-        ]);
-        if (result.rows.length > 0) {
-            const user = result.rows[0];
-            const storedPassword = user.password;
-
-            if (password === storedPassword) {
-                res.json({ success: true, message: "logged in successfully" });
-
-            } else {
-                res.send("incorrect password");
-            }
-        } else {
-            res.send("user not found");
+        const existing = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+        if (existing.rows.length > 0) {
+            return res.status(409).json({ success: false, message: "Email already registered" });
         }
-    } catch (err) {
-        console.log(err);
-    }
-});
 
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+        const userResult = await db.query(
+            "INSERT INTO users (email, password, full_name) VALUES ($1, $2, $3) RETURNING id", [email, hashedPassword, fullName]
+        );
+
+        const userId = userResult.rows[0].id;
+        await db.query(
+            "INSERT INTO students (u_id, major, year, cycle) VALUES ($1, $2, $3, $4)", [userId, major, year, cycle]
+        );
+
+        res.status(201).json({ success: true, message: "Registered successfully" });
+    });
+}

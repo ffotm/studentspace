@@ -1,8 +1,9 @@
   // Get the forms
   const signupForm = document.querySelector('.sign-up form');
   const signinForm = document.querySelector('.sign-in form');
+  const loginContainer = document.getElementById('container');
 
-  // Handle signup form submission
+  // SIGNUP FORM HANDLING
   if (signupForm) {
       signupForm.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -13,6 +14,15 @@
           const major = document.getElementById('signup-major').value;
           const year = document.getElementById('signup-year').value;
           const cycle = document.getElementById('signup-cycle').value;
+
+          // Form validation
+          if (!name || !email || !password || !major || !year || !cycle) {
+              return alert("Please fill in all fields.");
+          }
+
+          if (!/\S+@\S+\.\S+/.test(email)) {
+              return alert("Please enter a valid email address.");
+          }
 
           // Validate university email
           if (!email.endsWith('@univ-blida.dz')) {
@@ -37,11 +47,11 @@
                   },
                   body: JSON.stringify(userData)
               })
-              .then(response => response.text())
+              .then(response => response.json())
               .then(data => {
-                  alert(data);
-                  if (data.includes("successfully")) {
-                      // Switch to login form or redirect
+                  alert(data.message || "Registration successful!");
+                  if (data.success) {
+                      // Switch to login form
                       document.getElementById('container').classList.remove("active");
                   }
               })
@@ -51,20 +61,8 @@
               });
       });
   }
-  fetch("/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password })
-      })
-      .then(res => res.json())
-      .then(data => {
-          if (data.success) {
-              window.location.href = "/homepage"; // ✅ redirect from frontend
-          } else {
-              alert(data.message);
-          }
-      });
-  // Handle signin form submission
+
+  // SIGNIN FORM HANDLING
   if (signinForm) {
       signinForm.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -82,16 +80,17 @@
           fetch('/login', {
                   method: 'POST',
                   headers: {
-                      'Content-Type': 'application/json',
+                      'Content-Type': 'application/x-www-form-urlencoded',
                   },
-                  body: JSON.stringify(loginData)
+                  body: new URLSearchParams(loginData)
               })
-              .then(response => response.text())
+              .then(response => response.json())
               .then(data => {
-                  alert(data);
-                  if (data.includes("successfully")) {
+                  if (data.success) {
                       // Redirect to homepage
-                      window.location.href = "/";
+                      window.location.href = "/homepage";
+                  } else {
+                      alert(data.message || "Login failed");
                   }
               })
               .catch(error => {
@@ -101,14 +100,10 @@
       });
   }
 
-  //LOGIN PAGE LOGIC
-  const loginContainer = document.getElementById('container');
-
+  // LOGIN PAGE UI LOGIC
   if (loginContainer) {
       const registerBtn = document.getElementById('register');
       const loginBtn = document.getElementById('login');
-      const signupForm = document.getElementById('signup-form');
-
 
       // Handle register button click
       if (registerBtn) {
@@ -120,36 +115,7 @@
           loginBtn.addEventListener('click', () => loginContainer.classList.remove("active"));
       }
 
-      // Handle form submission
-      if (signupForm) {
-          signupForm.addEventListener('submit', function(e) {
-              e.preventDefault();
-
-              const inputs = signupForm.querySelectorAll('input');
-              const [name, email, password] = [inputs[0].value, inputs[1].value, inputs[2].value];
-
-              const yearSelect = document.getElementById('signup-year');
-              const cycleSelect = document.getElementById('signup-cycle');
-
-              const year = yearSelect.value;
-              const cycle = cycleSelect.value;
-              if (!name || !email || !password || !year || !cycle) {
-                  return alert("Please fill in all fields.");
-              }
-
-              if (!/\S+@\S+\.\S+/.test(email)) {
-                  return alert("Please enter a valid email address.");
-              }
-
-              console.log("Year:", year);
-              console.log("Cycle:", cycle);
-
-              alert("Sign up successful!");
-          });
-      }
-
-
-
+      // Password toggle functionality
       document.querySelectorAll('.toggle-password').forEach(icon => {
           icon.addEventListener('click', () => {
               const input = document.getElementById(icon.getAttribute('data-target'));
@@ -162,7 +128,6 @@
               }
           });
       });
-
   }
 
   // PRELOGIN PAGE LOGIC
@@ -194,7 +159,4 @@
           localStorage.setItem('userRole', 'teacher');
           window.location.href = "login.html";
       });
-
-
-
   });
