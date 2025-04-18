@@ -18,14 +18,14 @@ const app = express();
 const port = process.env.PORT || 3000;
 const saltRounds = 10;
 
-// PostgreSQL setup
+
 const db = new pg.Client({
     connectionString: "postgresql://postgres.cbrcntexlumhvfkqzhlz:dq3X*4yFvfH3haB@aws-0-eu-west-3.pooler.supabase.com:6543/postgres",
     ssl: { rejectUnauthorized: false },
 });
 db.connect();
 
-// Middleware setup
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "l")));
 app.use(session({
@@ -37,7 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 
-// Passport setup
+
 passport.use(new Strategy({ usernameField: 'email', passwordField: 'password' }, async(email, password, done) => {
     try {
         const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -61,7 +61,7 @@ passport.deserializeUser(async(id, done) => {
     try {
         const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
         const user = result.rows[0];
-        console.log("✅ Deserializing user:", user); // ← add this log!
+
         if (!user) return done(null, false);
         return done(null, user);
     } catch (err) {
@@ -84,8 +84,8 @@ loginRoutes(app, db, passport, bcrypt, saltRounds, __dirname);
 homepageRoutes(app, db, isAuthenticated, __dirname);
 
 app.get('/profile', async(req, res) => {
-    console.log("🔥 SESSION DATA:", req.session);
-    console.log("🔥 USER DATA:", req.user);
+    console.log("SESSION DATA:", req.session);
+    console.log("USER DATA:", req.user);
     if (!req.isAuthenticated()) {
         console.log("User not authenticated");
         return res.status(401).json({ error: 'Not logged in' });
@@ -115,5 +115,5 @@ WHERE users.id = $1
 
 // Start server
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on ${port}`);
 });
