@@ -61,14 +61,13 @@ passport.deserializeUser(async(id, done) => {
     try {
         const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
         const user = result.rows[0];
-        
+
         if (!user) return done(null, false);
         return done(null, user);
     } catch (err) {
         return done(err);
     }
 });
-
 
 // Auth middleware
 const isAuthenticated = (req, res, next) => {
