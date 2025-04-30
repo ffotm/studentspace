@@ -1,6 +1,7 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
 :root {
     --icons-color: rgba(41, 41, 41, 1);
+background-color: #000;
 }
 
 * {

@@ -2,27 +2,27 @@ import path from "path";
 import multer from "multer";
 import fs from "fs";
 
-// Make sure the uploads directory exists
+
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Configure multer storage for image upload
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/"); // Folder to store images
+        cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
         const filename = Date.now() + path.extname(file.originalname);
-        cb(null, filename); // Save file with timestamp-based filename
+        cb(null, filename);
     }
 });
 
 const upload = multer({ storage: storage });
 
 export default function(app, db, isAuthenticated, __dirname) {
-    // GET /homepage - Display posts and render homepage view
+
     app.get("/homepage", isAuthenticated, async(req, res) => {
         try {
             const result = await db.query(`
@@ -39,46 +39,80 @@ export default function(app, db, isAuthenticated, __dirname) {
                 return res.json({ user: req.user, posts: result.rows });
             }
 
-            // Render homepage with posts data in HTML format
-            res.sendFile(path.join(__dirname, "public", "index.html")); // adjust path if needed
+
+            res.sendFile(path.join(__dirname, "public", "index.html"));
         } catch (err) {
             console.error("Error loading homepage:", err);
             res.status(500).json({ error: "Failed to load homepage" });
         }
     });
 
-    // OPTION 1: Handle form submission from the original form action
-    app.post("/homepage", isAuthenticated, upload.single("image"), async(req, res) => {
+    app.post("/posts", isAuthenticated, upload.single("image"), async(req, res) => {
         try {
-            // Extract data from form submission
-            const { content } = req.body;
-            const tags = req.body.topic || "General"; // Use the topic field from your form
+
+            const { content, tags } = req.body;
             const user_id = req.user.id;
             const image_url = req.file ? `/uploads/${req.file.filename}` : null;
 
-            // Insert into database
+            console.log("Creating post with data:", {
+                user_id,
+                content,
+                image_url,
+                tags
+            });
+
+
             const result = await db.query(
                 `INSERT INTO posts (user_id, content, image_url, tags)
                 VALUES ($1, $2, $3, $4) RETURNING *`, [user_id, content, image_url, tags]
             );
 
-            // Redirect back to homepage after submission
+            // Return JSON response for API calls
+            if (req.headers.accept === "application/json") {
+                return res.status(201).json({
+                    success: true,
+                    post: result.rows[0]
+                });
+            }
+
+
             res.redirect("/homepage");
         } catch (err) {
             console.error("Error creating post:", err);
-            res.status(500).json({ error: "Failed to create post" });
+            res.status(500).json({ error: "Failed to create post", details: err.message });
         }
     });
 
 
-    // Add debugging endpoint to check if uploads directory exists
+    app.get("/profile", isAuthenticated, async(req, res) => {
+        try {
+            const result = await db.query(`
+                SELECT users.id, users.full_name, profiles.pfp
+                FROM users
+                JOIN profiles ON users.id = profiles.u_id
+                WHERE users.id = $1
+            `, [req.user.id]);
+
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: "Profile not found" });
+            }
+
+            res.json(result.rows[0]);
+        } catch (err) {
+            console.error("Error fetching profile:", err);
+            res.status(500).json({ error: "Failed to fetch profile" });
+        }
+    });
+
+
     app.get("/debug/uploads", (req, res) => {
         const uploadsPath = path.join(process.cwd(), "uploads");
         const exists = fs.existsSync(uploadsPath);
         res.json({
             uploadsPathExists: exists,
             uploadsPath: uploadsPath,
-            cwd: process.cwd()
+            cwd: process.cwd(),
+            files: fs.existsSync(uploadsPath) ? fs.readdirSync(uploadsPath) : []
         });
     });
 }

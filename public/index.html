@@ -792,7 +792,7 @@
                 <p class="cta-text">Don't wait and start buzzing <br />with the others</p>
 
                 <!-- Redesigned Post Form -->
-                <form class="post-form" action="#" method="post">
+                <form class="post-form" action="/posts" method="post" enctype="multipart/form-data">
                     <!-- Form Header: Username + Topic Dropdown on the right -->
                     <div class="form-header">
                         <div class="username-container">
@@ -802,18 +802,19 @@
 
                         <div class="topic-dropdown">
                             <label for="topic-select" class="visually-hidden">Select Topic</label>
-                            <select id="topic-select" aria-label="Select topic">
+                            <select id="topic-select" aria-label="Select topic" name="tags">
                   <option value="" disabled selected hidden>Topic</option>
                   <option value="tips">Tips</option>
                   <option value="general">General</option>
-                  <option value="events">Events</option>
+                  <option value="lost&found">Lost&Found</option>
+<option value="help">Help</option>
                   <!-- Add more topics here -->
                 </select>
                         </div>
                     </div>
 
                     <!-- Post content area -->
-                    <textarea class="post-textarea" maxlength="500" placeholder="Say something..." aria-label="Post content"></textarea>
+                    <textarea class="post-textarea" maxlength="500" name="content" placeholder="Say something..." aria-label="Post content"></textarea>
 
                     <!-- Form Footer: File Upload + Post Button -->
                     <div class="form-footer">
@@ -824,7 +825,7 @@
                         <!-- Show selected file name here -->
                         <span id="selected-file-name"></span>
 
-                        <input id="image-upload" type="file" aria-label="Upload image" accept="image/*" hidden />
+                        <input id="image-upload" type="file" aria-label="Upload image" name="image" accept="image/*" hidden />
 
                         <button class="submit-post" type="submit">
                 Post <i class="fas fa-plus"></i>
@@ -925,261 +926,351 @@
         </div>
     </footer>
     <script>
-        console.log("Navbar JS loaded"); // Add this at the top
-
-        // Global variable to store user data
-        let currentUser = null;
-
-        // Fetch user data on page load
-        window.addEventListener("DOMContentLoaded", () => {
-            fetch("/profile", {
-                    credentials: "include"
-                })
-                .then((res) => {
-                    if (!res.ok) throw new Error("Not logged in");
-                    return res.json();
-                })
-                .then((user) => {
-                    // Store user data globally
-                    currentUser = user;
-
-                    // Update navbar profile
-                    const profileDiv = document.querySelector(".profile");
-                    if (profileDiv) {
-                        const imagePath = `/${user.pfp}`;
-                        profileDiv.innerHTML = `
-                <img src="${imagePath}" alt="Profile Picture" class="navbar-pfp profile" />
-                <span class="profile-name">${user.full_name}</span>
-            `;
+        async function loadPosts() {
+            try {
+                const response = await fetch('/homepage', {
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json'
                     }
-                    // Update form header username and avatar
-                    const formUserAvatar = document.querySelector(".form-header .user-avatar");
-                    const usernameInput = document.querySelector(".form-header .username-input");
+                });
 
-                    if (formUserAvatar) {
-                        formUserAvatar.src = `/${user.pfp}`;
-                    }
+                if (!response.ok) {
+                    throw new Error('Failed to load posts');
+                }
+
+                const data = await response.json();
+                renderPosts(data.posts);
+
+                // Update form with user info if available
+                if (data.user) {
+                    const usernameInput = document.querySelector('.username-input');
+                    const userAvatar = document.querySelector('.form-header .user-avatar');
 
                     if (usernameInput) {
-                        usernameInput.value = user.username || user.full_name;
-                    };
-                })
-                .catch((err) => {
-                    console.warn("Could not load profile:", err);
-                });
-
-            // Set up form submission
-            setupPostForm();
-        });
-
-        // Set up the post form event listener
-        function setupPostForm() {
-            const postForm = document.querySelector(".post-form");
-            if (postForm) {
-                postForm.addEventListener("submit", function(e) {
-                    e.preventDefault();
-
-                    const textarea = this.querySelector(".post-textarea");
-                    const imageInput = document.getElementById("image-upload");
-                    const topicSelect = document.getElementById("topic-select");
-                    const postText = textarea.value.trim();
-
-                    if (!postText) return;
-
-                    // Capture the selected topic
-                    const chosenTopic = topicSelect ? (topicSelect.value || "General") : "General";
-
-                    const file = imageInput ? imageInput.files[0] : null;
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            createPost(postText, event.target.result, chosenTopic);
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        createPost(postText, null, chosenTopic);
+                        usernameInput.value = data.user.username || data.user.full_name;
                     }
 
-                    // Clear out the form + file name after posting
-                    textarea.value = "";
-                    if (imageInput) imageInput.value = "";
-
-                    const fileNameDisplay = document.getElementById("selected-file-name");
-                    if (fileNameDisplay) fileNameDisplay.textContent = "";
-                });
+                    if (userAvatar && data.user.pfp) {
+                        userAvatar.src = `/${data.user.pfp}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                const container = document.querySelector('.main-feed');
+                if (container) {
+                    const errorElem = document.createElement('p');
+                    errorElem.className = 'error-message';
+                    errorElem.textContent = 'Failed to load posts. Please try again later.';
+                    container.appendChild(errorElem);
+                }
             }
         }
 
-        // Function to create a new post
-        function createPost(postText, imageURL, topic) {
-            const postContainer = document.createElement("article");
-            postContainer.classList.add("post");
+        // Function to set up post form
+        function setupPostForm() {
+            const postForm = document.querySelector('.post-form');
+            if (postForm) {
+                postForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log("Form submitted");
 
-            const timestamp = new Date().toLocaleString();
+                    const formData = new FormData(this);
 
-            // Use currentUser if available, otherwise use placeholder
-            const userPfp = currentUser ? `/${currentUser.pfp}` : "https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-10-2.png";
-            const userName = currentUser ? (currentUser.username || currentUser.full_name) : "username_";
+                    // Get the values for debugging
+                    console.log("Form data:");
+                    for (let [key, value] of formData.entries()) {
+                        console.log(`${key}: ${value}`);
+                    }
 
-            postContainer.innerHTML = `
-        <header>
-            <img class="user-avatar" src="${userPfp}" alt="User avatar" />
-            <div class="post-header-text">
-                <h3>${userName}</h3>
-                <span class="post-tag">${topic}</span>
-            </div>
-            <div class="more-options-wrapper">
-                <button class="more-options" aria-label="More options">
-                    <span class="dot-dot-dot">...</span>
-                </button>
-                <ul class="options-menu">
-                    <li><button class="remove-post">Delete</button></li>
-                    <li><button class="report-post">Report</button></li>
-                </ul>
-            </div>
-        </header>
-        <p class="post-content">${postText.replace(/\n/g, "<br>")}</p>
-        ${imageURL ? `<img src="${imageURL}" class="uploaded-image profile" alt="User post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ""}
-        <p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
-            Posted on ${timestamp}
-        </p>
-        <footer>
-            <button class="like-button" aria-label="Like post">
-                <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
-            </button>
-            <button class="comment-button" aria-label="Comment on post">
-                <i class="far fa-comment-dots"></i>
-            </button>
-        </footer>
-        <div class="comment-section">
-            <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
-            <button class="submit-comment">
-                <i class="far fa-paper-plane"></i> Comment
-            </button>
-            <div class="comments-list"></div>
-        </div>
-    `;
+                    try {
+                        const response = await fetch('/posts', {
+                            method: 'POST',
+                            body: formData,
+                            credentials: 'include'
+                        });
 
-    // Like logic
-    const likeButton = postContainer.querySelector(".like-button");
-    const likeCount = postContainer.querySelector(".like-count");
-    let liked = false;
-    likeButton.addEventListener("click", () => {
-        liked = !liked;
-        likeCount.textContent = liked ? 1 : 0;
-        likeButton.classList.toggle("liked", liked);
-        // Switch icon from regular to solid thumbs-up
-        likeButton.querySelector("i").className = liked ?
-            "fas fa-thumbs-up" :
-            "far fa-thumbs-up";
-    });
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.error || 'Failed to create post');
+                        }
 
-    // Comment logic
-    const commentButton = postContainer.querySelector(".comment-button");
-    const commentSection = postContainer.querySelector(".comment-section");
-    const commentInput = postContainer.querySelector(".comment-input");
-    const submitComment = postContainer.querySelector(".submit-comment");
-    const commentsList = postContainer.querySelector(".comments-list");
+                        // Clear form
+                        document.querySelector('.post-textarea').value = '';
+                        document.getElementById('image-upload').value = '';
+                        document.getElementById('selected-file-name').textContent = '';
 
-    commentButton.addEventListener("click", () => {
-        commentSection.style.display =
-            commentSection.style.display === "none" ? "block" : "none";
-    });
+                        // Reload posts
+                        loadPosts();
 
-    submitComment.addEventListener("click", () => {
-        const text = commentInput.value.trim();
-        if (text) {
-            const comment = document.createElement("div");
-            comment.classList.add("comment-entry");
-            // Include user avatar here
-            comment.innerHTML = `
-                <img
-                  src="${userPfp}"
-                  alt="Commenter avatar"
-                  class="comment-avatar"
-                />
-                <div class="comment-body">
-                  <strong>${userName}</strong>
-                  <span class="comment-time">${new Date().toLocaleString()}</span>
-                  <br>
-                  <span class="comment-text">${text.replace(/\n/g, "<br>")}</span>
-                  <div class="comment-actions">
-                    <button class="edit-comment">Edit</button>
-                    <button class="delete-comment">Delete</button>
-                  </div>
-                </div>
-            `;
+                        console.log("Post created successfully!");
+                    } catch (error) {
+                        console.error('Error creating post:', error);
+                        alert('Failed to create post: ' + error.message);
+                    }
+                });
 
-            // Edit
-            comment.querySelector(".edit-comment").addEventListener("click", () => {
-                const textSpan = comment.querySelector(".comment-text");
-                const newText = prompt("Edit your comment:", textSpan.textContent);
-                if (newText !== null) {
-                    textSpan.textContent = newText;
+                // Display selected file name
+                const imageUpload = document.getElementById('image-upload');
+                if (imageUpload) {
+                    imageUpload.addEventListener('change', function() {
+                        const fileNameDisplay = document.getElementById('selected-file-name');
+                        if (fileNameDisplay) {
+                            fileNameDisplay.textContent = this.files.length > 0 ? this.files[0].name : '';
+                        }
+                    });
                 }
-            });
-
-            // Delete
-            comment.querySelector(".delete-comment").addEventListener("click", () => {
-                comment.remove();
-            });
-
-            commentsList.appendChild(comment);
-            commentInput.value = "";
+            }
         }
+
+        // Function to render posts
+        function renderPosts(posts) {
+            if (!posts || !Array.isArray(posts)) {
+                console.error("No posts data available");
+                return;
+            }
+
+            const container = document.querySelector('.main-feed');
+            if (!container) {
+                console.error("Main feed container not found");
+                return;
+            }
+
+            // Keep the form and title at the top
+            const postForm = container.querySelector('.post-form');
+            const ctaText = container.querySelector('.cta-text');
+
+            // Clear existing posts but keep form and title
+            const existingPosts = container.querySelectorAll('.post');
+            existingPosts.forEach(post => post.remove());
+
+            if (posts.length === 0) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.textContent = 'No posts yet. Be the first to post!';
+                emptyMessage.className = 'empty-posts-message';
+                container.appendChild(emptyMessage);
+                return;
+            }
+
+            // Create and append each post
+            posts.forEach(post => {
+                        const postElement = document.createElement('article');
+                        postElement.className = 'post';
+                        postElement.dataset.postId = post.id;
+
+                        const postDate = new Date(post.post_date).toLocaleString();
+
+                        postElement.innerHTML = `
+            <header>
+                <img class="user-avatar" src="${post.user_pfp}" alt="User avatar" />
+                <div class="post-header-text">
+                    <h3>${escapeHtml(post.username)}</h3>
+                    <span class="post-tag">${escapeHtml(post.tags || 'General')}</span>
+                </div>
+                <div class="more-options-wrapper">
+                    <button class="more-options" aria-label="More options">...</button>
+                    <ul class="options-menu">
+                        <li><button class="remove-post">Delete</button></li>
+                        <li><button class="report-post">Report</button></li>
+                    </ul>
+                </div>
+            </header>
+            <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
+            ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ''}
+            <p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
+                Posted on ${postDate}
+            </p>
+            <footer>
+                <button class="like-button" aria-label="Like post">
+                    <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                </button>
+                <button class="comment-button" aria-label="Comment on post">
+                    <i class="far fa-comment-dots"></i>
+                </button>
+            </footer>
+            <div class="comment-section">
+                <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
+                <button class="submit-comment">
+                    <i class="far fa-paper-plane"></i> Comment
+                </button>
+                <div class="comments-list"></div>
+            </div>
+        `;
+        
+        container.appendChild(postElement);
     });
+    
+    // Set up interactions for the new posts
+    setupPostInteractions();
+}
 
-    // Remove post
-    postContainer.querySelector(".remove-post").addEventListener("click", () => {
-        postContainer.remove();
-    });
+// Helper function to escape HTML (prevent XSS)
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-    // Report post
-    postContainer.querySelector(".report-post").addEventListener("click", () => {
-        alert("🚩 This post has been reported.");
-    });
-
-    // Options menu dropdown
-    const moreOptionsBtn = postContainer.querySelector(".more-options");
-    const optionsMenu = postContainer.querySelector(".options-menu");
-
-    moreOptionsBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        optionsMenu.style.display =
-            optionsMenu.style.display === "block" ? "none" : "block";
-    });
-
-    // Close menus when clicking elsewhere
-    document.addEventListener("click", () => {
-        const allMenus = document.querySelectorAll(".options-menu");
-        allMenus.forEach(menu => {
-            menu.style.display = "none";
+// Function to set up post interactions (likes, comments, etc.)
+function setupPostInteractions() {
+    // Like button functionality
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const likeCount = this.querySelector('.like-count');
+            const isLiked = this.classList.contains('liked');
+            
+            this.classList.toggle('liked');
+            likeCount.textContent = isLiked ? 
+                parseInt(likeCount.textContent) - 1 : 
+                parseInt(likeCount.textContent) + 1;
+            
+            // Update icon
+            const icon = this.querySelector('i');
+            icon.className = isLiked ? 
+                'far fa-thumbs-up' : 
+                'fas fa-thumbs-up';
         });
     });
-
-    // Finally, append the new post to the main feed
-    const mainFeed = document.querySelector(".main-feed");
-    if (mainFeed) {
-        mainFeed.appendChild(postContainer);
-    } else {
-        console.error("Main feed not found in the DOM");
-    }
-}
-
-// Display selected file name in the post form
-const imageUpload = document.getElementById("image-upload");
-if (imageUpload) {
-    imageUpload.addEventListener("change", function() {
-        const fileNameDisplay = document.getElementById("selected-file-name");
-        if (fileNameDisplay) {
-            if (this.files && this.files[0]) {
-                fileNameDisplay.textContent = this.files[0].name;
-            } else {
-                fileNameDisplay.textContent = "";
-            }
-        }
+    
+    // Comment button functionality
+    document.querySelectorAll('.comment-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentSection = post.querySelector('.comment-section');
+            commentSection.style.display = 
+                commentSection.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Submit comment functionality
+    document.querySelectorAll('.submit-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentInput = post.querySelector('.comment-input');
+            const commentsList = post.querySelector('.comments-list');
+            
+            const commentText = commentInput.value.trim();
+            if (!commentText) return;
+            
+            // Create comment element
+            const comment = document.createElement('div');
+            comment.className = 'comment-entry';
+            
+            // Get user info (or use placeholder)
+            const userPfp = currentUser?.pfp || 'https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png';
+            const userName = currentUser?.username || currentUser?.full_name || 'username_';
+            
+            comment.innerHTML = `
+                <img src="${userPfp}" alt="Commenter avatar" class="comment-avatar" />
+                <div class="comment-body">
+                    <strong>${userName}</strong>
+                    <span class="comment-time">${new Date().toLocaleString()}</span>
+                    <br>
+                    <span class="comment-text">${escapeHtml(commentText).replace(/\n/g, '<br>')}</span>
+                    <div class="comment-actions">
+                        <button class="edit-comment">Edit</button>
+                        <button class="delete-comment">Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add edit/delete listeners
+            comment.querySelector('.edit-comment').addEventListener('click', function() {
+                const textSpan = comment.querySelector('.comment-text');
+                const newText = prompt('Edit your comment:', textSpan.textContent);
+                if (newText !== null) {
+                    textSpan.innerHTML = escapeHtml(newText).replace(/\n/g, '<br>');
+                }
+            });
+            
+            comment.querySelector('.delete-comment').addEventListener('click', function() {
+                comment.remove();
+            });
+            
+            commentsList.appendChild(comment);
+            commentInput.value = '';
+        });
+    });
+    
+    // More options functionality
+    document.querySelectorAll('.more-options').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Close menus when clicking elsewhere
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    });
+    
+    // Remove post
+    document.querySelectorAll('.remove-post').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            post.remove();
+        });
+    });
+    
+    // Report post
+    document.querySelectorAll('.report-post').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('🚩 This post has been reported.');
+        });
     });
 }
+
+// Initialize everything when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Global variable for user data
+    window.currentUser = null;
+    
+    // Fetch user profile
+    fetch('/profile', { credentials: 'include' })
+        .then(res => {
+            if (!res.ok) throw new Error('Not logged in');
+            return res.json();
+        })
+        .then(user => {
+            // Store user data globally
+            window.currentUser = user;
+            
+            // Update navbar profile if it exists
+            const profileDiv = document.querySelector('.profile');
+            if (profileDiv) {
+                profileDiv.innerHTML = `
+                    <img src="/${user.pfp}" alt="Profile Picture" class="navbar-pfp profile" />
+                `;
+            }
+            
+            // Update form username and avatar
+            const formUserAvatar = document.querySelector('.form-header .user-avatar');
+            const usernameInput = document.querySelector('.form-header .username-input');
+            
+            if (formUserAvatar) {
+                formUserAvatar.src = `/${user.pfp}`;
+            }
+            
+            if (usernameInput) {
+                usernameInput.value = user.username || user.full_name;
+            }
+        })
+        .catch(err => {
+            console.warn('Could not load profile:', err);
+        });
+    
+    // Load posts and set up form
+    loadPosts();
+    setupPostForm();
+});
     </script>
 </body>
 
