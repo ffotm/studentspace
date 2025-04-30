@@ -69,7 +69,6 @@ passport.deserializeUser(async(id, done) => {
     }
 });
 
-
 // Auth middleware
 const isAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) return next();
