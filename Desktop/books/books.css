@@ -1,0 +1,542 @@
+body{
+    background-color: #010512;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding:20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*title + sell and filter buttons */
+.lign{
+    display:flex;
+    flex-direction:row;
+    gap:500px;
+    margin-top:20px;
+    justify-content: flex-end;
+    margin-left:-40px;
+    margin-top: 180px;
+    position:relative;
+}
+.button-container{
+    margin-top:20px;
+}
+#books{
+    font-family:"Nunito sans",sans-serif;
+    width:259px;
+    height:48px;
+    color:#FFFFFF;
+    text-decoration: underline;
+    text-underline-offset: 6px; 
+    display: flex;
+    align-items: flex-start;
+    top:326px;
+    left:78px;
+}
+#sellbut{
+    width: 121px;
+    height:48px;
+    background-color:white;
+    color:black;
+    border-radius: 12px;
+    top:330px;
+    left:1124px;
+    font-size:20px;
+    cursor:pointer;
+    font-family:"Nunito sans",sans-serif;
+    box-shadow:0px 0px;
+    border:0px;
+    font-weight: bold;
+
+}
+#filter{
+    width:121px;
+    height:48px;
+    background-color: black;
+    color:white;
+    border-radius:12px;
+    top:334px;
+    left:1287px;
+    font-size:20px;
+    cursor:pointer;
+    font-family:"Nunito sans",sans-serif;
+    background-color:#010512;
+    box-shadow:0px 0px;
+    border:0px;
+    font-weight: bold;
+
+}
+/*end lign */
+/*book cards*/
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 40px; 
+    padding:40px;
+    align-content: flex-start;
+}
+.flip-card {
+    width: 180px;
+    height: 240px;
+    perspective: 1000px;
+    margin: 20px; 
+    position: relative;
+    z-index: 1; 
+}
+.flip-card-inner {
+    width: 180px;
+    height: 240px;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+    z-index: 999;
+}
+
+.flip-card-front,
+.flip-card-back {
+    width: 180px;
+    height: 240px;
+    position: absolute;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    z-index: 999;
+}
+.flip-card-front {
+    background-color: #f8f8f8;
+    z-index: 999;
+}
+.flip-card-front img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 5px;
+    z-index: 999;
+}
+.flip-card-front h3 {
+    margin-top: 5px;
+    color: #444;
+    z-index: 999;
+}
+.flip-card-back {
+    background-color: #0f0d24;
+    color: white;
+    transform: rotateY(180deg);
+    z-index: 999;
+}
+
+.flip-card-back p {
+    margin: 5px 0;
+    font-size: 14px;
+    z-index: 999;
+}
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+    z-index:1000;
+}
+.flip-card:hover {
+  transform: scale(1.45);
+  z-index: 1000;
+}
+
+.new-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 40px; 
+  }
+  /*end book cards */
+  /*the filter and sell pop ups*/
+.button-container{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap:20px;
+  margin-right:20px;
+}
+input{
+  border-radius:8px;
+  height:30px;
+  width:170px;
+  border:#5A5A5A;
+  background-color:#BCCCDC;
+  font-family:"Nunito sans",sans-serif;
+}
+
+#category{
+  border-radius:8px;
+  height:30px;
+  width:170px;
+  border:#5A5A5A;
+  background-color:#BCCCDC;
+  font-family:"Nunito sans",sans-serif;
+  margin-bottom: 15px;
+  color:gray;
+}
+.upload-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+.upload-button:hover{
+    background-color: #BCCCDC;
+}  
+
+.sellpop{
+    width:300px;
+    height:350px;
+    opacity:0;
+    border-radius:15px;
+    background-color:#EEEEEE;
+    position:absolute;
+    top:90px;
+    left:490px;
+    display:flex;
+    transition:opacity 0.3s ease;
+    align-items:center;
+    justify-content: center;
+    z-index:10;
+    margin-right:500px;
+    pointer-events:none;
+    margin-top: 40px;
+}
+.sellpop.open{
+    opacity:1;
+    z-index:999;
+    pointer-events:auto;
+}
+.sellpop-inner{
+    background-color: #EEEEEE;
+    border-radius: 13px;
+    text-align:center;
+    padding:15px 25px;
+    width:380px;
+}
+button{
+    border-radius: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) ;
+    cursor:pointer;
+    padding:10px 25px;
+}
+button:active{
+    background-color: #5A5A5A;
+}
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3); 
+  z-index: 998;
+  display: none;
+}
+#overlay.active {
+  display: block;
+}
+/*filter*/
+#filterpop{
+    width:500px;
+    height:350px;
+    opacity:0;
+    border-radius:15px;
+    background-color:#EEEEEE;
+    position:absolute;
+    top:90px;
+    left:430px;
+    display:flex;
+    transition:opacity 0.3s ease;
+    align-items:flex-start;
+    justify-content: flex-start;
+    z-index:10;
+    margin-right:500px;
+    pointer-events:none;
+    margin-top: 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+#filterpop.open{
+  opacity:1;
+  z-index:999;
+  pointer-events:auto;
+}
+.filter-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+ margin-top:30px;
+ pointer-events: auto;
+}
+.filter-inner label {
+  display: flex;
+  margin-bottom: 15px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 18px;
+  color: #333;
+  
+}
+
+.filter-inner input[type="checkbox"] {
+  accent-color: black;
+  transform: scale(1.1);
+  margin-right: 10px;
+  border-radius: 180px;
+  cursor: pointer;
+}
+.filter-inner input[type="checkbox"]:checked{
+  background-color: #481E14;
+}
+.filter-content{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+}
+.buttoncontainerfilter{
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  gap: 100px;
+  margin-left:60px;
+  margin-top: 60px;
+}
+.buttoncontainerfilter button{
+  width:100px;
+  height:50px;
+  padding: 10px 0;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #EEEEEE;
+  color: black;
+  transition: background-color 0.3s ease;
+}
+.buttoncontainerfilter button:hover{
+  background-color: #5A5A5A;
+}
+.buttoncontainerfilter button:active{
+  background-color: #5A5A5A;
+}
+
+/*end */
+/*HEADER */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #000511;
+  width: 95%;
+  font-family: "Poppins",sans-serif;
+  text-decoration: none;
+}
+
+.branding {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 89px;
+  height: 89px;
+}
+
+.site-title {
+  font-size: 36px;
+  color: #fea303;
+  font-weight: 600;
+}
+
+.main-nav {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  color: #fea303;
+  font-weight: 800;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 18px;
+  transition: background-color 0.2s ease;
+}
+
+.main-nav a.active {
+  background-color: #fea303;
+  color: #000511;
+}
+
+.main-nav a:hover {
+  background-color: #fea30333;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search {
+  width: 40px;
+  height: 40px;
+}
+
+.notification {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notification i {
+  color: #fea303;
+  font-size: 1.7rem;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  margin-right:20px;
+}
+/*end header */
+
+ /* Footer */
+ footer {
+  background-color: #DC9F3DDC;
+  color: black;
+  padding: 60px 5% 30px;
+  border-radius: 100px;
+  font-family: 'Noto Sans', serif;
+  margin-top:300px;
+  width: 92%;
+  }
+  
+  .footer-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin-bottom: 50px;
+  }
+  
+  .footer-logo {
+  font-family: 'Noto Sans', serif;
+  font-size: 18px;
+  margin-bottom: 15px;
+  background: linear-gradient(45deg, #ff7eb3, #f26ba3, #ef476f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: black;
+  }
+  
+  .footer-about {
+  max-width: 300px;
+  }
+  
+  .social-links {
+  display: flex;
+  gap: 15px;
+  }
+  
+  .social-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #DC9F3DDC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .social-icon:hover {
+  background-color:#FF9D23;
+  transform: translateY(-3px);
+  }
+  
+  .footer-title {
+  font-size: 18px;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+  }
+  
+  .footer-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: black;
+  }
+  
+  .footer-links {
+  list-style: none;
+  }
+  
+  .footer-links li {
+  margin-bottom: 10px;
+  }
+  
+  .footer-links a {
+  color:black;
+  text-decoration: none;
+  transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+  color: #481E14;
+  }
+  
+  .contact-info {
+  color: black;
+  }
+  
+  .contact-info p {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  }
+  
+  .contact-info svg {
+  margin-right: 10px;
+  min-width: 20px;
+  }
+  
+  .footer-bottom {
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  text-align: center;
+  color: black;
+  font-size: 14px;
+  }
+  /*end footer*/
