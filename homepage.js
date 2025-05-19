@@ -104,6 +104,11 @@ export default function(app, db, isAuthenticated, __dirname) {
         }
     });
 
+    // Example in server.js or routes.js
+    app.get('/api/announcements', async(req, res) => {
+        const result = await db.query('SELECT title, content FROM announcements ORDER BY id DESC');
+        res.json(result.rows);
+    });
 
     app.get("/debug/uploads", (req, res) => {
         const uploadsPath = path.join(process.cwd(), "uploads");
