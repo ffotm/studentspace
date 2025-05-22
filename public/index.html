@@ -1444,18 +1444,17 @@
                     </ul>
                 </div>
             </header>
-            <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
-            ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ''}
+           <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
+            ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" />` : ''}
             
- 
-<p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
-                Posted on ${postDate}
-            </p>
+            <p class="timestamp">Posted on ${postDate}</p>
             <footer>
-                <button class="like-button" aria-label="Like post">
-                    <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                <button class="like-button ${post.user_liked ? 'liked' : ''}" 
+                        data-post-id="${post.id}">
+                    <i class="${post.user_liked ? 'fas' : 'far'} fa-thumbs-up"></i>
+                    <span class="like-count">${post.likes || 0}</span>
                 </button>
-                <button class="comment-button" aria-label="Comment on post">
+                <button class="comment-button">
                     <i class="far fa-comment-dots"></i>
                 </button>
             </footer>
@@ -1490,20 +1489,38 @@ function escapeHtml(unsafe) {
 function setupPostInteractions() {
     // Like button functionality
     document.querySelectorAll('.like-button').forEach(button => {
-        button.addEventListener('click', function() {
-            const likeCount = this.querySelector('.like-count');
+        button.addEventListener('click', async function() {
+            const postId = this.dataset.postId;
             const isLiked = this.classList.contains('liked');
+            const likeCountEl = this.querySelector('.like-count');
             
-            this.classList.toggle('liked');
-            likeCount.textContent = isLiked ? 
-                parseInt(likeCount.textContent) - 1 : 
-                parseInt(likeCount.textContent) + 1;
-            
-            // Update icon
-            const icon = this.querySelector('i');
-            icon.className = isLiked ? 
-                'far fa-thumbs-up' : 
-                'fas fa-thumbs-up';
+            try {
+                const response = await fetch('/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'toggle_like',
+                        post_id: postId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update UI
+                    likeCountEl.textContent = data.likes;
+                    this.classList.toggle('liked', data.liked);
+                    
+                    // Update icon
+                    const icon = this.querySelector('i');
+                    icon.className = data.liked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up';
+                }
+            } catch (err) {
+                console.error('Error updating like:', err);
+            }
         });
     });
     
