@@ -671,7 +671,11 @@
                     .then(data => {
                         if (data.success) {
                             // Redirect to homepage
-                            window.location.href = "/homepage";
+                            if (data.role === "admin") {
+                                window.location.href = "/admin/dashboard";
+                            } else {
+                                window.location.href = "/homepage";
+                            }
                         } else {
                             alert(data.message || "Login failed");
                         }

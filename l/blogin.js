@@ -15,7 +15,8 @@ export default function(app, db, passport, bcrypt, saltRounds, __dirname) {
 
             req.logIn(user, err => {
                 if (err) return next(err);
-                res.json({ success: true, message: "Logged in" });
+                res.json({ success: true, message: "Logged in", role: user.role });
+
             });
         })(req, res, next);
     });
