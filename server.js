@@ -81,11 +81,12 @@ const isAuthenticated = (req, res, next) => {
 // Import routes
 import loginRoutes from "./l/blogin.js";
 import homepageRoutes from "./homepage.js";
+import lostnfound from "./lostnfound.js";
 
 // Apply login and homepage routes
 loginRoutes(app, db, passport, bcrypt, saltRounds, __dirname);
 homepageRoutes(app, db, isAuthenticated, __dirname);
-
+lostnfound(app, db, isAuthenticated, __dirname);
 // Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
