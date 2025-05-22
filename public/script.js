@@ -69,6 +69,16 @@ function createPost(postText, imageURL, topic) {
     </div>
   `;
 
+ /*${post.tags === 'lost&found' || post.lostfound_type ? `
+        <div class="lost-found-info" style="background: #fef6e4; padding: 10px; margin-top: 10px; border-left: 4px solid #ffa500; border-radius: 5px;">
+            <h4 style="margin-bottom: 5px;">🔍 Lost & Found Details</h4>
+            ${post.lostfound_type ? `<p><strong>Type:</strong> ${escapeHtml(post.lostfound_type)}</p>` : ''}
+            ${post.location ? `<p><strong>Location:</strong> ${escapeHtml(post.location)}</p>` : ''}
+            ${post.contact ? `<p><strong>Contact:</strong> ${escapeHtml(post.contact)}</p>` : ''}
+            ${post.lostfound_description ? `<p><strong>Description:</strong> ${escapeHtml(post.lostfound_description)}</p>` : ''}
+        </div>
+    ` : ''}*/
+
   // Like logic
   const likeButton = postContainer.querySelector(".like-button");
   const likeCount = postContainer.querySelector(".like-count");

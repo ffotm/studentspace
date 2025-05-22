@@ -22,13 +22,88 @@
         margin: 0;
         color: #fff;
     }
+    /* Modal backdrop */
     
-    .frame {
-        background-color: #000511;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+    #lostFoundModalBackdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Dimmed background */
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+    /* Modal container */
+    
+    #lostFoundModal {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    /* Smooth fade-in */
+    
+    @keyframes fadeIn {
+        from {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    /* Form elements */
+    
+    #lostFoundModal input,
+    #lostFoundModal textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+    
+    #lostFoundModal input:focus,
+    #lostFoundModal textarea:focus {
+        border-color: #007bff;
+    }
+    /* Submit button */
+    
+    #modalSubmit {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+    
+    #modalSubmit:hover {
+        background-color: #0056b3;
+    }
+    /* Radio labels */
+    
+    #lostFoundModal label {
+        margin-right: 10px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
     }
     
     .main-content {
@@ -766,8 +841,8 @@
                 <nav class="main-nav">
                     <ul>
                         <li><a href="#" class="active">Feed</a></li>
-                        <li><a href="#">Lost&Found</a></li>
-                        <li><a href="#" class="Books">Books Shop</a></li>
+                        <li><a href="/lostnfound">Lost&Found</a></li>
+                        <li><a href="/books" class="Books">Books Shop</a></li>
                     </ul>
                 </nav>
                 <div class="user-actions">
@@ -833,7 +908,18 @@
               </button>
                     </div>
                 </form>
-                <!-- END Post Form -->
+                <div id="lostFoundModalBackdrop">
+                    <div id="lostFoundModal">
+                        <label><input type="radio" name="type" value="lost"> Lost</label>
+                        <label><input type="radio" name="type" value="found"> Found</label>
+                        <input name="location" placeholder="Location" />
+                        <input name="contact" placeholder="Contact Info" />
+                        <textarea id="lost-found-response" placeholder="Describe the item or situation..."></textarea>
+                        <input type="file" id="lost-found-image" name="image" />
+                        <button id="modalSubmit">Submit</button>
+                    </div>
+                    <!-- END Post Form -->
+                </div>
             </section>
             <!-- END MAIN FEED -->
 
@@ -927,6 +1013,10 @@
         </div>
     </footer>
     <script>
+        // Global variables
+        let currentUser = null;
+        let lostFoundCompleted = false;
+
         async function loadPosts() {
             try {
                 const response = await fetch('/homepage', {
@@ -968,62 +1058,344 @@
             }
         }
 
-        // Function to set up post form
-        function setupPostForm() {
-            const postForm = document.querySelector('.post-form');
-            if (postForm) {
-                postForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-                    console.log("Form submitted");
+        function setupLostFoundModal() {
+            console.log('Setting up Lost & Found modal...');
 
-                    const formData = new FormData(this);
+            // Find all possible select elements for tags
+            const possibleSelectors = [
+                '#topic-select',
+                '#tag-select',
+                'select[name="tag"]',
+                'select[name="topic"]',
+                '.post-form select',
+                '.tag-select'
+            ];
 
-                    // Get the values for debugging
-                    console.log("Form data:");
-                    for (let [key, value] of formData.entries()) {
-                        console.log(`${key}: ${value}`);
-                    }
-
-                    try {
-                        const response = await fetch('/posts', {
-                            method: 'POST',
-                            body: formData,
-                            credentials: 'include'
-                        });
-
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            throw new Error(errorData.error || 'Failed to create post');
-                        }
-
-                        // Clear form
-                        document.querySelector('.post-textarea').value = '';
-                        document.getElementById('image-upload').value = '';
-                        document.getElementById('selected-file-name').textContent = '';
-
-                        // Reload posts
-                        loadPosts();
-
-                        console.log("Post created successfully!");
-                    } catch (error) {
-                        console.error('Error creating post:', error);
-                        alert('Failed to create post: ' + error.message);
-                    }
-                });
-
-                // Display selected file name
-                const imageUpload = document.getElementById('image-upload');
-                if (imageUpload) {
-                    imageUpload.addEventListener('change', function() {
-                        const fileNameDisplay = document.getElementById('selected-file-name');
-                        if (fileNameDisplay) {
-                            fileNameDisplay.textContent = this.files.length > 0 ? this.files[0].name : '';
-                        }
-                    });
+            let tagSelect = null;
+            for (let selector of possibleSelectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    tagSelect = element;
+                    console.log(`Found tag select with selector: ${selector}`);
+                    break;
                 }
+            }
+
+            if (!tagSelect) {
+                console.error('No tag select element found! Tried selectors:', possibleSelectors);
+                return;
+            }
+
+            // Set up the change event listener
+            tagSelect.addEventListener('change', function(e) {
+                console.log('Tag selection changed to:', this.value);
+
+                if (this.value === 'lost&found' || this.value === 'lost_found' || this.value === 'lostfound') {
+                    showLostFoundModal();
+                } else {
+                    hideLostFoundModal();
+                    // Only reset completion status when changing away from lost&found
+                    lostFoundCompleted = false;
+                }
+            });
+
+            // Set up modal submit button
+            setupModalSubmitButton();
+        }
+
+        function showLostFoundModal() {
+            console.log('Attempting to show Lost & Found modal...');
+
+            // First try to find the backdrop (your actual structure)
+            let modalBackdrop = document.getElementById('lostFoundModalBackdrop');
+            let modal = document.getElementById('lostFoundModal');
+
+            if (modalBackdrop && modal) {
+                console.log('Found modal with backdrop structure');
+
+                // Reset completion status
+                lostFoundCompleted = false;
+
+                // Show the backdrop first
+                modalBackdrop.style.display = 'block';
+                modalBackdrop.style.visibility = 'visible';
+                modalBackdrop.style.opacity = '1';
+
+                // Make sure backdrop covers the screen
+                modalBackdrop.style.position = 'fixed';
+                modalBackdrop.style.top = '0';
+                modalBackdrop.style.left = '0';
+                modalBackdrop.style.width = '100%';
+                modalBackdrop.style.height = '100%';
+                modalBackdrop.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modalBackdrop.style.zIndex = '1000';
+
+                // Show the modal content
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+
+                // Center the modal
+                modal.style.position = 'fixed';
+                modal.style.top = '50%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.backgroundColor = 'white';
+                modal.style.padding = '20px';
+                modal.style.borderRadius = '8px';
+                modal.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                modal.style.zIndex = '1001';
+                modal.style.maxWidth = '500px';
+                modal.style.width = '90%';
+
+                console.log('Modal should now be visible');
+                return;
+            }
+
+            // Fallback: try other possible selectors
+            const possibleModalSelectors = [
+                '#lostFoundModal',
+                '#lost-found-modal',
+                '.lost-found-modal',
+                '#lostfound-modal'
+            ];
+
+            let foundModal = null;
+            for (let selector of possibleModalSelectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    foundModal = element;
+                    console.log(`Found modal with selector: ${selector}`);
+                    break;
+                }
+            }
+
+            if (foundModal) {
+                // Reset completion status
+                lostFoundCompleted = false;
+
+                // Show the modal
+                foundModal.style.display = 'block';
+                foundModal.style.visibility = 'visible';
+                foundModal.style.opacity = '1';
+                foundModal.style.position = 'fixed';
+                foundModal.style.top = '50%';
+                foundModal.style.left = '50%';
+                foundModal.style.transform = 'translate(-50%, -50%)';
+                foundModal.style.backgroundColor = 'white';
+                foundModal.style.padding = '20px';
+                foundModal.style.borderRadius = '8px';
+                foundModal.style.zIndex = '1000';
+
+                console.log('Modal should now be visible');
+            } else {
+                console.error('Modal not found! Creating fallback modal...');
+                createFallbackModal();
             }
         }
 
+        function hideLostFoundModal() {
+            // Hide backdrop first
+            const modalBackdrop = document.getElementById('lostFoundModalBackdrop');
+            if (modalBackdrop) {
+                modalBackdrop.style.display = 'none';
+                modalBackdrop.style.visibility = 'hidden';
+                modalBackdrop.style.opacity = '0';
+            }
+
+            // Then hide the modal itself
+            const modal = document.querySelector('#lostFoundModal, #lost-found-modal, .lost-found-modal, #lostfound-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                modal.style.opacity = '0';
+            }
+
+            // DON'T reset completion status when hiding after successful completion
+            // Only reset when canceling or changing tags
+        }
+
+        function createFallbackModal() {
+            console.log('Creating fallback modal...');
+
+            const modal = document.createElement('div');
+            modal.id = 'lostFoundModal';
+            modal.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 20px; border-radius: 8px; max-width: 500px; width: 90%;">
+                <h3>Lost & Found Information</h3>
+                <div style="margin: 10px 0;">
+                    <label><input type="radio" name="type" value="lost"> Lost Item</label><br>
+                    <label><input type="radio" name="type" value="found"> Found Item</label>
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Location:</label><br>
+                    <input type="text" name="location" style="width: 100%; padding: 5px;" placeholder="Where was it lost/found?">
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Contact Information:</label><br>
+                    <input type="text" name="contact" style="width: 100%; padding: 5px;" placeholder="Email or phone number">
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Description:</label><br>
+                    <textarea id="lost-found-response" style="width: 100%; padding: 5px; height: 80px;" placeholder="Describe the item..."></textarea>
+                </div>
+                <div style="text-align: right; margin-top: 15px;">
+                    <button id="modalCancel" style="margin-right: 10px; padding: 8px 16px;">Cancel</button>
+                    <button id="modalSubmit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px;">Submit</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+            document.body.appendChild(modal);
+
+            // Set up the submit button for the fallback modal
+            setupModalSubmitButton();
+
+            // Set up cancel button
+            document.getElementById('modalCancel').addEventListener('click', function() {
+                hideLostFoundModal();
+                // Reset the tag select to default
+                const tagSelect = document.querySelector('#topic-select, select[name="tag"], .post-form select');
+                if (tagSelect) {
+                    tagSelect.selectedIndex = 0;
+                }
+            });
+
+            // Show the modal
+            modal.style.display = 'block';
+        }
+
+        function setupModalSubmitButton() {
+            const modalSubmit = document.getElementById('modalSubmit');
+            if (modalSubmit) {
+                modalSubmit.addEventListener('click', function() {
+                    console.log('Modal submit clicked');
+                    const type = document.querySelector('input[name="type"]:checked');
+                    const location = document.querySelector('input[name="location"]');
+                    const contact = document.querySelector('input[name="contact"]');
+                    const description = document.getElementById('lost-found-response');
+                    const imageInput = document.getElementById("lost-found-image");
+
+                    if (!type || !location || !location.value.trim() || !contact || !contact.value.trim() || !description || !description.value.trim()) {
+                        alert('Please fill out all Lost & Found fields.');
+                        return;
+                    }
+
+                    // Format the content for the main post
+                    const formatted = `🔍 ${type.value === 'lost' ? 'Lost Item' : 'Found Item'}\n📍 Location: ${location.value}\n📞 Contact: ${contact.value}\n📝 Description: ${description.value}`;
+
+                    // Get the main textarea and set its value
+                    const mainTextarea = document.querySelector('.post-textarea');
+                    if (mainTextarea) {
+                        mainTextarea.value = formatted;
+                    }
+
+                    // Store the data for form submission
+                    window.lostFoundData = {
+                        type: type.value,
+                        location: location.value,
+                        contact: contact.value,
+                        description: description.value,
+                        imageFile: imageInput.files.length > 0 ? imageInput.files[0] : null
+                    };
+
+                    // Mark as completed and hide modal
+                    lostFoundCompleted = true;
+                    hideLostFoundModal();
+
+                    // Focus the main textarea so user can edit or post
+                    if (mainTextarea) {
+                        mainTextarea.focus();
+                    }
+                });
+            }
+        }
+
+        function setupPostForm() {
+            const postForm = document.querySelector('.post-form');
+            if (!postForm) return;
+
+            postForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const tagSelect = this.querySelector('select[name="tags"]');
+                const selectedTag = tagSelect ? tagSelect.value : null;
+
+                // Check if lost&found is selected but not completed
+                if ((selectedTag === 'lost&found') && !lostFoundCompleted) {
+                    alert('Please complete the Lost & Found information before submitting.');
+                    showLostFoundModal();
+                    return;
+                }
+
+                // Add lost & found data to form if completed
+                if (lostFoundCompleted && window.lostFoundData) {
+                    formData.append('lostfound_type', window.lostFoundData.type);
+                    formData.append('location', window.lostFoundData.location);
+                    formData.append('contact', window.lostFoundData.contact);
+                    formData.append('lost_found_response', window.lostFoundData.description);
+
+                    // Add the image file if one was selected in the modal
+                    if (window.lostFoundData.imageFile) {
+                        formData.append('image', window.lostFoundData.imageFile);
+                    }
+                }
+
+                try {
+                    const response = await fetch('/posts', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to create post');
+                    }
+
+                    // Clear form and reset state
+                    clearForm();
+                    lostFoundCompleted = false;
+                    window.lostFoundData = null;
+                    await loadPosts();
+
+                } catch (error) {
+                    console.error('Error creating post:', error);
+                    alert('Failed to create post: ' + error.message);
+                }
+            });
+        }
+        // Helper function to clear form
+        function clearForm() {
+            // Clear main form
+            const postTextarea = document.querySelector('.post-textarea');
+            const imageUpload = document.getElementById('image-upload');
+            const fileNameDisplay = document.getElementById('selected-file-name');
+            const tagSelect = document.querySelector('#topic-select');
+
+            if (postTextarea) postTextarea.value = '';
+            if (imageUpload) imageUpload.value = '';
+            if (fileNameDisplay) fileNameDisplay.textContent = '';
+            if (tagSelect) tagSelect.selectedIndex = 0;
+
+            // Clear modal fields
+            const typeInputs = document.querySelectorAll('input[name="type"]');
+            typeInputs.forEach(input => input.checked = false);
+
+            const locationInput = document.querySelector('input[name="location"]');
+            if (locationInput) locationInput.value = '';
+
+            const contactInput = document.querySelector('input[name="contact"]');
+            if (contactInput) contactInput.value = '';
+
+            const descriptionInput = document.getElementById('lost-found-response');
+            if (descriptionInput) descriptionInput.value = '';
+
+            const lostFoundImageInput = document.getElementById('lost-found-image');
+            if (lostFoundImageInput) lostFoundImageInput.value = '';
+        }
         // Function to render posts
         function renderPosts(posts) {
             if (!posts || !Array.isArray(posts)) {
@@ -1036,10 +1408,6 @@
                 console.error("Main feed container not found");
                 return;
             }
-
-            // Keep the form and title at the top
-            const postForm = container.querySelector('.post-form');
-            const ctaText = container.querySelector('.cta-text');
 
             // Clear existing posts but keep form and title
             const existingPosts = container.querySelectorAll('.post');
@@ -1078,7 +1446,9 @@
             </header>
             <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
             ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ''}
-            <p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
+            
+ 
+<p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
                 Posted on ${postDate}
             </p>
             <footer>
@@ -1162,8 +1532,8 @@ function setupPostInteractions() {
             comment.className = 'comment-entry';
             
             // Get user info (or use placeholder)
-            const userPfp = currentUser?.pfp || 'https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png';
-            const userName = currentUser?.username || currentUser?.full_name || 'username_';
+            const userPfp = currentUser && currentUser.pfp ? currentUser.pfp : 'https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png';
+            const userName = currentUser && currentUser.username ? currentUser.username : (currentUser && currentUser.full_name ? currentUser.full_name : 'username_');
             
             comment.innerHTML = `
                 <img src="${userPfp}" alt="Commenter avatar" class="comment-avatar" />
@@ -1231,8 +1601,7 @@ function setupPostInteractions() {
 
 // Initialize everything when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Global variable for user data
-    window.currentUser = null;
+    console.log('DOM loaded, initializing...');
     
     // Fetch user profile
     fetch('/profile', { credentials: 'include' })
@@ -1242,7 +1611,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(user => {
             // Store user data globally
-            window.currentUser = user;
+            currentUser = user;
             
             // Update navbar profile if it exists
             const profileDiv = document.querySelector('.profile');
@@ -1271,30 +1640,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load posts and set up form
     loadPosts();
     setupPostForm();
-});
-  fetch('/api/announcements')
+    setupLostFoundModal();
+    
+    // Load announcements
+    fetch('/api/announcements')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('announcement-list');
-            data.forEach(announcement => {
-                const div = document.createElement('div');
-                div.className = 'announcement';
+            if (container) {
+                data.forEach(announcement => {
+                    const div = document.createElement('div');
+                    div.className = 'announcement';
 
-                const title = document.createElement('h3');
-                title.textContent = announcement.title;
+                    const title = document.createElement('h3');
+                    title.textContent = announcement.title;
 
-                const content = document.createElement('p');
-                content.textContent = announcement.content;
+                    const content = document.createElement('p');
+                    content.textContent = announcement.content;
 
-                div.appendChild(title);
-                div.appendChild(content);
+                    div.appendChild(title);
+                    div.appendChild(content);
 
-                container.appendChild(div);
-            });
+                    container.appendChild(div);
+                });
+            }
         })
         .catch(error => {
             console.error('Error fetching announcements:', error);
         });
+    
+    // Expose functions globally for debugging
+    window.showLostFoundModal = showLostFoundModal;
+    window.hideLostFoundModal = hideLostFoundModal;
+    window.lostFoundCompleted = () => lostFoundCompleted;
+});
     </script>
 </body>
 
