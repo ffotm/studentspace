@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lost&Found</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.1">
+    <meta name="description" content="Displays Items that were Found or Lost">
+    <link rel="stylesheet" href="lostfound.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+</head>
+<style>
+    body {
+        background-color: #010512;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .lign {
+        display: flex;
+        flex-direction: row;
+        gap: 500px;
+        margin-top: 20px;
+        justify-content: flex-end;
+        margin-left: -40px;
+        margin-top: 180px;
+        position: relative;
+        width: 100%;
+    }
+    
+    .button-container {
+        margin-top: 20px;
+    }
+    
+    #lostobject {
+        font-family: "Nunito sans", sans-serif;
+        color: #FFFFFF;
+        text-underline-offset: 6px;
+        display: flex;
+        align-items: flex-start;
+        opacity: 0;
+        transform: translateX(-100px);
+        animation: slideRight 1s ease-out forwards;
+    }
+    
+    @keyframes slideRight {
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    #sellbut {
+        width: 121px;
+        height: 48px;
+        background-color: white;
+        color: black;
+        border-radius: 12px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: "Nunito sans", sans-serif;
+        box-shadow: 0px 0px;
+        border: 0px;
+        font-weight: bold;
+        margin-right: 160px;
+    }
+    
+    #filter {
+        width: 121px;
+        height: 48px;
+        background-color: black;
+        color: white;
+        border-radius: 12px;
+        top: 334px;
+        left: 1287px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: "Nunito sans", sans-serif;
+        background-color: #010512;
+        box-shadow: 0px 0px;
+        border: 0px;
+        font-weight: bold;
+    }
+    
+    .books-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 40px;
+        padding: 40px;
+        align-content: flex-start;
+    }
+    
+    .flip-card {
+        width: 180px;
+        height: 240px;
+        perspective: 1000px;
+        margin: 20px;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .flip-card-inner {
+        width: 180px;
+        height: 240px;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+    
+    .flip-card-front,
+    .flip-card-back {
+        width: 180px;
+        height: 240px;
+        position: absolute;
+        backface-visibility: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .flip-card-front {
+        background-color: #f8f8f8;
+    }
+    
+    .flip-card-front img {
+        width: 100%;
+        height: 90%;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+    
+    .flip-card-front h3 {
+        margin-top: 5px;
+        color: #444;
+    }
+    
+    .flip-card-back {
+        background-color: #0f0d24;
+        color: white;
+        transform: rotateY(180deg);
+    }
+    
+    .flip-card-back p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+        z-index: 1000;
+    }
+    
+    .flip-card:hover {
+        transform: scale(1.45);
+        z-index: 1000;
+    }
+    
+    .new-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+    
+    button {
+        border-radius: 20px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        padding: 10px 25px;
+    }
+    
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+        background-color: #000511;
+        width: 95%;
+        font-family: "Poppins", sans-serif;
+        text-decoration: none;
+    }
+    
+    .branding {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .logo {
+        width: 89px;
+        height: 89px;
+    }
+    
+    .site-title {
+        font-size: 36px;
+        color: #fea303;
+        font-weight: 600;
+    }
+    
+    .main-nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .main-nav ul {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .main-nav a {
+        color: #fea303;
+        font-weight: 800;
+        font-size: 18px;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 18px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .main-nav a.active {
+        background-color: #fea303;
+        color: #000511;
+    }
+    
+    .main-nav a:hover {
+        background-color: #fea30333;
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .search {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .notification {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .notification i {
+        color: #fea303;
+        font-size: 1.7rem;
+    }
+    
+    .profile {
+        width: 40px;
+        height: 40px;
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: flex;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .overlay.active {
+        display: flex;
+    }
+    
+    .post {
+        background-color: #A5A4A4FC;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        width: 353px;
+        height: 465px;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 1001;
+    }
+    
+    .form {
+        margin-left: 30px;
+    }
+    
+    label {
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 26px;
+        color: black;
+    }
+    
+    input {
+        border-radius: 28px;
+        background-color: white;
+        width: 282px;
+        height: 51px;
+        border-color: #444;
+        border: 20px;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 18px;
+        color: black;
+        padding-left: 15px;
+    }
+    
+    .upload-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        color: black;
+        font-size: 2rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .upload-button:hover {
+        background-color: #fea303;
+    }
+    
+    .button-container {
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        gap: 15px;
+    }
+    
+    .buttons {
+        border-radius: 13px;
+        width: 131px;
+        height: 44px;
+        font-family: "Nunito sans", sans-serif;
+        color: black;
+        border: 1px;
+        cursor: pointer;
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        transition: transform 0.3s ease;
+        z-index: 1;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .buttons::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #D49D3D;
+        position: absolute;
+        top: -100%;
+        left: 0;
+        z-index: -1;
+        transition: top 0.3s ease;
+    }
+    
+    .buttons:hover {
+        transform: scale(1.25);
+    }
+    
+    .buttons:hover::before {
+        top: 0;
+        /
+    }
+    
+    #publier {
+        background-color: #D49D3D;
+    }
+    
+    #cancel {
+        background-color: white;
+    }
+    /* Footer */
+    
+    footer {
+        background-color: #DC9F3DDC;
+        color: black;
+        padding: 60px 5% 30px;
+        border-radius: 100px;
+        font-family: 'Noto Sans', serif;
+        margin-top: 300px;
+        width: 92%;
+    }
+    
+    .footer-top {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 50px;
+    }
+    
+    .footer-logo {
+        font-family: 'Noto Sans', serif;
+        font-size: 18px;
+        margin-bottom: 15px;
+        background: linear-gradient(45deg, #ff7eb3, #f26ba3, #ef476f);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: black;
+    }
+    
+    .footer-about {
+        max-width: 300px;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #DC9F3DDC;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .social-icon:hover {
+        background-color: #FF9D23;
+        transform: translateY(-3px);
+    }
+    
+    .footer-title {
+        font-size: 18px;
+        margin-bottom: 20px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: black;
+    }
+    
+    .footer-links {
+        list-style: none;
+    }
+    
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+    
+    .footer-links a {
+        color: black;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+        color: #481E14;
+    }
+    
+    .contact-info {
+        color: black;
+    }
+    
+    .contact-info p {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .contact-info svg {
+        margin-right: 10px;
+        min-width: 20px;
+    }
+    
+    .footer-bottom {
+        border-top: 1px solid #444;
+        padding-top: 20px;
+        text-align: center;
+        color: black;
+        font-size: 14px;
+    }
+</style>
+
+<body>
+    <!--HEADER -->
+    <header>
+        <div class="branding">
+            <img class="logo" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/1742586172225-1.png" alt="UniHive Logo" />
+            <h1 class="site-title">UniHive</h1>
+        </div>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#">Feed</a></li>
+                <li><a href="#" class="active">Lost&Found</a></li>
+                <li><a href="#">BooksShop</a></li>
+            </ul>
+        </nav>
+
+        <div class="user-actions">
+            <img class="search" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-8.png" alt="Search" />
+            <button class="notification" aria-label="Notifications">
+            <i class="fas fa-bell"></i>
+          </button>
+            <div class="profile" aria-label="User profile"></div>
+        </div>
+    </header>
+    <!--END HEADER-->
+    <div class="lign">
+        <h1 id="lostobject">Find your lost Objects</h1>
+        <div class="buttons-container">
+            <!--SELL BUTTON-->
+            <button class="buttons" id="sellbut">Post</button>
+            <!--END SELL BUTTON-->
+        </div>
+    </div>
+    <div class="books-container">
+        <div class="overlay" id="popup">
+            <div class="post" id="post">
+                <form class="form" id="form">
+                    <label id="object">Object:</label>
+                    <br>
+                    <input id="inobject" type="text" required>
+                    <label id="email">Email:</label>
+                    <br>
+                    <input id="inemail" type="email" required>
+                    <label id="place">Place:</label>
+                    <br>
+                    <input id="inplace" type="text" required>
+                    <br>
+                    <br>
+                    <label id="attachim">Attach image: </label>
+                    <label for="imageInput" class="upload-button">
+                            +
+                        </label>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none" />
+                    <div class="button-container">
+                        <button type="submit" class="buttons" id="publier">Post</button>
+                        <button class="buttons" id="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Book 1 -->
+
+        <div class="new-container" id="newcont">
+            <!--add nex card here-->
+        </div>
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="wallet.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>wallet</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="keys.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>keys</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="earphones.jpg" alt="Book 3">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong></p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+        <!-- Book 1 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="umbrella.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>umbrella</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book 2 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="jacket.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>jacket</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="secret.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>secret</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+        <!-- Book 2 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="computer.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong>computer</p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book 3 -->
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="necklace.jpg" alt="Object">
+                </div>
+                <div class="flip-card-back">
+                    <p><strong>Object:</strong></p>
+                    <p><strong>Name:</strong> </p>
+                    <p><strong>Place:</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="footer-about">
+                <h3 class="footer-logo">Helping students connect, share, and thrive</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Fast Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Feed</a></li>
+                    <li><a href="#">Lost&Found</a></li>
+                    <li><a href="#">Book Shop</a></li>
+                    <li><a href="#">Switch to UniVerse</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Informations</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Report a Bug</a></li>
+                    <li><a href="#">UniHiVerse@univ-blida.dz</a></li>
+                    <li><a href="#">Support:14h-18h</Hours:14h-18h></a></li>
+                    <li><a href="#">Conditions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3 class="footer-title">Contactez-nous</h3>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg> University Of Saad Dahleb
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg> By TeenTechTitans
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 UniHive. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const popup = document.getElementById("popup");
+        const sellBtn = document.getElementById("sellbut");
+        const cancelBtn = document.getElementById("cancel");
+
+        // Show popup when "Post" button is clicked
+        sellBtn.addEventListener("click", () => {
+            popup.classList.add("active");
+        });
+
+        // Hide popup when "Cancel" is clicked
+        cancelBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            popup.classList.remove("active");
+        });
+
+        //attach image 
+        let imageDataURL = "";
+
+        // When an image is selected
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageDataURL = e.target.result;
+                    console.log("Image loaded");
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        // add post
+
+        const form = document.getElementById("form");
+        const container = document.getElementById("newcont");
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const object = document.getElementById("inobject").value;
+            const email = document.getElementById("inemail").value;
+            const place = document.getElementById("inplace").value;
+
+
+            addCard(object, email, place, imageDataURL);
+
+            // Clear input fields
+            form.reset();
+            imageDataURL = "";
+        });
+
+        function addCard(itemObject, itemEmail, itemPlace, imgSrc) {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            card.innerHTML = `
+     <div class="flip-card"">
+      <div class="flip-card-inner">
+      <div class="flip-card-front">
+       ${imgSrc ? `<img src="${imgSrc}" alt="Attached Image" style="width:100%; height:80%; border-radius:5px;object-fit: cover;">` : ''}
+       </div>
+      <div class="flip-card-back">
+      <p><strong>Object:</strong> ${itemObject}</p>
+      <p><strong>Email:</strong> ${itemEmail}</p>
+      <p><strong>Place:</strong> ${itemPlace}</p>
+      </div>
+      </div>
+     </div>
+    `;
+  
+    container.prepend(card);
+  }
+    </script>
+</body>
+
+</html>
