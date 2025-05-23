@@ -88,7 +88,8 @@ import adminRoutes from "./admin.js";
 loginRoutes(app, db, passport, bcrypt, saltRounds, __dirname);
 homepageRoutes(app, db, isAuthenticated, __dirname);
 lostnfound(app, db, isAuthenticated, __dirname);
-app.use("/admin", adminRoutes);
+adminRoutes(app, db, isAuthenticated, __dirname);
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
