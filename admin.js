@@ -1,6 +1,9 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import bcrypt from "bcrypt";
+import multer from "multer";
+import fs from "fs";
 
 const __filename = fileURLToPath(
     import.meta.url);
@@ -8,6 +11,36 @@ const __dirname = path.dirname(__filename);
 
 const router = express.Router();
 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        const uploadDir = path.join(__dirname, 'uploads', 'announcements');
+        // Create directory if it doesn't exist
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        cb(null, uploadDir);
+    },
+    filename: function(req, file, cb) {
+        // Generate unique filename
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'announcement-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB limit
+    },
+    fileFilter: function(req, file, cb) {
+        // Check file type
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only image files are allowed!'), false);
+        }
+    }
+});
 export default function(app, db, isAuthenticated, __dirname) {
     const router = express.Router();
 
@@ -29,7 +62,7 @@ export default function(app, db, isAuthenticated, __dirname) {
             // Get all statistics in a single query for efficiency
             const statsQuery = `
             SELECT 
-                (SELECT COUNT(*) FROM users WHERE role = 'teacher') AS teachers,
+                (SELECT COUNT(*) FROM users WHERE role = 'professor') AS professors,
                 (SELECT COUNT(*) FROM users WHERE role = 'student') AS students,
                 (SELECT COUNT(*) FROM reports WHERE status = 'Pending') AS pending_reports
         `;
@@ -38,9 +71,9 @@ export default function(app, db, isAuthenticated, __dirname) {
             const stats = statsResult.rows[0];
 
             res.json({
-                teachers: stats.teachers,
+                professors: stats.professors,
                 students: stats.students,
-                totalUsers: parseInt(stats.teachers) + parseInt(stats.students),
+                totalUsers: parseInt(stats.professors) + parseInt(stats.students),
                 pendingReports: stats.pending_reports
             });
         } catch (err) {
@@ -180,11 +213,191 @@ export default function(app, db, isAuthenticated, __dirname) {
         }
     });
 
+    // GET endpoint - Serve the HTML page
     router.get("/admin/home", isAdmin, (req, res) => {
         res.sendFile(path.join(__dirname, "admin-pages-1", "home.html"));
     });
 
+    router.post("/admin/home", isAdmin, upload.single('image'), async(req, res) => {
+        try {
+            const { text, major, year } = req.body;
 
+            console.log('Received data:', { text, major, year, hasFile: !!req.file });
+
+            // Validate required fields
+            if (!text || text.trim() === '') {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Announcement text is required'
+                });
+            }
+
+            if (!major || major.trim() === '') {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Major is required'
+                });
+            }
+
+            if (!year || isNaN(parseInt(year))) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Valid year is required'
+                });
+            }
+
+            // Get admin info from session
+            const adminId = 1;
+            const adminName = 'Admin';
+
+            // Handle image path
+            let imageUrl = null;
+            if (req.file) {
+                imageUrl = '/uploads/home/' + req.file.filename;
+            }
+
+            // Create content that includes both text and image
+            let fullContent = text.trim();
+            if (imageUrl) {
+                fullContent = JSON.stringify({
+                    text: text.trim(),
+                    image: imageUrl
+                });
+            }
+
+            // Insert announcement into database - including major and year
+            const query = `
+            INSERT INTO announcements (title, content, posted_by, major, year, created_at, updated_at) 
+            VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
+            RETURNING *
+        `;
+
+            const result = await db.query(query, [
+                `${adminName} - ${major} Year ${year}`, // $1
+                fullContent, // $2
+                adminId, // $3
+                major.trim(), // $4
+                parseInt(year) // $5
+            ]);
+
+            console.log('Announcement created successfully:', result.rows[0]);
+
+            res.status(201).json({
+                success: true,
+                message: 'Announcement posted successfully',
+                announcement: result.rows[0]
+            });
+
+        } catch (error) {
+            console.error('Error creating announcement:', error);
+            console.error('Error stack:', error.stack);
+
+            // Clean up uploaded file if database insert failed
+            if (req.file) {
+                fs.unlink(req.file.path, (err) => {
+                    if (err) console.error('Error deleting file:', err);
+                });
+            }
+
+            res.status(500).json({
+                success: false,
+                message: 'Failed to post announcement',
+                error: error.message
+            });
+        }
+    });
+
+    // GET endpoint for retrieving announcements (API)
+    router.get("/admin/announcements", isAdmin, async(req, res) => {
+        try {
+            const query = `
+            SELECT id, title, content, posted_by, created_at, updated_at, major, year
+            FROM announcements 
+            ORDER BY created_at DESC
+        `;
+
+            const result = await db.query(query);
+
+            // Parse content field to separate text and image
+            const parsedAnnouncements = result.rows.map(announcement => {
+                let parsedContent;
+                try {
+                    parsedContent = JSON.parse(announcement.content);
+                    return {
+                        ...announcement,
+                        text: parsedContent.text || announcement.content,
+                        image: parsedContent.image || null
+                    };
+                } catch (e) {
+                    // If content is not JSON, treat as plain text
+                    return {
+                        ...announcement,
+                        text: announcement.content,
+                        image: null
+                    };
+                }
+            });
+
+            res.json({
+                success: true,
+                announcements: parsedAnnouncements
+            });
+
+        } catch (error) {
+            console.error('Error fetching announcements:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to fetch announcements',
+                error: error.message
+            });
+        }
+    });
+
+    // GET endpoint for public announcements (for students/teachers)
+    router.get("/announcements", async(req, res) => {
+        try {
+            const query = `
+            SELECT id, title, content, created_at, major, year
+            FROM announcements 
+            ORDER BY created_at DESC
+            LIMIT 20
+        `;
+
+            const result = await db.query(query);
+
+            // Parse content field to separate text and image
+            const parsedAnnouncements = result.rows.map(announcement => {
+                let parsedContent;
+                try {
+                    parsedContent = JSON.parse(announcement.content);
+                    return {
+                        ...announcement,
+                        text: parsedContent.text || announcement.content,
+                        image: parsedContent.image || null
+                    };
+                } catch (e) {
+                    // If content is not JSON, treat as plain text
+                    return {
+                        ...announcement,
+                        text: announcement.content,
+                        image: null
+                    };
+                }
+            });
+
+            res.json({
+                success: true,
+                announcements: parsedAnnouncements
+            });
+
+        } catch (error) {
+            console.error('Error fetching public announcements:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Failed to fetch announcements'
+            });
+        }
+    });
     router.get("/students", isAdmin, async(req, res) => {
         try {
             const studentsQuery = `
