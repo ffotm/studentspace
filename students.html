@@ -1,16 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="students.css"></link>
     <title>Students</title>
-    
+
 </head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Ubuntu', sans-serif;
+    }
+    
+     :root {
+        --black: #07051B;
+        --black1: #222;
+        --black2: #999;
+        --white: #fff;
+        --grey: #f5f5f5;
+    }
+    
+    body {
+        position: relative;
+        width: 100%;
+    }
+    
+    .navigation {
+        position: fixed;
+        width: 300px;
+        height: 100%;
+        background-color: var(--black);
+        border-left: 10px solid var(--black);
+        transition: 0.5s;
+        overflow: hidden;
+    }
+    
+    .navigation.active {
+        width: 80px;
+    }
+    
+    .navigation ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    .navigation ul li {
+        position: relative;
+        width: 100%;
+        list-style: none;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+    }
+    
+    .navigation ul li:hover,
+    .navigation ul li.hovered {
+        background-color: var(--white);
+    }
+    
+    .navigation ul li:nth-child(1) {
+        margin-bottom: 40px;
+        pointer-events: none;
+    }
+    
+    .navigation ul li a {
+        position: relative;
+        display: block;
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+        color: var(--white);
+    }
+    
+    .navigation ul li:hover a,
+    .navigation ul li.hovered a {
+        color: var(--black);
+    }
+    
+    .navigation ul li a .icon {
+        position: relative;
+        display: block;
+        min-width: 60px;
+        line-height: 70px;
+        text-align: center;
+    }
+    
+    .navigation ul li a .icon ion-icon {
+        font-size: 1.75em;
+    }
+    
+    .navigation ul li a .title {
+        position: relative;
+        display: block;
+        padding: 0 10px;
+        height: 60px;
+        line-height: 60px;
+        text-align: start;
+        white-space: nowrap;
+    }
+    /*curve outside*/
+    
+    .navigation ul li:hover a::before,
+    .navigation ul li.hovered a::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -50px;
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: 35px 35px 0 10px var(--white);
+        pointer-events: none;
+    }
+    
+    .navigation ul li:hover a::after,
+    .navigation ul li.hovered a::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -50px;
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: 35px -35px 0 10px var(--white);
+        pointer-events: none;
+    }
+    /* main */
+    
+    .main {
+        position: absolute;
+        width: calc(100% - 300px);
+        left: 300px;
+        min-height: 100vh;
+        background: var(--white);
+        transition: 0.5s;
+    }
+    
+    .main.active {
+        width: calc(100% - 80px);
+        left: 80px;
+    }
+    
+    .topbar {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+    }
+    
+    .toggle {
+        position: fixed;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5em;
+        cursor: pointer;
+    }
+    
+    .search {
+        position: relative;
+        width: 400px;
+        margin: 0 10px;
+        left: 280px;
+        transition: width 0.5s ease;
+    }
+    
+    .main.active .search {
+        width: 600px;
+    }
+    
+    .search label {
+        position: relative;
+        width: 100%;
+    }
+    
+    .search label input {
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        padding: 5px 20px;
+        padding-left: 35px;
+        font-size: 18px;
+        outline: none;
+        border: 1px solid var(--black2);
+        transition: all 0.5s ease;
+    }
+    
+    .main.active .search label input {
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        padding: 5px 20px;
+        padding-left: 35px;
+        font-size: 18px;
+        outline: none;
+        border: 1px solid var(--black2);
+    }
+    
+    .search label ion-icon {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        font-size: 1.2em;
+    }
+    
+    .admin {
+        position: relative;
+        right: 10px;
+        cursor: pointer;
+        transition: transform 0.5s ease;
+    }
+    
+    .main.active .admin {
+        transform: translateX(-25px);
+    }
+    
+    .admin-star {
+        cursor: pointer;
+        position: relative;
+        top: -1px;
+        transition: transform 0.5s ease;
+    }
+    
+    .main.active .admin-star {
+        transform: translateX(-25px)
+    }
+    
+    .student-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% - 150px);
+        transition: width 0.5s ease;
+        height: 65px;
+        padding: 20px;
+        border: 1px solid #000000;
+        border-radius: 16px;
+        position: relative;
+        left: 60px;
+        top: 20px;
+        cursor: pointer;
+        /*box-shadow: 0px 5px 15px rgba(0,0, 0, 0.25);*/
+    }
+    
+    .main.active .student-item {
+        width: calc(100% - 100px);
+    }
+    
+    .student-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    
+    .student-username {
+        font-weight: bold;
+    }
+    
+    .student-email {
+        font-size: 0.9em;
+        color: gray;
+    }
+    
+    .delete-btn-student {
+        background-color: #f0c040;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .delete-btn-student:hover {
+        background-color: #f9d570;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .student-container {
+        margin-top: 75px;
+        ;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .student-level {
+        font-weight: 900;
+        display: flex;
+        justify-content: space-around;
+        position: relative;
+        width: calc(100% - 150px);
+        top: 50px;
+        left: 60px;
+    }
+    
+    .student-level-line {
+        position: absolute;
+        top: 100px;
+        left: 85px;
+        background: #000000;
+        width: 80%;
+        height: 2px;
+        transition: width 0.5s ease;
+    }
+    
+    .main.active .student-level-line {
+        width: 84%;
+    }
+    /*
+ scrollbar
+ body::-webkit-scrollbar
+ {
+   width: 15px;
+   margin-right: 10px;
+ }
+ body::-webkit-scrollbar-track
+ {
+   background: var(--black2);
+   border-radius: 100vw;
+   margin-block: 60px;
+ }
+
+ body::-webkit-scrollbar-thumb
+ {
+   background: var(--black) var(--black2);;
+   border-radius: 100vw;
+ }
+
+ body::-webkit-scrollbar-thumb:hover
+ {
+   background: var(--black);
+ }
+
+*/
+</style>
+
 <body>
     <div class="container">
         <div class="navigation">
-            <ul>              
+            <ul>
                 <li>
                     <a href="#">
                         <span class="icon"></span>
@@ -18,27 +367,27 @@
                     </a>
                 </li>
                 <li>
-                    <a href="home.html">
+                    <a href="/admin/home">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="dashboared.html">
+                    <a href="/admin/dashboard">
                         <span class="icon"><ion-icon name="grid-outline"></ion-icon>
                         </span>
-                        <span class="title">Dashboared</span>
+                        <span class="title">Dashboard</span>
                     </a>
-                </li>     
-                <li>           
-                    <a href="students.html">
+                </li>
+                <li>
+                    <a href="/admin/students">
                         <span class="icon"><ion-icon name="school-outline"></ion-icon>
                         </span>
                         <span class="title">Students</span>
                     </a>
-                </li>               
+                </li>
                 <li>
-                    <a href="teachers.html">
+                    <a href="/admin/teachers">
                         <span class="icon"><ion-icon name="book-outline"></ion-icon>
                         </span>
                         <span class="title">Teachers</span>
@@ -67,134 +416,134 @@
                     </label>
                 </div>
                 <!-- userImg -->
-                 <div class="admin">
+                <div class="admin">
                     <span class="admin-star">admin</span>
                     <ion-icon name="star"></ion-icon>
-                 </div>
-                 <!-- end of the topbar  -->
+                </div>
+                <!-- end of the topbar  -->
             </div>
             <span class="student-level-line"></span>
             <div class="student-level">
-            <span> 1Eng </span>
-            <span> 2Eng </span>
-            <span> 3Eng </span>
-            <span> 4Eng </span>
-            <span> 5Eng </span>
-            <span> L1 </span>
-            <span> L2 </span>
-            <span> L3 </span>
-            <span> M1 </span>
-            <span> M2 </span>
+                <span data-level="1ing"> 1ing </span>
+                <span data-level="2ing">2ing</span>
+                <span data-level="3ing">3ing</span>
+                <span data-level="4ing">4ing</span>
+                <span data-level="5ing">5ing</span>
+                <span data-level="L1">L1</span>
+                <span data-level="L2">L2</span>
+                <span data-level="L3">L3</span>
+                <span data-level="L4">M1</span>
+                <span data-level="L5">M2</span>
             </div>
-            
+
             <div class="student-container">
-            <!-- student <1> -->
-            <div class="student-item">
-                <div class="student-info">
-                    <img src="profile-placeholder.png" alt="" class="profile-pic">
-                <div>
-                    <div class="student-username">username-32</div>
-                    <div class="student-email">studentemailname@etu-blida.univ</div>
-            </div>
-            </div>
-                <button class="delete-btn-student">Delete</button>
-            </div>
-            <!-- student <2> -->
+                <!-- student <1> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <3> -->
+                <!-- student <2> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <4> -->
+                <!-- student <3> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <5> -->
+                <!-- student <4> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <6> -->
+                <!-- student <5> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <7> -->
+                <!-- student <6> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <8> -->
+                <!-- student <7> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
-                    <button class="delete-btn-student">Delete</button>                    </div>
-            <!-- student <9> -->
-                <div class="student-item">
-                    <div class="student-info">
-                        <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
-                </div>
-                </div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
-            <!-- student <10> -->
+                <!-- student <8> -->
                 <div class="student-item">
                     <div class="student-info">
                         <img src="profile-placeholder.png" alt="" class="profile-pic">
-                    <div>
-                        <div class="student-username">username-32</div>
-                        <div class="student-email">studentemailname@etu-blida.univ</div>
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
+                    <button class="delete-btn-student">Delete</button> </div>
+                <!-- student <9> -->
+                <div class="student-item">
+                    <div class="student-info">
+                        <img src="profile-placeholder.png" alt="" class="profile-pic">
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
+                    <button class="delete-btn-student">Delete</button>
                 </div>
-                </div>
+                <!-- student <10> -->
+                <div class="student-item">
+                    <div class="student-info">
+                        <img src="profile-placeholder.png" alt="" class="profile-pic">
+                        <div>
+                            <div class="student-username">username-32</div>
+                            <div class="student-email">studentemailname@etu-blida.univ</div>
+                        </div>
+                    </div>
                     <button class="delete-btn-student">Delete</button>
                 </div>
 
@@ -229,23 +578,235 @@
         let navigation = document.querySelector('.navigation');
         let main = document.querySelector('.main');
 
-        toggle.onclick = function()
-        {
+        toggle.onclick = function() {
             navigation.classList.toggle('active');
             main.classList.toggle('active');
-
         }
+
         //add hovered class in selected list item
         let list = document.querySelectorAll('.navigation li');
-        function activeLink(){
-            list.forEach((item)=>
-            item.classList.remove('hovered'));
-            this.classList.add('hovered');
 
+        function activeLink() {
+            list.forEach((item) =>
+                item.classList.remove('hovered'));
+            this.classList.add('hovered');
         }
-        list.forEach((item)=>
-        item.addEventListener('mouseover',activeLink));
-    </script>
+        list.forEach((item) =>
+            item.addEventListener('mouseover', activeLink));
+
+        async function loadStudents() {
+            try {
+                const response = await fetch('/students', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const students = await response.json();
+                console.log('Students data received:', students);
+
+                renderStudents(students);
+
+            } catch (error) {
+                console.error("Failed to load students:", error);
+                // Keep existing hardcoded data as fallback
+            }
+        }
+
+        // Render students in the DOM
+        function renderStudents(students) {
+            const container = document.querySelector('.student-container');
+
+            if (students.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">No students found</div>';
+                return;
+            }
+
+            container.innerHTML = students.map(student => `
+        <div class="student-item" data-student-id="${student.id}">
+            <div class="student-info">
+                <img src="${student.pfp || 'profile-placeholder.png'}" alt="Profile" class="profile-pic">
+                <div>
+                    <div class="student-username">${student.full_name}</div>
+                    <div class="student-email">${student.email}</div>
+                    ${student.major ? `<div class="student-major">${student.major} - Year ${student.year}</div>` : ''}
+                </div>
+            </div>
+            <button class="delete-btn-student" onclick="deleteStudent(${student.id}, '${student.full_name}')">Delete</button>
+        </div>
+    `).join('');
+}
+
+// Delete student function
+async function deleteStudent(studentId, studentName) {
+    if (!confirm(`Are you sure you want to delete ${studentName}? This action cannot be undone.`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/students/${studentId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete student');
+        }
+
+        const result = await response.json();
+        console.log('Student deleted:', result);
+        
+        // Remove from DOM immediately
+        const studentElement = document.querySelector(`[data-student-id="${studentId}"]`);
+        if (studentElement) {
+            studentElement.remove();
+        }
+        
+        alert('Student deleted successfully!');
+        
+        // Reload the list to ensure consistency
+        loadStudents();
+        
+    } catch (error) {
+        console.error('Error deleting student:', error);
+        alert('Failed to delete student. Please try again.');
+    }
+}
+
+// Search functionality
+function setupSearch() {
+    const searchInput = document.querySelector('.search input');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const students = document.querySelectorAll('.student-item');
+            
+            students.forEach(student => {
+                const name = student.querySelector('.student-username').textContent.toLowerCase();
+                const email = student.querySelector('.student-email').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                    student.style.display = 'flex';
+                } else {
+                    student.style.display = 'none';
+                }
+            });
+        });
+    }
+}
+
+function setupLevelFilters() {
+    const levelButtons = document.querySelectorAll('.student-level span');
+    levelButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Remove active class from all buttons
+            levelButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Clean up the selected level - get from data attribute OR text content
+            let selectedLevel = this.dataset.level || this.textContent.trim();
+            
+            // Remove any non-alphanumeric characters except 'all'
+            if (selectedLevel !== 'all') {
+                selectedLevel = selectedLevel.replace(/[^0-9]/g, '');
+            }
+            
+            console.log('Filter selected (cleaned):', selectedLevel); // Debug log
+            console.log('Original data-level:', this.dataset.level); // Debug log
+            console.log('Original textContent:', this.textContent); // Debug log
+            
+            filterByLevel(selectedLevel);
+        });
+    });
+}
+
+// Fixed filter function
+function filterByLevel(level) {
+    const students = document.querySelectorAll('.student-item');
+    console.log('Filtering by level (clean):', `"${level}"`); // Debug log with quotes to see exact value
+
+    students.forEach(student => {
+        const majorElement = student.querySelector('.student-major');
+        
+        if (!majorElement) {
+            // If no major element, hide unless showing all
+            student.style.display = level === 'all' ? 'flex' : 'none';
+            return;
+        }
+        
+        const majorText = majorElement.textContent.trim();
+        
+        if (level === 'all') {
+            student.style.display = 'flex';
+        } else {
+            // Extract year number from text like "Computer Science - Year 2"
+            const yearMatch = majorText.match(/Year (\d+)/i);
+            const studentYear = yearMatch ? yearMatch[1] : null;
+            
+            console.log('Student:', student.querySelector('.student-username').textContent, 'Year:', `"${studentYear}"`, 'Looking for:', `"${level}"`);
+            
+            if (studentYear === level) {
+                student.style.display = 'flex';
+                console.log('✓ Showing student');
+            } else {
+                student.style.display = 'none';
+                console.log('✗ Hiding student');
+            }
+        }
+    });
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Students page loading...');
+    // Setup search functionality
+    setupSearch();    
+    setupLevelFilters();
+    // Load students data
+    loadStudents();
     
+    console.log('Students page initialized');
+});
+
+// Logout function
+function logoutUser() {
+    fetch('/logout', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(() => window.location.href = '/login')
+    .catch(err => {
+        console.error('Logout error:', err);
+        window.location.href = '/login';
+    });
+}
+
+// Add logout event listener
+document.addEventListener('DOMContentLoaded', function() {
+    const logoutLink = document.querySelector('a[href="#"]:last-of-type');
+    if (logoutLink) {
+        logoutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            logoutUser();
+        });
+    }
+});
+    </script>
+
 </body>
+
 </html>
