@@ -55,7 +55,62 @@ EXISTS(
             res.status(500).json({ error: "Failed to load homepage" });
         }
     });
+    // Clubs endpoints
+    app.get('/api/clubs', async(req, res) => {
+        try {
+            const result = await db.query(`
+                SELECT 
+                    club_id as id,
+                    name,
+                    tag as category,
+                    description,
+                    members as member_count,
+                    contact as contact_email
+                FROM clubs
+                ORDER BY name ASC
+            `);
 
+            res.json(result.rows);
+        } catch (err) {
+            console.error("Error fetching clubs:", err);
+            res.status(500).json({ error: "Failed to fetch clubs" });
+        }
+    });
+
+    app.get('/api/clubs/search', async(req, res) => {
+        const { q } = req.query;
+        if (!q) {
+            return res.status(400).json({ error: 'Search query is required' });
+        }
+
+        try {
+            const result = await db.query(`
+                SELECT 
+                    club_id as id,
+                    name,
+                    tag as category,
+                    description,
+                    members as member_count,
+                    contact as contact_email
+                FROM clubs
+                WHERE 
+                    name ILIKE $1 OR
+                    description ILIKE $1 OR
+                    tag ILIKE $1
+                ORDER BY name ASC
+            `, [`%${q}%`]);
+
+            res.json(result.rows);
+        } catch (err) {
+            console.error("Error searching clubs:", err);
+            res.status(500).json({ error: "Failed to search clubs" });
+        }
+    });
+
+    // Serve the clubs page
+    app.get("/all-clubs", isAuthenticated, (req, res) => {
+        res.sendFile(path.join(__dirname, "public", "clubs.html"));
+    });
     app.post("/posts", isAuthenticated, upload.single("image"), async(req, res) => {
         try {
             // Check if this is a like action
