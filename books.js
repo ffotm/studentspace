@@ -3,6 +3,8 @@ import path from "path";
 import multer from "multer";
 import { fileURLToPath } from "url";
 import fs from "fs";
+app.use(express.static('public'));
+
 
 const __filename = fileURLToPath(
     import.meta.url);
@@ -66,6 +68,18 @@ export default function(app, db, isAuthenticated, __dirname) {
             res.status(500).json({ error: 'Failed to fetch books' });
         }
     });
+    app.get('/addbook/:id', (req, res) => {
+        res.render('addbook', {
+            darkMode: false,
+            title: "UniHive - Light Mode",
+            activePage: "books",
+            activeBrand: "A",
+            bookTitle: "Placeholder Title",
+            bookImage: "/images/placeholder.jpg",
+            bookDescription: "Placeholder description."
+        }); // just render it without data for now
+    });
+
 
     // API to get books by category
     app.get('/books/field/:field', async(req, res) => {
@@ -87,6 +101,10 @@ where b.field = $1
             res.status(500).json({ error: 'Failed to fetch books' });
         }
     });
+    app.get('/addbook/:id', (req, res) => {
+        res.sendFile(__dirname + '/public/addbook.html');
+    });
+
 
     // API to add a new book
     app.post('/books', isAuthenticated, upload.single('image'), async(req, res) => {

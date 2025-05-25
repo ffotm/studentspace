@@ -19,6 +19,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 const saltRounds = 10;
+app.use(express.static('public'));
+
 // Configure EJS to look in the public directory
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -181,6 +183,64 @@ app.post('/books', isAuthenticated, upload.single('image'), async(req, res) => {
     } catch (err) {
         console.error("Error adding book:", err);
         res.status(500).json({ error: 'Failed to add book' });
+    }
+});
+async function getBookById(id) {
+    const result = await db.query('SELECT * FROM books WHERE id = $1', [id]);
+    return result.rows[0];
+}
+
+app.get('/addbook/:id', async(req, res) => {
+    const bookId = req.params.id;
+    try {
+        const book = await getBookById(bookId); // Your function to get book from DB by id
+        if (!book) {
+            return res.status(404).send('Book not found');
+        }
+        res.render('addbook', {
+            darkMode: false,
+            title: `UniHive - ${book.title}`,
+            activePage: "books",
+            activeBrand: "A",
+            bookTitle: book.title,
+            bookImage: book.cover, // adjust to your DB column names
+            bookDescription: book.description,
+            price: book.price,
+            owner: book.owner,
+            status: book.status,
+            author: book.author
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+app.get('/books/:id', async(req, res) => {
+    const bookId = req.params.id;
+
+    try {
+        const result = await pool.query('SELECT * FROM books WHERE id = $1', [bookId]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).send('Book not found');
+        }
+
+        const book = result.rows[0];
+
+        res.render('addbook', {
+            title: "UniHive - Light Mode",
+            darkMode: false,
+            activePage: "books",
+            activeBrand: "A",
+            bookTitle: book.title,
+            bookImage: book.cover, // adjust this to match your column name
+            bookDescription: book.description
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
     }
 });
 
