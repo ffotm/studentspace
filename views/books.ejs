@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Books Shop</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.1">
+    <meta name="description" content="A Book Shop Offering a variety of Different academic book on the market">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<style>
+    /* Background from in.html */
+    
+    body {
+        background-color: #778DA9;
+        color: #0D1321;
+        overflow-x: hidden;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        background: radial-gradient(ellipse 80% 90% at top left, rgba(62, 92, 118, 0.5) 0%, transparent 65%), radial-gradient(ellipse 70% 80% at top right, rgba(91, 131, 166, 0.4) 0%, transparent 60%), radial-gradient(ellipse 75% 85% at bottom left, rgba(119, 141, 169, 0.45) 0%, transparent 65%), radial-gradient(ellipse 70% 80% at bottom right, rgba(152, 170, 189, 0.35) 0%, transparent 60%), radial-gradient(ellipse 65% 75% at 50% 50%, rgba(255, 248, 214, 0.4) 0%, transparent 85%), radial-gradient(ellipse 70% 80% at 45% 45%, rgba(253, 244, 189, 0.35) 10%, transparent 90%), radial-gradient(ellipse 60% 70% at 55% 55%, rgba(242, 247, 224, 0.3) 5%, transparent 80%), #FFFDF0;
+        filter: blur(0px);
+    }
+    /* Main Content Area - No white container */
+    
+    .main-content {
+        width: 85%;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+    /* UNIHIVERSE Navigation - Exact match from Image 2 */
+    
+    .unihiverse-nav {
+        background-color: rgba(232, 232, 232, 0.8);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .universe-text {
+        color: #0D1321;
+        font-weight: 700;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+    
+    .nav-pills {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .pill {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #0D1321;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .pill:hover {
+        background-color: rgba(13, 19, 33, 0.1);
+    }
+    
+    .pill.active {
+        background-color: #0D1321;
+        color: white;
+    }
+    
+    .nav-icons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    .icon-button {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0D1321;
+        transition: all 0.2s ease;
+    }
+    
+    .icon-button:hover {
+        background-color: rgba(13, 19, 33, 0.1);
+    }
+    
+    .icon-button i {
+        font-size: 1rem;
+    }
+    /*title + sell and filter buttons */
+    
+    .lign {
+        display: flex;
+        flex-direction: row;
+        gap: 500px;
+        margin-top: 20px;
+        justify-content: flex-end;
+        margin-left: -40px;
+        margin-top: 180px;
+        position: relative;
+    }
+    
+    .button-container {
+        margin-top: 20px;
+    }
+    
+    #books {
+        font-family: "Nunito sans", sans-serif;
+        width: 259px;
+        height: 48px;
+        color: #FFFFFF;
+        text-decoration: underline;
+        text-underline-offset: 6px;
+        display: flex;
+        align-items: flex-start;
+        top: 326px;
+        left: 78px;
+    }
+    
+    #sellbut {
+        width: 121px;
+        height: 48px;
+        background-color: white;
+        color: black;
+        border-radius: 12px;
+        top: 330px;
+        left: 1124px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: "Nunito sans", sans-serif;
+        box-shadow: 0px 0px;
+        border: 0px;
+        font-weight: bold;
+    }
+    
+    #filter {
+        width: 121px;
+        height: 48px;
+        background-color: black;
+        color: white;
+        border-radius: 12px;
+        top: 334px;
+        left: 1287px;
+        font-size: 20px;
+        cursor: pointer;
+        font-family: "Nunito sans", sans-serif;
+        background-color: #010512;
+        box-shadow: 0px 0px;
+        border: 0px;
+        font-weight: bold;
+    }
+    /*end lign */
+    /*book cards*/
+    /* Replace your existing .books-container styles with this */
+    
+    .books-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        width: 90%;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 1rem;
+        justify-items: center;
+        /* Ensure proper grid behavior */
+        grid-auto-rows: auto;
+    }
+    /* Alternative approach if you prefer flexbox */
+    
+    .books-container-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        width: 90%;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 1rem;
+        justify-content: center;
+    }
+    
+    .books-container .flip-card {
+        width: 180px;
+        height: 240px;
+        perspective: 1000px;
+        margin: 10px;
+        /* Remove margin to prevent layout issues */
+        position: relative;
+        z-index: 1;
+        /* Ensure the card doesn't shrink */
+        flex-shrink: 0;
+    }
+    /* Rest of your flip-card styles remain the same */
+    
+    .books-container .flip-card-inner {
+        width: 180px;
+        height: 240px;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+        z-index: 999;
+    }
+    
+    .books-container .flip-card-front,
+    .books-container .flip-card-back {
+        width: 180px;
+        height: 240px;
+        position: absolute;
+        backface-visibility: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 15px;
+        z-index: 999;
+    }
+    
+    .books-container .flip-card-front {
+        background-color: #f8f8f8;
+        z-index: 999;
+    }
+    
+    .books-container .flip-card-front img {
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
+        border-radius: 5px;
+        z-index: 999;
+    }
+    
+    .books-container .flip-card-front h3 {
+        margin-top: 5px;
+        color: #444;
+        z-index: 999;
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+    
+    .books-container .flip-card-back {
+        background-color: #0f0d24;
+        color: white;
+        transform: rotateY(180deg);
+        z-index: 999;
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+    
+    .books-container .flip-card-back p {
+        margin: 3px 0;
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+    
+    .books-container .view-detail-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 12px;
+        background-color: #3E5C76;
+        color: white;
+        text-decoration: none;
+        border-radius: 15px;
+        font-weight: 500;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+    }
+    
+    .books-container .view-detail-btn:hover {
+        background-color: #0D1321;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+    }
+    
+    .books-container .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+        z-index: 1000;
+    }
+    
+    .books-container .flip-card:hover {
+        transform: scale(1.1);
+        /* Reduced scale to prevent layout issues */
+        z-index: 1000;
+    }
+    /* Responsive adjustments */
+    
+    @media (max-width: 1200px) {
+        .books-container {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 900px) {
+        .books-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+    }
+    
+    @media (max-width: 600px) {
+        .books-container {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        .books-container .flip-card {
+            width: 160px;
+            height: 220px;
+        }
+        .books-container .flip-card-inner,
+        .books-container .flip-card-front,
+        .books-container .flip-card-back {
+            width: 160px;
+            height: 220px;
+        }
+    }
+    /*end book cards */
+    /*the filter and sell pop ups*/
+    
+    .button-container {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 20px;
+        margin-right: 20px;
+    }
+    
+    input {
+        border-radius: 8px;
+        height: 30px;
+        width: 170px;
+        border: #5A5A5A;
+        background-color: #BCCCDC;
+        font-family: "Nunito sans", sans-serif;
+    }
+    
+    #category {
+        border-radius: 8px;
+        height: 30px;
+        width: 170px;
+        border: #5A5A5A;
+        background-color: #BCCCDC;
+        font-family: "Nunito sans", sans-serif;
+        margin-bottom: 15px;
+        color: gray;
+    }
+    
+    .upload-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        color: black;
+        font-size: 2rem;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .upload-button:hover {
+        background-color: #BCCCDC;
+    }
+    
+    .sellpop {
+        width: 300px;
+        height: 350px;
+        opacity: 0;
+        border-radius: 15px;
+        background-color: #EEEEEE;
+        position: absolute;
+        top: 90px;
+        left: 490px;
+        display: flex;
+        transition: opacity 0.3s ease;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        margin-right: 500px;
+        pointer-events: none;
+        margin-top: 40px;
+    }
+    
+    .sellpop.open {
+        opacity: 1;
+        z-index: 999;
+        pointer-events: auto;
+    }
+    
+    .sellpop-inner {
+        background-color: #EEEEEE;
+        border-radius: 13px;
+        text-align: center;
+        padding: 15px 25px;
+        width: 380px;
+    }
+    
+    button {
+        border-radius: 20px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        padding: 10px 25px;
+    }
+    
+    button:active {
+        background-color: #5A5A5A;
+    }
+    
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 998;
+        display: none;
+    }
+    
+    #overlay.active {
+        display: block;
+    }
+    /*filter*/
+    
+    #filterpop {
+        width: 500px;
+        height: 350px;
+        opacity: 0;
+        border-radius: 15px;
+        background-color: #EEEEEE;
+        position: absolute;
+        top: 90px;
+        left: 430px;
+        display: flex;
+        transition: opacity 0.3s ease;
+        align-items: flex-start;
+        justify-content: flex-start;
+        z-index: 10;
+        margin-right: 500px;
+        pointer-events: none;
+        margin-top: 40px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    #filterpop.open {
+        opacity: 1;
+        z-index: 999;
+        pointer-events: auto;
+    }
+    
+    .filter-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 30px;
+        pointer-events: auto;
+    }
+    
+    .filter-inner label {
+        display: flex;
+        margin-bottom: 15px;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 18px;
+        color: #333;
+    }
+    
+    .filter-inner input[type="checkbox"] {
+        accent-color: black;
+        transform: scale(1.1);
+        margin-right: 10px;
+        border-radius: 180px;
+        cursor: pointer;
+    }
+    
+    .filter-inner input[type="checkbox"]:checked {
+        background-color: #481E14;
+    }
+    
+    .filter-content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+    }
+    
+    .buttoncontainerfilter {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        gap: 100px;
+        margin-left: 60px;
+        margin-top: 60px;
+    }
+    
+    .buttoncontainerfilter button {
+        width: 100px;
+        height: 50px;
+        padding: 10px 0;
+        font-family: "Nunito Sans", sans-serif;
+        font-size: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #EEEEEE;
+        color: black;
+        transition: background-color 0.3s ease;
+    }
+    
+    .buttoncontainerfilter button:hover {
+        background-color: #5A5A5A;
+    }
+    
+    .buttoncontainerfilter button:active {
+        background-color: #5A5A5A;
+    }
+    /*end */
+    /*HEADER */
+    
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #000511;
+        width: 95%;
+        font-family: "Poppins", sans-serif;
+        text-decoration: none;
+    }
+    
+    .branding {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .logo {
+        width: 89px;
+        height: 89px;
+    }
+    
+    .site-title {
+        font-size: 36px;
+        color: #fea303;
+        font-weight: 600;
+    }
+    
+    .main-nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .main-nav ul {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .main-nav a {
+        color: #fea303;
+        font-weight: 800;
+        font-size: 18px;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 18px;
+        transition: background-color 0.2s ease;
+    }
+    
+    .main-nav a.active {
+        background-color: #fea303;
+        color: #000511;
+    }
+    
+    .main-nav a:hover {
+        background-color: #fea30333;
+    }
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .search {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .notification {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .notification i {
+        color: #fea303;
+        font-size: 1.7rem;
+    }
+    
+    .profile {
+        width: 40px;
+        height: 40px;
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+    /*end header */
+    
+    nav {
+        background-color: rgba(13, 19, 33, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(224, 225, 221, 0.1);
+        width: 100%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        transition: background-color 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+    }
+    
+    nav.scrolled {
+        background-color: rgba(27, 38, 59, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom-color: rgba(224, 225, 221, 0.2);
+    }
+    
+    .brand-switcher {
+        display: flex;
+        background-color: #3E5C76;
+        border-radius: 25px;
+        padding: 5px;
+        position: relative;
+        height: 40px;
+        width: 220px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-right: 20px;
+    }
+    
+    .brand-switcher::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: calc(50% - 5px);
+        height: calc(100% - 10px);
+        background-color: #0D1321;
+        border-radius: 20px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+    
+    .brand-switcher.universe-active::after {
+        transform: translateX(100%);
+    }
+    
+    .brand-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #E0E1DD;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        transition: color 0.3s ease;
+        border-radius: 20px;
+    }
+    
+    .brand-option:hover {
+        color: #FFD972;
+    }
+    
+    .brand-option.active {
+        color: #FFD972;
+    }
+    
+    .universe-logo {
+        height: 60px;
+        width: 60px;
+        object-fit: contain;
+        filter: drop-shadow(0 1px 3px #0D1321);
+        margin-right: 0;
+        margin-left: -10px;
+        cursor: pointer;
+        vertical-align: middle;
+    }
+    
+    .universe-text {
+        font-size: 30px;
+        font-weight: 700;
+        color: #E0E1DD;
+        letter-spacing: 1px;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+        transition: all 0.3s ease;
+    }
+    
+    nav ul {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        gap: 10px;
+    }
+    
+    nav ul li {
+        display: inline-block;
+        list-style: none;
+        opacity: 0;
+        transform: translateY(-40px) scale(0.95);
+        animation: navPillIn 0.7s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+    }
+    
+    nav ul li:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+    
+    nav ul li:nth-child(2) {
+        animation-delay: 0.35s;
+    }
+    
+    nav ul li:nth-child(3) {
+        animation-delay: 0.5s;
+    }
+    
+    nav ul li:nth-child(4) {
+        animation-delay: 0.65s;
+    }
+    
+    @keyframes navPillIn {
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 10px 32px;
+        border-radius: 50px;
+        transition: all 0.25s cubic-bezier(.68, -0.55, .27, 1.55);
+        font-size: 15px;
+        display: block;
+        background: #3E5C76;
+        /* Blue buttons */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        opacity: 0.92;
+        border: none;
+        position: relative;
+        z-index: 1;
+    }
+    
+    nav ul li a.active {
+        background: #E0E1DD;
+        color: #0D1321;
+        /* Dark text on light gray active button */
+        opacity: 1;
+        box-shadow: 0 0 18px rgba(62, 92, 118, 0.25);
+    }
+    
+    nav ul li a.active::after {
+        display: none;
+    }
+    
+    nav ul li a::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 50%;
+        bottom: 8px;
+        transform: translateX(-50%) scaleX(0);
+        width: 60%;
+        height: 4px;
+        background: #EDEDED;
+        border-radius: 2px;
+        transition: transform 0.35s cubic-bezier(.68, -0.55, .27, 1.55);
+        z-index: 0;
+    }
+    
+    nav ul li a:hover::after {
+        transform: translateX(-50%) scaleX(1);
+    }
+    
+    nav ul li a:hover:not(.active) {
+        background: #415A77;
+        /* Slightly lighter blue for hover */
+        color: #fff;
+        opacity: 1;
+        box-shadow: 0 4px 16px rgba(62, 92, 118, 0.13);
+        animation: pillPulse 0.33s;
+    }
+    
+    @keyframes pillPulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.08);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    .right-nav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+    
+    #dark-mode-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .nav-icon {
+        color: #1B263B;
+        font-size: 21px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-icon:hover {
+        color: #3E5C76;
+        transform: scale(1.15);
+    }
+    
+    .notification-container {
+        position: relative;
+    }
+    
+    .user-profile .profile {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3E5C76, #6CA0DC);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(62, 92, 118, 0.2);
+    }
+    
+    .user-profile .profile:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(62, 92, 118, 0.3);
+    }
+    
+    .frame {
+        background-color: transparent;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        min-height: 100vh;
+        margin-top: 70px;
+        /* Add margin to accommodate the fixed navbar */
+        padding-top: 20px;
+    }
+    
+    .main-content {
+        padding-top: 90px;
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        padding: 30px;
+        max-width: 1400px;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+    }
+    
+    .main-feed {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border: 1px solid #000511;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        color: #000511;
+    }
+    /* Header Styles */
+    
+    .branding {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .logo {
+        width: 89px;
+        height: 89px;
+        transition: transform 0.3s ease;
+    }
+    
+    .logo:hover {
+        transform: scale(1.05);
+    }
+    
+    .site-title {
+        font-size: 36px;
+        color: #fea303;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    /* Modern Navbar */
+    
+    .main-nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .main-nav ul {
+        display: flex;
+        gap: 24px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .main-nav a {
+        color: #0D1B2A;
+        font-weight: 800;
+        font-size: 18px;
+        text-decoration: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .main-nav a.active {
+        background-color: #0D1B2A;
+        color: #FFD972;
+        box-shadow: 0 4px 12px rgba(13, 27, 42, 0.3);
+    }
+    
+    .main-nav a:hover:not(.active) {
+        background-color: rgba(13, 27, 42, 0.15);
+        transform: translateY(-2px);
+    }
+    /* User Actions */
+    
+    .user-actions {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+    
+    .search {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .search:hover {
+        transform: scale(1.1);
+    }
+    
+    .notification {
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .notification i {
+        color: #fea303;
+        font-size: 1.7rem;
+    }
+    
+    .notification:hover {
+        transform: scale(1.1);
+    }
+    
+    .profile {
+        width: 45px;
+        height: 45px;
+        background-color: #d9d9d9;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #fea303;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .profile:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(254, 163, 3, 0.5);
+    }
+    /* Modern Footer Styles */
+    
+    Responsive adjustments for footer columns */
+    /* Main Feed Header */
+    
+    .main-feed-header {
+        padding: 30px 0 10px;
+        text-align: center;
+    }
+    
+    .page-heading {
+        color: #0D1B2A;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .page-heading:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: #FFD972;
+        border-radius: 2px;
+    }
+    
+    .page-footer {
+        background-color: #0D1B2A;
+        color: #E0E1DD;
+        padding: 40px 20px;
+        margin-top: 60px;
+        width: 100%;
+    }
+    
+    footer {
+        display: block;
+        unicode-bidi: isolate;
+    }
+    
+    .footer-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .footer-about,
+    .footer-links-column,
+    .contact-info {
+        flex: 1;
+        min-width: 220px;
+    }
+    
+    .footer-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #FFFFFF;
+        margin-bottom: 15px;
+        position: relative;
+        padding-bottom: 8px;
+    }
+    
+    .contact-info p {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .contact-info svg {
+        min-width: 20px;
+        color: #FFD972;
+        fill: #FFD972;
+    }
+    
+    .page-footer .footer-bottom {
+        text-align: center;
+        padding-top: 25px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: rgba(224, 225, 221, 0.7);
+        font-size: 0.9rem;
+    }
+    
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .page-footer ul li a {
+        color: #E0E1DD;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+    }
+    
+    h3 {
+        display: block;
+        font-size: 1.17em;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+        unicode-bidi: isolate;
+    }
+    
+    .page-footer {
+        background-color: #0D1B2A;
+        color: #E0E1DD;
+        padding: 40px 20px;
+        margin-top: 60px;
+    }
+    
+    body {
+        background-color: #778DA9;
+        color: #0D1321;
+        overflow-x: hidden;
+        min-height: 100vh;
+        transition: background 0.3s, color 0.3s;
+        animation: fadeIn 1s ease-out forwards;
+    }
+    
+     :host,
+     :root {
+        --fa-font-solid: normal 900 1em / 1 "Font Awesome 6 Free";
+    }
+    
+     :host,
+     :root {
+        --fa-font-regular: normal 400 1em / 1 "Font Awesome 6 Free";
+    }
+    
+     :host,
+     :root {
+        --fa-font-brands: normal 400 1em / 1 "Font Awesome 6 Brands";
+    }
+    
+    ul {
+        display: block;
+        list-style-type: disc;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        padding-inline-start: 40px;
+        unicode-bidi: isolate;
+    }
+    
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 30px;
+        height: 2px;
+        background-color: #FFD972;
+    }
+    
+    @media screen and (max-width: 1200px) {
+        .main-feed {
+            max-width: 100%;
+        }
+        .sidebar {
+            width: 100%;
+            margin-left: 0;
+            margin-top: 30px;
+        }
+        .additional-content-1,
+        .additional-content-2 {
+            padding: 15px;
+        }
+    }
+    
+    @media screen and (max-width: 768px) {
+        header {
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+        }
+        .main-nav ul {
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .main-nav a {
+            padding: 8px 15px;
+            font-size: 16px;
+        }
+        .user-actions {
+            width: 100%;
+            justify-content: center;
+        }
+        .post-form,
+        .post {
+            border-radius: 15px;
+        }
+    }
+    
+    .center-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+</style>
+</head>
+
+<body>
+    <!--HEADER -->
+    <header>
+
+        <!-- Clean Navigation Bar -->
+        <nav>
+            <div class="universe-text">UNIHIVERSE</div>
+
+            <div class="center-nav">
+                <div class="brand-switcher" id="brandSwitcher">
+                    <div class="brand-option active" data-brand="unihive">UniHive</div>
+                    <div class="brand-option " data-brand="universe">Universe</div>
+                </div>
+
+                <ul>
+                    <li><a href="/homepage">Feed</a></li>
+                    <li><a href="/lostnfound">Lost&Found</a></li>
+                    <li><a href="#" class="active">Books Shop</a></li>
+                </ul>
+            </div>
+
+            <div class="right-nav" style="display: flex; align-items: center; gap: 15px; margin-right: 20px;">
+                <button id="dark-mode-toggle" style="background: transparent; border: none; cursor: pointer; color: inherit; padding: 0; font-size: 1.2rem; /* Basic styling */">
+                <i id="theme-icon" class="fa-solid fa-sun nav-icon"></i>
+            </button>
+                <div class="notification-container">
+                    <i class="fa-solid fa-bell nav-icon" id="notification-bell"></i>
+                </div>
+                <div class="user-profile" style="display: block;">
+                    <div class="profile" style="width: 35px; height: 35px; border-radius: 50%; background-color: #3E5C76; border: 2px solid #FFD972; display: block;" aria-label="User profile"></div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <!--END HEADER-->
+
+    <!--SECOND PART-->
+    <main class="main-content">
+        <h2 class="books-title" style="font-size: 2.5em; text-align: center; margin-bottom: 20px;">Books For Sale</h2>
+        <div class="button-container">
+            <!--SELL BUTTON-->
+            <button id="sellbut">Sell</button>
+            <div id="overlay">
+                <div class="sellpop" id="sellingpop">
+                    <div class="sellpop-inner" id="sellingpop-inner">
+                        <div class="text">
+                            <h3>Enter The necessary Informations</h3>
+                        </div>
+                        <form id="enterinfos">
+                            <div>
+                                <input id="name" type="text" name="name" placeholder="Name" required>
+                            </div>
+                            <br>
+                            <div>
+                                <input id="title" type="text" name="title" placeholder="Title" required>
+                            </div>
+                            <br>
+                            <div>
+                                <input id="author" type="text" name="author" placeholder="Author" required>
+                            </div>
+                            <br>
+                            <div>
+                                <select id="category" type="text" name="category" placeholder="category">
+                                            <option>Mathematics</option>
+                                            <option>Computer science</option>
+                                            <option>Physics</option>
+                                            <option>Other</option>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <input id="price" type="number" name="price" min="0" step="10" placeholder="Price" required>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <input id="descrip" type="text" name="descrip" placeholder="Description">
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <label id="attachim">Attach image: </label>
+                                           <label for="imageInput" class="upload-button">
+                                               +
+                                                </label>
+                                         <input type="file" id="imageInput" accept="image/*"/>
+ <img id="imagePreview" class="image-preview" alt="Preview" style="margin-top: 10px; max-width: 100px; max-height: 100px; border-radius: 4px; display: none;" />
+                                    </div>
+                                   <div class="button-container">
+                                    <div>
+                                        <button type="submit" id="submit">Submit</button>
+                                    </div>
+                                    <div>
+                                        <button id="cancel">Cancel</button>
+                                    </div>
+                                   </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <!--END SELL BUTTON-->
+            <!--FILTER BUTTON-->
+            <button id="filter">Filter</button>
+    
+
+     <!-- Filter Form -->
+       <div id="filterpop">
+        <div class="filter-content">
+            <div class="filter-inner">
+                <label><input type="checkbox" class="category-filter" value="Mathematics"> Mathematics</label>
+                <label><input type="checkbox" class="category-filter" value="Computer Science"> Computer Science</label>
+                <label><input type="checkbox" class="category-filter" value="Physics"> Physics</label>
+                <label><input type="checkbox" class="category-filter" value="Other"> Other</label>
+            </div>
+            <div class="buttoncontainerfilter">
+                <button id="apply">Apply</button>
+                <button id="clearfilter">Clear</button>
+            </div>
+        </div>
+         </div>
+
+
+    <!-- Books Container with EJS rendering -->
+
+    
+        <div class="books-container" id="newcont">
+    <% if (books && books.length > 0) { %>
+        <% books.forEach(book => { %>
+            <div class="flip-card" data-category="<%= book.field %>">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <% if (book.cover) { %>
+                            <img src="<%= book.cover %>" alt="<%= book.title %>">
+                        <% } else { %>
+                            <div class="no-image">No Image</div>
+                        <% } %>
+                        <h3><%= book.title %></h3>
+                    </div>
+                    <div class="flip-card-back">
+                        <p><strong>Price:</strong> <%= book.price %> DA</p>
+                        <p><strong>Author:</strong> <%= book.author %></p>
+                        <p data-category="<%= book.field %>"><strong>Field:</strong> <%= book.field %></p>
+                        <p><strong>Posted:</strong>
+                            <% 
+                                const now = new Date();
+                                const postedDate = new Date(book.date_of_publication);
+                                const diffTime = Math.abs(now - postedDate);
+                                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                                
+                                if (diffDays === 0) {
+                                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                                    if (hours === 0) {
+                                        const mins = Math.floor(diffTime / (1000 * 60));
+                                        if (mins === 0) {
+                            %>Just now
+                            <% } else { %><%= mins %> minutes ago<% } %>
+                            <% } else { %><%= hours %> hours ago<% } %>
+                            <% } else if (diffDays === 1) { %>Yesterday
+                            <% } else if (diffDays < 7) { %><%= diffDays %> days ago
+                            <% } else if (diffDays < 30) { %><%= Math.floor(diffDays / 7) %> weeks ago
+                            <% } else { %><%= Math.floor(diffDays / 30) %> months ago
+                            <% } %>
+                        </p>
+                        <p><strong>Seller:</strong> <%= book.owner_name %></p>
+                        <% if (book.description) { %>
+                            <p><strong>Description:</strong> <%= book.description %></p>
+                        <% } %>
+                        <a href="/addbook/<%= book.id %>" class="view-detail-btn">View Detail</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <div class="no-books-message">
+            <h3>No books available yet</h3>
+            <p>Be the first to sell a book! Click the "Sell" button above to add your book.</p>
+        </div>
+    <% } %>
+</div>
+</main>
+    <footer class="page-footer">
+        <div class="footer-top">
+            <div class="footer-about">
+                <h3 class="footer-logo">Helping students connect, share, and thrive</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Fast Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Feed</a></li>
+                    <li><a href="#">Lost&Found</a></li>
+                    <li><a href="#">Book Shop</a></li>
+                    <li><a href="#">Switch to UniVerse</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Informations</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Report a Bug</a></li>
+                    <li><a href="#">UniHiVerse@univ-blida.dz</a></li>
+                    <li><a href="#">Support:14h-18h</Hours:14h-18h></a></li>
+                    <li><a href="#">Conditions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3 class="footer-title">Contactez-nous</h3>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg> University Of Saad Dahleb
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg> By TeenTechTitans
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 UniHive. All rights reserved.</p>
+        </div>
+    </footer>
+<script>
+    // Books Shop Frontend JavaScript
+    const openBtn = document.getElementById("sellbut");
+    const closeBtn = document.getElementById("cancel");
+    const overlay = document.getElementById("overlay");
+    const sell = document.getElementById("sellingpop");
+    const container = document.getElementById("newcont");
+
+    // Open Sell Pop-up
+    openBtn.addEventListener("click", () => {
+        sell.classList.add("open");
+        overlay.classList.add("active");
+    });
+
+    // Close Sell Pop-up
+    closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        sell.classList.remove("open");
+        overlay.classList.remove("active");
+    });
+
+    // Filter Popup
+    const filterBtn = document.getElementById("filter");
+    const clearFilterBtn = document.getElementById("clearfilter");
+    const filterPopup = document.getElementById("filterpop");
+
+    // Open Filter
+    filterBtn.addEventListener("click", () => {
+        filterPopup.classList.add("open");
+        overlay.classList.add("active");
+    });
+
+    // Close Filter
+    clearFilterBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        filterPopup.classList.remove("open");
+        overlay.classList.remove("active");
+    });
+
+    // Form submission for new book
+   const form = document.getElementById("enterinfos");
+
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch('/books', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include' // Include cookies for authentication
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to add book');
+        }
+
+        const result = await response.json();
+        console.log("Book added successfully:", result);
+        alert("Book added!");
+        
+        // Close the popup
+        sell.classList.remove("open");
+        overlay.classList.remove("active");
+        
+        // Reset the form
+        form.reset();
+        
+        // Refresh to show the new book
+        window.location.reload();
+        
+    } catch (err) {
+        console.error("Error adding book:", err);
+        alert('Error adding book: ' + err.message);
+    }
+});
+    // Filter Logic
+    const applyBtn = document.getElementById("apply");
+    const checkboxes = document.querySelectorAll(".category-filter");
+
+    applyBtn.addEventListener("click", () => {
+        const selectedCategories = Array.from(checkboxes)
+            .filter(cb => cb.checked)
+            .map(cb => cb.value);
+
+        const itemCards = document.querySelectorAll(".flip-card");
+        let visibleCount = 0;
+
+        itemCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            const shouldDisplay = (selectedCategories.length === 0 || selectedCategories.includes(cardCategory));
+            card.style.display = shouldDisplay ? "block" : "none";
+
+            if (shouldDisplay) visibleCount++;
+        });
+
+        filterPopup.classList.remove("open");
+        overlay.classList.remove("active");
+
+        // If no cards are visible after filtering, show a message
+        const noVisibleMsg = document.getElementById("no-visible-books");
+        if (visibleCount === 0 && selectedCategories.length > 0) {
+            if (!noVisibleMsg) {
+                const msg = document.createElement("div");
+                msg.id = "no-visible-books";
+                msg.className = "no-books-message";
+                msg.textContent = "No books found in the selected categories.";
+                document.querySelector(".books-container").appendChild(msg);
+            }
+        } else if (noVisibleMsg) {
+            noVisibleMsg.remove();
+        }
+    });
+ document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const body = document.body;
+
+            // Function to apply theme
+            const applyTheme = (isDarkMode) => {
+                if (isDarkMode) {
+                    body.classList.add('dark-mode');
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-sun');
+                        themeIcon.classList.add('fa-moon');
+                    }
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (themeIcon) {
+                        themeIcon.classList.remove('fa-moon');
+                        themeIcon.classList.add('fa-sun');
+                    }
+                }
+            };
+
+            // Check localStorage for saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                applyTheme(true);
+            } else {
+                // Default to light theme if no preference or if it's 'light'
+                applyTheme(false);
+            }
+
+            // Toggle event listener
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', () => {
+                    const isDarkMode = body.classList.toggle('dark-mode');
+                    applyTheme(isDarkMode);
+                    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+                });
+            }
+        });
+ document.addEventListener('DOMContentLoaded', function() {
+            const brandSwitcher = document.getElementById('brandSwitcher');
+            const brandOptions = document.querySelectorAll('.brand-option');
+            
+            brandOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const brand = this.getAttribute('data-brand');
+                    
+                    // Remove active class from all options
+                    brandOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Toggle the switcher background position
+                    if (brand === 'universe') {
+                        brandSwitcher.classList.add('universe-active');
+                    } else {
+                        brandSwitcher.classList.remove('universe-active');
+                    }
+                    
+                    // Optional: Trigger any additional functionality based on selection
+                    console.log(`Switched to: ${brand}`);
+                    
+                    // You can add custom events or callbacks here
+                    // For example, changing page content or making API calls
+                    handleBrandSwitch(brand);
+                });
+            });
+        });
+        
+        function handleBrandSwitch(brand) {
+            
+            if (brand === 'unihive') {
+window.location.href = '/homepage';
+            } else {
+                window.location.href = '/universe';
+            }
+        }
+</script>
+</body>
+</html>
