@@ -1,0 +1,4134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UniHive</title>
+
+    <!-- Google Fonts (Poppins) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts (Poppins) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- FullPage.js Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            background-color: #778DA9;
+            color: #0D1321;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        /* Modern UniHive Design - Based on the preferred styles */
+        /* Base Styles */
+        
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            color: #E0E1DD;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            background-color: #0D1321;
+            /* Fallback color if gradient fails */
+        }
+        /* Particles Container Styles */
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        /* Beautiful Gradient Background - Dark blue theme */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(140deg, #0D1321 0%, #1B263B 35%, #0D1B2A 65%, #0D1321 100%);
+            animation: subtleGradientAnimation 25s infinite alternate;
+        }
+        
+        @keyframes subtleGradientAnimation {
+            0% {
+                background-position: 0% 0%;
+            }
+            33% {
+                background-position: 2% 1%;
+            }
+            66% {
+                background-position: 1% 2%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Navigation Bar Styles - Dark theme */
+        
+        nav {
+            background-color: rgba(13, 19, 33, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(224, 225, 221, 0.1);
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background-color 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+        }
+        
+        nav.scrolled {
+            background-color: rgba(27, 38, 59, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom-color: rgba(224, 225, 221, 0.2);
+        }
+        
+        .center-nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .brand-switcher {
+            display: flex;
+            background-color: #3E5C76;
+            border-radius: 25px;
+            padding: 5px;
+            position: relative;
+            height: 40px;
+            width: 220px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-right: 20px;
+        }
+        
+        .brand-switcher::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: calc(50% - 5px);
+            height: calc(100% - 10px);
+            background-color: #0D1321;
+            border-radius: 20px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+        
+        .brand-switcher.universe-active::after {
+            transform: translateX(100%);
+        }
+        
+        .brand-option {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #E0E1DD;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
+            border-radius: 20px;
+        }
+        
+        .brand-option:hover {
+            color: #FFD972;
+        }
+        
+        .brand-option.active {
+            color: #FFD972;
+        }
+        
+        .universe-logo {
+            height: 60px;
+            width: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 3px #0D1321);
+            margin-right: 0;
+            margin-left: -10px;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+        
+        .universe-text {
+            font-size: 30px;
+            font-weight: 700;
+            color: #E0E1DD;
+            letter-spacing: 1px;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+            transition: all 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            gap: 10px;
+        }
+        
+        nav ul li {
+            display: inline-block;
+            list-style: none;
+            opacity: 0;
+            transform: translateY(-40px) scale(0.95);
+            animation: navPillIn 0.7s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+        }
+        
+        nav ul li:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        nav ul li:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        
+        nav ul li:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        
+        nav ul li:nth-child(4) {
+            animation-delay: 0.65s;
+        }
+        
+        @keyframes navPillIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 32px;
+            border-radius: 50px;
+            transition: all 0.25s cubic-bezier(.68, -0.55, .27, 1.55);
+            font-size: 15px;
+            display: block;
+            background: #3E5C76;
+            /* Blue buttons */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            opacity: 0.92;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        nav ul li a.active {
+            background: #E0E1DD;
+            color: #0D1321;
+            /* Dark text on light gray active button */
+            opacity: 1;
+            box-shadow: 0 0 18px rgba(62, 92, 118, 0.25);
+        }
+        
+        nav ul li a.active::after {
+            display: none;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 4px;
+            background: #EDEDED;
+            border-radius: 2px;
+            transition: transform 0.35s cubic-bezier(.68, -0.55, .27, 1.55);
+            z-index: 0;
+        }
+        
+        nav ul li a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        nav ul li a:hover:not(.active) {
+            background: #415A77;
+            /* Slightly lighter blue for hover */
+            color: #fff;
+            opacity: 1;
+            box-shadow: 0 4px 16px rgba(62, 92, 118, 0.13);
+            animation: pillPulse 0.33s;
+        }
+        
+        @keyframes pillPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        
+        #dark-mode-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .nav-icon {
+            color: #1B263B;
+            font-size: 21px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-icon:hover {
+            color: #3E5C76;
+            transform: scale(1.15);
+        }
+        
+        .notification-container {
+            position: relative;
+        }
+        
+        .user-profile .profile {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3E5C76, #6CA0DC);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(62, 92, 118, 0.2);
+        }
+        
+        .user-profile .profile:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(62, 92, 118, 0.3);
+        }
+        
+        .frame {
+            background-color: transparent;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            margin-top: 70px;
+            /* Add margin to accommodate the fixed navbar */
+            padding-top: 20px;
+        }
+        
+        .main-content {
+            padding-top: 90px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 auto;
+            padding: 30px;
+            max-width: 1400px;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .main-feed {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            border: 1px solid #000511;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: #000511;
+        }
+        /* Header Styles */
+        
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            background-color: rgba(62, 92, 118, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 100%;
+            border-bottom: 1px solid rgba(254, 163, 3, 0.3);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+        
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            width: 89px;
+            height: 89px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .site-title {
+            font-size: 36px;
+            color: #fea303;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        /* Modern Navbar */
+        
+        .main-nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main-nav a {
+            color: #0D1B2A;
+            font-weight: 800;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-nav a.active {
+            background-color: #0D1B2A;
+            color: #FFD972;
+            box-shadow: 0 4px 12px rgba(13, 27, 42, 0.3);
+        }
+        
+        .main-nav a:hover:not(.active) {
+            background-color: rgba(13, 27, 42, 0.15);
+            transform: translateY(-2px);
+        }
+        /* User Actions */
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        
+        .search {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .search:hover {
+            transform: scale(1.1);
+        }
+        
+        .notification {
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .notification i {
+            color: #fea303;
+            font-size: 1.7rem;
+        }
+        
+        .notification:hover {
+            transform: scale(1.1);
+        }
+        
+        .profile {
+            width: 45px;
+            height: 45px;
+            background-color: #d9d9d9;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fea303;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .profile:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(254, 163, 3, 0.5);
+        }
+        /* Announcements Section */
+        
+        .announcements {
+            color: #000511;
+            width: 100%;
+            background-color: #ffffff;
+            border: 1px solid #000511;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .announcements h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #fea303;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .announcements h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: #fea303;
+            border-radius: 3px;
+        }
+        /* Post Form */
+        
+        .post-form {
+            background-color: #E0E1DD;
+            color: #0D1321;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-color: #ffffff;
+            padding: 25px;
+            margin-bottom: 30px;
+            color: #0D1B2A;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            border-radius: 20px;
+            border: 1px solid #000511;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .post-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .username-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-avatar {
+            border: 2px solid #3E5C76;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #3E5C76;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.1);
+        }
+        
+        .username-input {
+            background: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #0D1B2A;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .topic-dropdown select {
+            background: #e9ecef;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            color: #0D1B2A;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .topic-dropdown select:hover {
+            background: #d1d9e6;
+        }
+        
+        .post-textarea {
+            min-height: 100px;
+            padding: 15px;
+            border: 1px solid #e1e1e1;
+            border-radius: 15px;
+            resize: none;
+            font-size: 1rem;
+            color: #0D1B2A;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        .post-textarea:focus {
+            border-color: #3E5C76;
+            box-shadow: 0 0 0 2px rgba(62, 92, 118, 0.2);
+            outline: none;
+        }
+        
+        .form-footer {
+            background-color: #0D1B2A;
+            color: #E0E1DD;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 15px 20px;
+            border-top: 1px solid #f0f0f0;
+            border-radius: 0 0 20px 20px;
+            margin-top: auto;
+            gap: 15px;
+        }
+        
+        .custom-file-button {
+            background: #e9ecef;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            color: #0D1B2A;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #d1d9e6;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-file-button:hover {
+            background: #d1d9e6;
+            transform: translateY(-3px);
+        }
+        
+        .submit-post {
+            padding: 10px 20px;
+            background-color: #3E5C76;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(254, 163, 3, 0.3);
+            color: #ffffff;
+        }
+        
+        .submit-post:hover {
+            background-color: #ec9500;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(254, 163, 3, 0.4);
+        }
+        /* Posts & Comments */
+        
+        .post {
+            background-color: #E0E1DD;
+            color: #0D1321;
+            border: none;
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .post header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #3E5C76;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            margin-bottom: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            color: white;
+        }
+        
+        .post-tag {
+            font-size: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-top: 4px;
+            width: fit-content;
+        }
+        
+        .post-content {
+            padding: 20px;
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+            max-width: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        
+        .post footer {
+            background-color: #3E5C76;
+            color: #E0E1DD;
+            padding: 12px;
+            border-radius: 0 0 10px 10px;
+            margin: 15px -20px -20px -20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .like-button,
+        .comment-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            flex: 1;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #0D1B2A;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .like-button:hover,
+        .comment-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+        }
+        
+        .like-button.liked {
+            color: #0D1B2A;
+            font-weight: bold;
+        }
+        
+        .more-options {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .more-options:hover {
+            transform: scale(1.2);
+        }
+        
+        .options-menu {
+            position: absolute;
+            top: 1.8rem;
+            right: 0;
+            background: #fff;
+            border: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+        
+        .options-menu li {
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s ease;
+        }
+        
+        .options-menu li:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .comment-section {
+            margin-top: 12px;
+            border-top: 1px solid #eaeaea;
+            padding-top: 15px;
+            display: none;
+            background-color: #f8f9fa;
+            border-left: 4px solid #fea303;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comment-input {
+            background-color: #ffffff;
+            color: #0D1321;
+            border: 1px solid #cccccc;
+            width: 100%;
+            border: 1px solid #e1e1e1;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+            color: #0D1B2A;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        .comment-input:focus {
+            border-color: #3E5C76;
+            box-shadow: 0 0 0 2px rgba(62, 92, 118, 0.2);
+            outline: none;
+        }
+        
+        .submit-comment {
+            padding: 10px 20px;
+            background-color: #3E5C76;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-comment:hover {
+            background-color: #2c4459;
+            transform: translateY(-2px);
+        }
+        
+        .comments-list .comment-entry {
+            background: #fff;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .comments-list .comment-entry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #3E5C76;
+        }
+        
+        .comment-body {
+            flex: 1;
+        }
+        
+        .comment-time {
+            font-size: 0.8rem;
+            color: #888;
+            margin-left: 8px;
+        }
+        
+        .comment-actions button {
+            background: none;
+            border: none;
+            font-size: 0.85rem;
+            color: #3E5C76;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .comment-actions button:hover {
+            background-color: rgba(62, 92, 118, 0.1);
+        }
+        /* Sidebar */
+        
+        .sidebar {
+            width: 30%;
+            margin-left: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .sidebar .clubs h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0D1B2A;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar .clubs h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: #fea303;
+            border-radius: 3px;
+        }
+        
+        .clubs-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E0E1DD;
+        }
+        
+        .additional-content-1,
+        .additional-content-2 {
+            background-color: rgba(62, 92, 118, 0.85);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            margin-bottom: 30px;
+            padding: 25px;
+            margin-top: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .additional-content-1:hover,
+        .additional-content-2:hover {
+            transform: translateY(-5px);
+        }
+        /* Modern Footer Styles */
+        
+        .page-footer {
+            background-color: #0D1B2A;
+            /* Dark blue, matching navbar elements */
+            color: #E0E1DD;
+            /* Light gray text */
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+        
+        .page-footer h5 {
+            font-size: 1.2rem;
+            /* Increased from 1.1rem */
+            color: #FFFFFF;
+            margin-bottom: 18px;
+            /* Slightly more space */
+        }
+        
+        .page-footer ul li a {
+            color: #E0E1DD;
+            text-decoration: none;
+            font-size: 1rem;
+            /* Increased from 0.9rem */
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            /* For transform to work */
+        }
+        
+        .page-footer .footer-about p {
+            color: #FFFFFF !important;
+            /* Bright white, forced */
+            font-size: 0.95rem;
+            /* Retaining a readable size */
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .page-footer .footer-bottom {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            /* The general color for .footer-bottom can be light gray with opacity */
+            color: rgba(224, 225, 221, 0.7);
+            /* Light gray with opacity */
+            font-size: 0.9rem;
+            /* Increased from 14px */
+        }
+        
+        .page-footer .footer-bottom p {
+            color: #FFFFFF !important;
+            /* Bright white, forced */
+            /* Font size is inherited from .footer-bottom or can be set here if needed */
+        }
+        
+        .footer-top {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-about,
+        .footer-links-column,
+        .contact-info {
+            flex: 1;
+            min-width: 220px;
+            /* Ensure columns don't get too squished */
+        }
+        
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+        
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 30px;
+            height: 2px;
+            background-color: #FFD972;
+            /* Accent color for underline */
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #E0E1DD;
+            /* Light gray for links */
+            text-decoration: none;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+        }
+        
+        .footer-links a:hover,
+        .footer-links a.active {
+            color: #FFD972;
+            /* Accent color on hover/active */
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #E0E1DD;
+            transition: fill 0.3s ease, transform 0.3s ease;
+        }
+        
+        .social-icon:hover svg {
+            fill: #FFD972;
+            transform: scale(1.15);
+        }
+        
+        .contact-info p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            /* Increased gap for better alignment */
+            margin-bottom: 10px;
+        }
+        
+        .contact-info svg {
+            min-width: 20px;
+            /* Keep existing rule */
+            color: #FFD972;
+            /* Keep existing rule for icon color */
+            fill: #FFD972;
+            /* Ensure SVG fill matches for consistency */
+        }
+        /* Responsive adjustments for footer columns */
+        
+        @media screen and (max-width: 768px) {
+            .footer-top {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-about,
+            .footer-links-column,
+            .contact-info {
+                min-width: 100%;
+                align-items: center;
+                /* Center content in columns */
+            }
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+                /* Center the underline */
+            }
+            .social-links {
+                justify-content: center;
+            }
+            .contact-info p {
+                justify-content: center;
+            }
+        }
+        /* Main Feed Header */
+        
+        .main-feed-header {
+            padding: 30px 0 10px;
+            text-align: center;
+        }
+        
+        .page-heading {
+            color: #0D1B2A;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .page-heading:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #FFD972;
+            border-radius: 2px;
+        }
+        /* Announcements Container - Modern Style */
+        
+        .announcements-container {
+            margin: 30px auto 60px;
+            padding: 0;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+        }
+        
+        .section-title {
+            color: #0D1B2A;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: left;
+            padding: 0;
+            letter-spacing: 0.5px;
+        }
+        /* Announcements Carousel - Modern */
+        
+        .announcements-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            gap: 0;
+            padding: 0;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+        }
+        
+        .announcements-carousel::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+        
+        .announcement-item {
+            min-width: 100%;
+            height: 220px;
+            background: #ffffff;
+            overflow: hidden;
+            flex: 0 0 auto;
+            transition: all 0.5s ease;
+            position: relative;
+            border-radius: 12px;
+        }
+        
+        .announcement-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: transform 0.5s ease;
+        }
+        
+        .announcement-item:hover img {
+            transform: scale(1.03);
+        }
+        
+        .announcement-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(13, 27, 42, 0.9), transparent);
+            color: white;
+            padding: 30px 15px 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        /* Indicators for carousel */
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #FFD972;
+            transform: scale(1.3);
+        }
+        /* Modern Scroll buttons */
+        
+        .scroll-buttons {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            left: 0;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .scroll-left,
+        .scroll-right {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            color: #FFD972;
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            margin: 0 20px;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .scroll-left:hover,
+        .scroll-right:hover {
+            background: #FFD972;
+            color: #0D1B2A;
+            transform: scale(1.1);
+        }
+        /* Responsive adjustments */
+        
+        @media screen and (max-width: 1200px) {
+            .main-feed {
+                max-width: 100%;
+            }
+            .sidebar {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 30px;
+            }
+            .additional-content-1,
+            .additional-content-2 {
+                padding: 15px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            .main-nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .main-nav a {
+                padding: 8px 15px;
+                font-size: 16px;
+            }
+            .user-actions {
+                width: 100%;
+                justify-content: center;
+            }
+            .post-form,
+            .post {
+                border-radius: 15px;
+            }
+        }
+        /* Animation for better user experience */
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .post,
+        .post-form,
+        .announcements {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .universe-text {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        /* Add a blurred background image for the body */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            /* Rearranged gradients: Dark corners, light yellow center */
+            background: /* Lighter Blue Corners */
+            radial-gradient(ellipse 80% 90% at top left, rgba(62, 92, 118, 0.5) 0%, transparent 65%), /* Medium blue top left */
+            radial-gradient(ellipse 70% 80% at top right, rgba(91, 131, 166, 0.4) 0%, transparent 60%), /* Lighter blue top right */
+            radial-gradient(ellipse 75% 85% at bottom left, rgba(119, 141, 169, 0.45) 0%, transparent 65%), /* Light blue bottom left */
+            radial-gradient(ellipse 70% 80% at bottom right, rgba(152, 170, 189, 0.35) 0%, transparent 60%), /* Very light blue bottom right */
+            /* Soft Yellow Center / Mid - Eye-Friendly */
+            radial-gradient(ellipse 65% 75% at 50% 50%, rgba(255, 248, 214, 0.4) 0%, transparent 85%), /* Very soft cream yellow - gentler glow */
+            radial-gradient(ellipse 70% 80% at 45% 45%, rgba(253, 244, 189, 0.35) 10%, transparent 90%), /* Soft pastel yellow - muted and comfortable */
+            radial-gradient(ellipse 60% 70% at 55% 55%, rgba(242, 247, 224, 0.3) 5%, transparent 80%), /* Very soft yellow-green - reduced intensity */
+            /* Base */
+            #FFFDF0;
+            /* Very light cream color for the base */
+            filter: blur(0px);
+        }
+        
+        body.dark-mode::before {
+            background: /* Dark Corners - using dark mode colors */
+            radial-gradient(ellipse 80% 90% at top left, rgba(13, 19, 33, 0.85) 0%, transparent 65%), /* Dark blue top left */
+            radial-gradient(ellipse 70% 80% at top right, rgba(27, 38, 59, 0.8) 0%, transparent 60%), /* Navy blue top right */
+            radial-gradient(ellipse 75% 85% at bottom left, rgba(27, 38, 59, 0.75) 0%, transparent 65%), /* Medium blue bottom left */
+            radial-gradient(ellipse 70% 80% at bottom right, rgba(13, 27, 42, 0.7) 0%, transparent 60%), /* Darker blue bottom right */
+            /* Center with enhanced dark blue tones */
+            radial-gradient(ellipse 65% 75% at 50% 50%, rgba(62, 92, 118, 0.6) 0%, transparent 80%), radial-gradient(ellipse 70% 80% at 45% 45%, rgba(119, 141, 169, 0.5) 5%, transparent 85%), radial-gradient(ellipse 60% 70% at 55% 55%, rgba(62, 92, 118, 0.45) 3%, transparent 80%), /* Base */
+            #0D1321;
+            /* Dark blue base color */
+            filter: blur(0px);
+            animation: subtleGlow 20s infinite alternate;
+        }
+        
+        @keyframes subtleGlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            33% {
+                background-position: 2% 1%;
+            }
+            66% {
+                background-position: 1% 2%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Enhanced background effects with animated gradients and patterns */
+        
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: none;
+            animation: cloudShift 100s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes cloudShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+        
+        body.dark-mode::after {
+            background: /* Light sparkles using yellow-green palette */
+            radial-gradient(ellipse at 80% 20%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 20% 40%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 60%), radial-gradient(ellipse at 40% 85%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 65% 55%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 55%);
+            animation: cloudShift 120s linear infinite, sparkleShift 25s ease-in-out infinite alternate;
+        }
+        
+        @keyframes sparkleShift {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* FullPage Scrolling Styles */
+        
+        #fullpage {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .content-container {
+            max-width: 1200px;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #3E5C76;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #3E5C76, #778DA9);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        /* Scroll Indicators */
+        
+        .scroll-down-hint,
+        .scroll-up-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: #3E5C76;
+            font-weight: 500;
+            z-index: 10;
+        }
+        
+        .scroll-up-hint {
+            bottom: auto;
+            top: 30px;
+        }
+        
+        .bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        /* Announcement Section Styles - Full Width */
+        
+        .fullwidth-container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #section-announcements .section-title {
+            position: absolute;
+            top: 100px;
+            /* Moved down to account for navbar */
+            left: 60px;
+            /* Aligned to the left */
+            transform: none;
+            z-index: 10;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0;
+            text-align: left;
+            font-size: 2.8rem;
+        }
+        
+        #section-announcements .announcements-fullscreen {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .announcement-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: scale(0.95);
+        }
+        
+        .announcement-item.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+        
+        .announcement-item img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        
+        .announcement-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+            color: white;
+        }
+        
+        .announcement-caption h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .announcement-caption p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .btn-more {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #3E5C76;
+            color: white;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-more:hover {
+            background: #0D1321;
+            transform: translateY(-2px);
+        }
+        
+        .announcement-controls {
+            position: absolute;
+            bottom: 120px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            gap: 12px;
+            margin: 0 30px;
+        }
+        
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .indicator.active {
+            background-color: #3E5C76;
+            transform: scale(1.2);
+            border-color: white;
+        }
+        
+        .scroll-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .scroll-left,
+        .scroll-right {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-left:hover,
+        .scroll-right:hover {
+            background: #3E5C76;
+            transform: scale(1.1);
+        }
+        
+        .scroll-down-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-align: center;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        /* Clubs Section Styles - Updated */
+        
+        .clubs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .club-card {
+            background: #3E5C76;
+            /* Blue cards with white text as per design preferences */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
+            position: relative;
+        }
+        
+        .club-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+        
+        .club-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .club-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(13, 19, 33, 0.8), transparent);
+        }
+        
+        .club-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .club-card:hover .club-image img {
+            transform: scale(1.1);
+        }
+        
+        .club-info {
+            padding: 20px;
+        }
+        
+        .club-info h3 {
+            margin: 0 0 10px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .club-info p {
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .club-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+        }
+        
+        .social-links-club {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px);
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links-club:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .club-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(119, 141, 169, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 5;
+            backdrop-filter: blur(3px);
+        }
+        /* Feed Section Styles */
+        
+        #section-feed .content-container {
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        
+        .feed-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .post-form {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .posts-container {
+            flex: 1;
+            overflow-y: hidden;
+            padding-right: 10px;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        /* Custom Scrollbar */
+        
+        .posts-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .posts-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .posts-container::-webkit-scrollbar-thumb {
+            background: #3E5C76;
+            border-radius: 10px;
+        }
+        /* Animation Classes */
+        
+        .fade-in-up {
+            animation: fadeInUp 1s forwards;
+        }
+        
+        .fade-in-down {
+            animation: fadeInDown 1s forwards;
+        }
+        
+        .fade-in-left {
+            animation: fadeInLeft 1s forwards;
+        }
+        
+        .fade-in-right {
+            animation: fadeInRight 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* Responsive Adjustments */
+        
+        @media (max-width: 768px) {
+            .content-container {
+                width: 95%;
+                padding: 1rem;
+            }
+            .clubs-container {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            #section-announcements .announcements-carousel {
+                height: 300px;
+            }
+        }
+        /* Animated particles effect */
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        /* Post Form Section */
+        
+        #section-post-form {
+            background-color: #f5f7fa;
+        }
+        
+        #section-post-form .content-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Posts Feed Section */
+        
+        #section-posts-feed .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            height: 100%;
+        }
+        
+        .posts-container {
+            height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        /* Scroll Down Hint */
+        
+        .scroll-down-hint {
+            text-align: center;
+            margin-top: 40px;
+            color: #3E5C76;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-down-hint p {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        @keyframes bounce {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        /* FullPage.js Navigation Dots Customization */
+        
+        #fp-nav ul li a span,
+        .fp-slidesNav ul li a span {
+            background: #3E5C76 !important;
+            overflow-y: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 238, 147, 0.5);
+            /* Yellow particles for better visibility */
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatParticle var(--duration) ease-in-out infinite;
+        }
+        /* Yellow particles in dark mode */
+        
+        body.dark-mode .particle {
+            background: rgba(234, 248, 191, 0.5);
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            25% {
+                opacity: var(--opacity);
+            }
+            75% {
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translateY(-20vh) translateX(var(--travel));
+                opacity: 0;
+            }
+        }
+        
+        .uploaded-image {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="particles-container">
+    </div>
+
+    <!-- Clean Navigation Bar -->
+    <nav>
+        <div class="universe-text">UNIHIVERSE</div>
+
+        <div class="center-nav">
+            <div class="brand-switcher" id="brand-switcher">
+                <div class="brand-option active" data-brand="unihive">UniHive</div>
+                <div class="brand-option " data-brand="universe">Universe</div>
+            </div>
+
+            <ul>
+                <li><a href="#" class="active">Feed</a></li>
+                <li><a href="/lostnfound">Lost&Found</a></li>
+                <li><a href="/books">Books Shop</a></li>
+            </ul>
+        </div>
+
+        <div class="right-nav">
+            <button id="dark-mode-toggle">
+                <i id="theme-icon" class="fa-solid fa-sun nav-icon"></i>
+            </button>
+            <div class="notification-container">
+                <i class="fa-solid fa-bell nav-icon" id="notification-bell"></i>
+            </div>
+            <div class="user-profile">
+                <div class="profile" aria-label="User profile"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FullPage Scrolling Content -->
+    <div id="fullpage">
+        <!-- SECTION 1: ANNOUNCEMENTS (Full Screen) -->
+        <div class="section" id="section-announcements">
+            <div class="fullwidth-container">
+                <h1 class="section-title">Announcements</h1>
+                <div class="loading-spinner" id="loading-spinner"></div>
+                <div class="announcements-fullscreen announcements-carousel" id="announcements-carousel">
+                    <div class="announcement-item active">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="University announcement 1">
+                        <div class="announcement-caption">
+                            <h3>New Campus Facilities</h3>
+                            <p>Opening next month with state-of-the-art technology and study spaces</p>
+                            <a href="#" class="btn-more">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="University announcement 2">
+                        <div class="announcement-caption">
+                            <h3>Fall Semester Registration</h3>
+                            <p>Registration begins on August 15th - prepare your schedule now</p>
+                            <a href="#" class="btn-more">Register</a>
+                        </div>
+                    </div>
+                    <div class="announcement-item">
+                        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="University announcement 3">
+                        <div class="announcement-caption">
+                            <h3>Graduation Ceremony</h3>
+                            <p>Class of 2025 ceremony details and important dates</p>
+                            <a href="#" class="btn-more">View Schedule</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="announcement-controls" id="announcement-controls">
+                    <div class="carousel-indicators" id="carousel-indicators">
+                        <span class="indicator active" data-index="0"></span>
+                        <span class="indicator" data-index="1"></span>
+                        <span class="indicator" data-index="2"></span>
+                    </div>
+                    <div class="scroll-buttons">
+                        <button class="scroll-left"><i class="fas fa-chevron-left"></i></button>
+                        <button class="scroll-right"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="scroll-down-hint">
+                    <p>Scroll Down</p>
+                    <i class="fas fa-chevron-down bounce"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: CLUBS (Full Screen) -->
+        <div class="section" id="section-clubs">
+            <div class="content-container">
+                <h1 class="section-title">University Clubs</h1>
+                <div class="clubs-container">
+                    <div class="club-card">
+                        <div class="club-badge">Science & Tech</div>
+                        <a href="https://www.instagram.com/robotics_club" class="social-links-club" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <div class="club-image">
+                            <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Robotics Club">
+                        </div>
+                        <div class="club-info">
+                            <h3>Robotics Club</h3>
+                            <p>Build robots, learn programming and participate in competitions. Our members have won national awards for innovative designs.</p>
+                            <div class="club-meta">
+                                <span><i class="fas fa-users"></i> 42 members</span>
+                                <span><i class="fas fa-calendar-alt"></i> Tue, Thu</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="club-card">
+                        <div class="club-badge">Communication</div>
+                        <a href="https://www.instagram.com/debate_masters" class="social-links-club" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <div class="club-image">
+                            <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Debate Club">
+                        </div>
+                        <div class="club-info">
+                            <h3>Debate Club</h3>
+                            <p>Improve public speaking skills and participate in regional tournaments. Weekly meetings include mock debates and speaking exercises.</p>
+                            <div class="club-meta">
+                                <span><i class="fas fa-users"></i> 28 members</span>
+                                <span><i class="fas fa-calendar-alt"></i> Mon, Wed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="club-card">
+                        <div class="club-badge">Arts</div>
+                        <a href="https://www.instagram.com/photo_visionaries" class="social-links-club" target="_blank" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <div class="club-image">
+                            <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Photography Club">
+                        </div>
+                        <div class="club-info">
+                            <h3>Photography Club</h3>
+                            <p>Learn photography techniques and showcase your work in exhibitions. Access to professional equipment and studio space available for members.</p>
+                            <div class="club-meta">
+                                <span><i class="fas fa-users"></i> 35 members</span>
+                                <span><i class="fas fa-calendar-alt"></i> Fri, Sat</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <a href="/all-clubs" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #2d668b 100%); color: white; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: 600; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(102, 126, 234, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                            <i class="fas fa-list" style="margin-right: 8px;"></i>View All Clubs
+                        </a>
+                    </div>
+                </div>
+
+                <div class="scroll-down-hint">
+                    <p>Scroll Down</p>
+                    <i class="fas fa-chevron-down bounce"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: FEED & POST (Full Screen) -->
+        <div class="section" id="section-feed">
+            <div class="content-container">
+                <div class="feed-header">
+                    <h1 class="section-title">Campus Feed</h1>
+                    <p class="cta-text">Don't wait and start buzzing with others</p>
+                </div>
+                <div id="lostFoundModalBackdrop" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000;">
+                    <div id="lostFoundModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; z-index: 1001; max-width: 500px; width: 90%;">
+                        <h3>Lost & Found Information</h3>
+
+                        <div style="margin: 10px 0;">
+                            <label><input type="radio" name="type" value="lost"> Lost Item</label><br>
+                            <label><input type="radio" name="type" value="found"> Found Item</label>
+                        </div>
+
+                        <div style="margin: 10px 0;">
+                            <label>Location:</label><br>
+                            <input type="text" name="location" style="width: 100%; padding: 5px;" placeholder="Where was it lost/found?">
+                        </div>
+
+                        <div style="margin: 10px 0;">
+                            <label>Contact Information:</label><br>
+                            <input type="text" name="contact" style="width: 100%; padding: 5px;" placeholder="Email or phone number">
+                        </div>
+
+                        <div style="margin: 10px 0;">
+                            <label>Description:</label><br>
+                            <textarea id="lost-found-response" style="width: 100%; padding: 5px; height: 80px;" placeholder="Describe the item..."></textarea>
+                        </div>
+
+                        <div style="margin: 10px 0;">
+                            <label>Upload Image (optional):</label><br>
+                            <input type="file" id="lost-found-image" accept="image/*">
+                        </div>
+
+                        <div style="text-align: right; margin-top: 15px;">
+                            <button id="modalCancel" style="margin-right: 10px; padding: 8px 16px;">Cancel</button>
+                            <button id="modalSubmit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px;">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Redesigned Post Form -->
+                <form class="post-form" action="/posts" method="post" enctype="multipart/form-data">
+                    <!-- Lost & Found Modal Structure -->
+
+                    <!-- Form Header: Username + Topic Dropdown on the right -->
+                    <div class="form-header">
+                        <div class="username-container">
+                            <img class="user-avatar" src="https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png" alt="User avatar" />
+                            <input type="text" class="username-input" placeholder="username_" aria-label="Username" readonly />
+                        </div>
+
+                        <div class="topic-dropdown">
+                            <label for="topic-select" class="visually-hidden">Select Topic</label>
+                            <select id="topic-select" aria-label="Select topic" name="tags">
+                                <option value="" disabled selected hidden>Topic</option>
+                                <option value="tips">Tips</option>
+                                <option value="general">General</option>
+                                <option value="lost&found">Lost&Found</option>
+                                <option value="help">Help</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Post content area -->
+                    <textarea class="post-textarea" maxlength="500" name="content" placeholder="Say something..." aria-label="Post content"></textarea>
+
+                    <!-- Form Footer: File Upload + Post Button -->
+                    <div class="form-footer">
+                        <!-- Custom file label + hidden file input -->
+                        <label class="custom-file-button" for="image-upload">
+                            <i class="fas fa-image"></i> Image
+                        </label>
+                        <!-- Show selected file name here -->
+                        <span id="selected-file-name"></span>
+                        <input id="image-upload" type="file" aria-label="Upload image" name="image" accept="image/*" hidden />
+                        <button class="submit-post" type="submit">
+                            Post <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+
+
+        <!-- SECTION 4: POSTS FEED (Full Screen) -->
+        <div class="section" id="section-posts-feed">
+            <div class="content-container">
+                <h1 class="section-title">Community Posts</h1>
+
+                <!-- Posts Container -->
+                <div class="posts-container" id="posts-list">
+                    <!-- Posts will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+        <div class="footer-top">
+            <div class="footer-about">
+                <h3 class="footer-logo">Helping students connect, share, and thrive</h3>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                    </svg>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Fast Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Feed</a></li>
+                    <li><a href="#">Lost&Found</a></li>
+                    <li><a href="#">Book Shop</a></li>
+                    <li><a href="#">Switch to UniVerse</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links-column">
+                <h3 class="footer-title">Informations</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Report a Bug</a></li>
+                    <li><a href="#">UniHiVerse@univ-blida.dz</a></li>
+                    <li><a href="#">Support:14h-18h</Hours:14h-18h></a></li>
+                    <li><a href="#">Conditions</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3 class="footer-title">Contactez-nous</h3>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg> University Of Saad Dahleb
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg> By TeenTechTitans
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 UniHive. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        let isFormSubmitting = false; // Prevent double submissions
+
+        async function loadPosts() {
+            try {
+                const response = await fetch('/homepage', {
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load posts');
+                }
+
+                const data = await response.json();
+                renderPosts(data.posts);
+
+                // Update form with user info if available
+                if (data.user) {
+                    const usernameInput = document.querySelector('.username-input');
+                    const userAvatar = document.querySelector('.form-header .user-avatar');
+
+                    if (usernameInput) {
+                        usernameInput.value = data.user.username || data.user.full_name;
+                    }
+
+                    if (userAvatar && data.user.pfp) {
+                        userAvatar.src = `/${data.user.pfp}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                const container = document.querySelector('.main-feed');
+                if (container) {
+                    const errorElem = document.createElement('p');
+                    errorElem.className = 'error-message';
+                    errorElem.textContent = 'Failed to load posts. Please try again later.';
+                    container.appendChild(errorElem);
+                }
+            }
+        }
+
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            console.log("Form submitted - single handler");
+            // Prevent double submissions
+            if (isFormSubmitting) {
+                console.log("Form already submitting, ignoring...");
+                return;
+            }
+
+            isFormSubmitting = true;
+            console.log("Form submitted - single handler");
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const tagSelect = form.querySelector('select[name="tags"]');
+            const selectedTag = tagSelect ? tagSelect.value : null;
+
+            // Check if lost&found is selected but not completed
+            if ((selectedTag === 'lost&found') && !lostFoundCompleted) {
+                alert('Please complete the Lost & Found information before submitting.');
+                showLostFoundModal();
+                return;
+            }
+
+            // Add lost & found data to form if completed
+            if (lostFoundCompleted && window.lostFoundData) {
+                formData.append('lostfound_type', window.lostFoundData.type);
+                formData.append('location', window.lostFoundData.location);
+                formData.append('contact', window.lostFoundData.contact);
+                formData.append('lost_found_response', window.lostFoundData.description);
+            }
+
+            try {
+                const response = await fetch('/posts', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to create post');
+                }
+
+                // Clear form and reset state
+                clearForm();
+                lostFoundCompleted = false;
+                window.lostFoundData = null;
+                await loadPosts();
+
+            } catch (error) {
+                console.error('Error creating post:', error);
+                alert('Failed to create post: ' + error.message);
+            } finally {
+                isFormSubmitting = false;
+            }
+        }
+
+
+
+        // Display selected file name
+        const imageUpload = document.getElementById('image-upload');
+        if (imageUpload) {
+            imageUpload.addEventListener('change', function() {
+                const fileNameDisplay = document.getElementById('selected-file-name');
+                if (fileNameDisplay) {
+                    fileNameDisplay.textContent = this.files.length > 0 ? this.files[0].name : '';
+                }
+            });
+        }
+
+        // Function to render posts
+        function renderPosts(posts) {
+            console.log('Rendering posts:', posts); // Debug log
+            if (!posts || !Array.isArray(posts)) {
+                console.error("No posts data available");
+                return;
+            }
+
+            const container = document.querySelector('.main-feed');
+            if (!container) {
+                console.error("Main feed container not found");
+                return;
+            }
+
+            // Keep the form and title at the top
+            const postForm = container.querySelector('.post-form');
+            const ctaText = container.querySelector('.cta-text');
+
+            // Clear existing posts but keep form and title
+            const existingPosts = container.querySelectorAll('.post');
+            existingPosts.forEach(post => post.remove());
+
+            if (posts.length === 0) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.textContent = 'No posts yet. Be the first to post!';
+                emptyMessage.className = 'empty-posts-message';
+                container.appendChild(emptyMessage);
+                return;
+            }
+
+            // Create and append each post
+            posts.forEach(post => {
+                        const postElement = document.createElement('article');
+                        postElement.className = 'post';
+                        postElement.dataset.postId = post.id;
+
+                        const postDate = new Date(post.post_date).toLocaleString();
+
+                        postElement.innerHTML = `
+            <header>
+                <img class="user-avatar" src="${post.user_pfp}" alt="User avatar" />
+                <div class="post-header-text">
+                    <h3>${escapeHtml(post.username)}</h3>
+                    <span class="post-tag">${escapeHtml(post.tags || 'General')}</span>
+                </div>
+                <div class="more-options-wrapper">
+                    <button class="more-options" aria-label="More options">...</button>
+                    <ul class="options-menu">
+                        <li><button class="remove-post">Delete</button></li>
+                        <li><button class="report-post">Report</button></li>
+                    </ul>
+                </div>
+            </header>
+            <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
+            ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" style="max-width: 100%; border-radius: 8px; margin-top: 10px;" />` : ''}
+            <p class="timestamp" style="font-size: 0.8rem; color: #777; margin-top: 8px;">
+                Posted on ${postDate}
+            </p>
+            <footer>
+                <button class="like-button" aria-label="Like post">
+                    <i class="far fa-thumbs-up"></i> <span class="like-count">0</span>
+                </button>
+                <button class="comment-button" aria-label="Comment on post">
+                    <i class="far fa-comment-dots"></i>
+                </button>
+            </footer>
+            <div class="comment-section">
+                <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
+                <button class="submit-comment">
+                    <i class="far fa-paper-plane"></i> Comment
+                </button>
+                <div class="comments-list"></div>
+            </div>
+        `;
+        
+        container.appendChild(postElement);
+    });
+    
+    // Set up interactions for the new posts
+    setupPostInteractions();
+}
+
+// Helper function to escape HTML (prevent XSS)
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Function to set up post interactions (likes, comments, etc.)
+function setupPostInteractions() {
+    // Like button functionality
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const likeCount = this.querySelector('.like-count');
+            const isLiked = this.classList.contains('liked');
+            
+            this.classList.toggle('liked');
+            likeCount.textContent = isLiked ? 
+                parseInt(likeCount.textContent) - 1 : 
+                parseInt(likeCount.textContent) + 1;
+            
+            // Update icon
+            const icon = this.querySelector('i');
+            icon.className = isLiked ? 
+                'far fa-thumbs-up' : 
+                'fas fa-thumbs-up';
+        });
+    });
+    
+    // Comment button functionality
+    document.querySelectorAll('.comment-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentSection = post.querySelector('.comment-section');
+            commentSection.style.display = 
+                commentSection.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Submit comment functionality
+    document.querySelectorAll('.submit-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentInput = post.querySelector('.comment-input');
+            const commentsList = post.querySelector('.comments-list');
+            
+            const commentText = commentInput.value.trim();
+            if (!commentText) return;
+            
+            // Create comment element
+            const comment = document.createElement('div');
+            comment.className = 'comment-entry';
+            
+            // Get user info (or use placeholder)
+            const userPfp = currentUser?.pfp || 'https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png';
+            const userName = currentUser?.username || currentUser?.full_name || 'username_';
+            
+            comment.innerHTML = `
+                <img src="${userPfp}" alt="Commenter avatar" class="comment-avatar" />
+                <div class="comment-body">
+                    <strong>${userName}</strong>
+                    <span class="comment-time">${new Date().toLocaleString()}</span>
+                    <br>
+                    <span class="comment-text">${escapeHtml(commentText).replace(/\n/g, '<br>')}</span>
+                    <div class="comment-actions">
+                        <button class="edit-comment">Edit</button>
+                        <button class="delete-comment">Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add edit/delete listeners
+            comment.querySelector('.edit-comment').addEventListener('click', function() {
+                const textSpan = comment.querySelector('.comment-text');
+                const newText = prompt('Edit your comment:', textSpan.textContent);
+                if (newText !== null) {
+                    textSpan.innerHTML = escapeHtml(newText).replace(/\n/g, '<br>');
+                }
+            });
+            
+            comment.querySelector('.delete-comment').addEventListener('click', function() {
+                comment.remove();
+            });
+            
+            commentsList.appendChild(comment);
+            commentInput.value = '';
+        });
+    });
+    
+    // More options functionality
+    document.querySelectorAll('.more-options').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Close menus when clicking elsewhere
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    });
+    
+    // Remove post
+    document.querySelectorAll('.remove-post').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            post.remove();
+        });
+    });
+    
+    // Report post
+    document.querySelectorAll('.report-post').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('🚩 This post has been reported.');
+        });
+    });
+}
+    </script>
+
+    <!-- Particle Effects Script -->
+    <script>
+        // Fixed Announcements Carousel Class
+        class AnnouncementsCarousel {
+            constructor() {
+                this.announcements = [];
+                this.currentIndex = 0;
+                this.autoRotateInterval = null;
+                this.isLoading = false;
+
+                this.initializeElements();
+                this.loadAnnouncements();
+            }
+
+            initializeElements() {
+                // Wait for DOM to be ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => this.findElements());
+                } else {
+                    this.findElements();
+                }
+            }
+
+            findElements() {
+                // Try to find elements with multiple selectors
+                this.carousel = this.findElement([
+                    '#announcements-carousel',
+                    '.announcements-carousel',
+                    '[data-carousel="announcements"]'
+                ]);
+
+                this.controls = this.findElement([
+                    '#announcement-controls',
+                    '.announcement-controls',
+                    '.carousel-controls'
+                ]);
+
+                this.indicators = this.findElement([
+                    '#carousel-indicators',
+                    '.carousel-indicators',
+                    '.indicators'
+                ]);
+
+                this.prevBtn = this.findElement([
+                    '#scroll-left',
+                    '.scroll-left',
+                    '.prev-btn'
+                ]);
+
+                this.nextBtn = this.findElement([
+                    '#scroll-right',
+                    '.scroll-right',
+                    '.next-btn'
+                ]);
+
+                this.loadingSpinner = this.findElement([
+                    '#loading-spinner',
+                    '.loading-spinner',
+                    '.spinner'
+                ]);
+
+                this.errorMessage = this.findElement([
+                    '#error-message',
+                    '.error-message'
+                ]);
+
+                this.emptyMessage = this.findElement([
+                    '#empty-message',
+                    '.empty-message'
+                ]);
+
+                // Log what we found
+                console.log('Announcements elements found:', {
+                    carousel: !!this.carousel,
+                    controls: !!this.controls,
+                    indicators: !!this.indicators,
+                    prevBtn: !!this.prevBtn,
+                    nextBtn: !!this.nextBtn
+                });
+
+                if (this.carousel) {
+                    this.setupEventListeners();
+                } else {
+                    console.error('Announcements carousel container not found!');
+                    this.createFallbackCarousel();
+                }
+            }
+
+            findElement(selectors) {
+                for (let selector of selectors) {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        console.log(`Found element with selector: ${selector}`);
+                        return element;
+                    }
+                }
+                return null;
+            }
+
+            createFallbackCarousel() {
+                console.log('Creating fallback announcements carousel...');
+
+                // Find the announcements section
+                const announcementsSection = document.querySelector('#announcements, .section-announcements, [data-section="announcements"]');
+
+                if (!announcementsSection) {
+                    console.error('No announcements section found to inject carousel');
+                    return;
+                }
+
+                // Create the carousel structure
+                const carouselHTML = `
+            <div class="announcements-container">
+                <div id="loading-spinner" class="loading-spinner" style="display: none; text-align: center; padding: 20px;">
+                    <div style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite; margin: 0 auto;"></div>
+                    <p>Loading announcements...</p>
+                </div>
+                
+                <div id="error-message" class="error-message" style="display: none; color: #e74c3c; text-align: center; padding: 20px;">
+                    Failed to load announcements
+                </div>
+                
+                <div id="empty-message" class="empty-message" style="display: none; text-align: center; padding: 20px; color: #7f8c8d;">
+                    No announcements available
+                </div>
+                
+                <div id="announcements-carousel" class="announcements-carousel" style="display: none; position: relative; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <!-- Announcements will be inserted here -->
+                </div>
+                
+                <div id="announcement-controls" class="announcement-controls" style="display: none; justify-content: center; align-items: center; margin-top: 15px; gap: 10px;">
+                    <button id="scroll-left" class="scroll-left" style="background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">‹</button>
+                    <div id="carousel-indicators" class="carousel-indicators" style="display: flex; gap: 8px;">
+                        <!-- Indicators will be inserted here -->
+                    </div>
+                    <button id="scroll-right" class="scroll-right" style="background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">›</button>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+                
+                .announcement-item {
+                    display: none;
+                    position: relative;
+                }
+                
+                .announcement-item.active {
+                    display: block;
+                }
+                
+                .announcement-item img {
+                    width: 100%;
+                    height: 300px;
+                    object-fit: cover;
+                }
+                
+                .announcement-caption {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+                    color: white;
+                    padding: 30px 20px 20px;
+                }
+                
+                .announcement-caption h3 {
+                    margin: 0 0 10px 0;
+                    font-size: 1.5rem;
+                }
+                
+                .announcement-caption p {
+                    margin: 0 0 15px 0;
+                    opacity: 0.9;
+                }
+                
+                .btn-more {
+                    background: #3498db;
+                    color: white;
+                    padding: 8px 16px;
+                    text-decoration: none;
+                    border-radius: 4px;
+                    display: inline-block;
+                    transition: background 0.3s;
+                }
+                
+                .btn-more:hover {
+                    background: #2980b9;
+                }
+                
+                .indicator {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: rgba(255,255,255,0.5);
+                    cursor: pointer;
+                    transition: background 0.3s;
+                }
+                
+                .indicator.active {
+                    background: white;
+                }
+                
+                .scroll-left:hover, .scroll-right:hover {
+                    background: #2980b9;
+                }
+            </style>
+        `;
+
+                announcementsSection.innerHTML = carouselHTML;
+
+                // Re-find elements after creating them
+                setTimeout(() => {
+                    this.findElements();
+                }, 100);
+            }
+
+            setupEventListeners() {
+                if (this.prevBtn) {
+                    this.prevBtn.addEventListener('click', () => this.previousSlide());
+                }
+
+                if (this.nextBtn) {
+                    this.nextBtn.addEventListener('click', () => this.nextSlide());
+                }
+
+                if (this.carousel) {
+                    // Pause auto-rotation on hover
+                    this.carousel.addEventListener('mouseenter', () => this.stopAutoRotate());
+                    this.carousel.addEventListener('mouseleave', () => this.startAutoRotate());
+                }
+            }
+
+            showLoading() {
+                if (this.loadingSpinner) {
+                    this.loadingSpinner.style.display = 'block';
+                }
+                if (this.carousel) {
+                    this.carousel.style.display = 'none';
+                }
+                if (this.controls) {
+                    this.controls.style.display = 'none';
+                }
+                if (this.errorMessage) {
+                    this.errorMessage.style.display = 'none';
+                }
+                if (this.emptyMessage) {
+                    this.emptyMessage.style.display = 'none';
+                }
+            }
+
+            hideLoading() {
+                if (this.loadingSpinner) {
+                    this.loadingSpinner.style.display = 'none';
+                }
+            }
+
+            showError(message) {
+                this.hideLoading();
+                if (this.errorMessage) {
+                    this.errorMessage.textContent = message;
+                    this.errorMessage.style.display = 'block';
+                }
+                if (this.carousel) {
+                    this.carousel.style.display = 'none';
+                }
+                if (this.controls) {
+                    this.controls.style.display = 'none';
+                }
+                if (this.emptyMessage) {
+                    this.emptyMessage.style.display = 'none';
+                }
+            }
+
+            showEmpty() {
+                this.hideLoading();
+                if (this.emptyMessage) {
+                    this.emptyMessage.style.display = 'block';
+                }
+                if (this.carousel) {
+                    this.carousel.style.display = 'none';
+                }
+                if (this.controls) {
+                    this.controls.style.display = 'none';
+                }
+                if (this.errorMessage) {
+                    this.errorMessage.style.display = 'none';
+                }
+            }
+
+            async loadAnnouncements() {
+                if (this.isLoading) return;
+
+                this.isLoading = true;
+                this.showLoading();
+
+                // Try multiple endpoints
+                const endpoints = [
+                    '/api/announcements',
+                    '/announcements',
+                    '/homepage/announcements'
+                ];
+
+                let data = null;
+                let lastError = null;
+
+                for (let endpoint of endpoints) {
+                    try {
+                        console.log(`Trying to fetch announcements from: ${endpoint}`);
+
+                        const response = await fetch(endpoint, {
+                            credentials: 'include',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            data = await response.json();
+                            console.log(`Successfully loaded announcements from ${endpoint}:`, data);
+                            break;
+                        } else {
+                            console.warn(`Failed to load from ${endpoint}: ${response.status} - ${response.statusText}`);
+                            lastError = new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                    } catch (error) {
+                        console.warn(`Error with endpoint ${endpoint}:`, error);
+                        lastError = error;
+                    }
+                }
+
+                // If no data from any endpoint, try to use mock data or show error
+                if (!data) {
+                    console.warn('No announcements data from any endpoint, using mock data');
+                    data = this.getMockAnnouncements();
+                }
+
+                if (!data || !Array.isArray(data) || data.length === 0) {
+                    this.showEmpty();
+                    this.isLoading = false;
+                    return;
+                }
+
+                this.announcements = data;
+                this.renderAnnouncements();
+                this.setupCarousel();
+                this.isLoading = false;
+            }
+
+            getMockAnnouncements() {
+                // Fallback mock data if no API is available
+                return [{
+                    id: 1,
+                    title: "Welcome to Campus!",
+                    content: "Join us for orientation week activities and campus tours.",
+                    image_url: "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    link: "#"
+                }, {
+                    id: 2,
+                    title: "Library Hours Extended",
+                    content: "The library will now be open 24/7 during finals week.",
+                    image_url: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    link: "#"
+                }, {
+                    id: 3,
+                    title: "Student Activities Fair",
+                    content: "Discover clubs and organizations on campus this Friday.",
+                    image_url: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+                    link: "#"
+                }];
+            }
+
+            renderAnnouncements() {
+                    if (!this.carousel || !this.indicators) {
+                        console.error('Cannot render announcements - missing carousel elements');
+                        return;
+                    }
+
+                    this.carousel.innerHTML = '';
+                    this.indicators.innerHTML = '';
+
+                    this.announcements.forEach((announcement, index) => {
+                                // Create announcement slide
+                                const slide = document.createElement('div');
+                                slide.className = `announcement-item ${index === 0 ? 'active' : ''}`;
+
+                                const imageUrl = announcement.image_url ||
+                                    announcement.image ||
+                                    `https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80`;
+
+                                slide.innerHTML = `
+                <img src="${imageUrl}" alt="${this.escapeHtml(announcement.title || 'University announcement')}" />
+                <div class="announcement-caption">
+                    <h3>${this.escapeHtml(announcement.title || 'Announcement')}</h3>
+                    <p>${this.escapeHtml(announcement.content || announcement.description || 'No description available')}</p>
+                    ${announcement.link ? `<a href="${announcement.link}" class="btn-more" target="_blank">Learn More</a>` : ''}
+                </div>
+            `;
+            
+            this.carousel.appendChild(slide);
+
+            // Create indicator
+            const indicator = document.createElement('span');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.dataset.index = index;
+            indicator.addEventListener('click', () => this.goToSlide(index));
+            
+            this.indicators.appendChild(indicator);
+        });
+
+        // Show carousel and controls
+        this.hideLoading();
+        if (this.carousel) {
+            this.carousel.style.display = 'block';
+        }
+        if (this.controls) {
+            this.controls.style.display = 'flex';
+        }
+    }
+
+    setupCarousel() {
+        this.currentIndex = 0;
+        this.startAutoRotate();
+    }
+
+    goToSlide(index) {
+        if (index < 0 || index >= this.announcements.length) return;
+
+        // Remove active class from all slides and indicators
+        const slides = this.carousel.querySelectorAll('.announcement-item');
+        const indicators = this.indicators.querySelectorAll('.indicator');
+
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+
+        // Add active class to current slide and indicator
+        if (slides[index]) {
+            slides[index].classList.add('active');
+        }
+        if (indicators[index]) {
+            indicators[index].classList.add('active');
+        }
+
+        this.currentIndex = index;
+    }
+
+    nextSlide() {
+        const nextIndex = (this.currentIndex + 1) % this.announcements.length;
+        this.goToSlide(nextIndex);
+    }
+
+    previousSlide() {
+        const prevIndex = this.currentIndex === 0 ? 
+            this.announcements.length - 1 : this.currentIndex - 1;
+        this.goToSlide(prevIndex);
+    }
+
+    startAutoRotate() {
+        this.stopAutoRotate();
+        if (this.announcements.length > 1) {
+            this.autoRotateInterval = setInterval(() => {
+                this.nextSlide();
+            }, 5000);
+        }
+    }
+
+    stopAutoRotate() {
+        if (this.autoRotateInterval) {
+            clearInterval(this.autoRotateInterval);
+            this.autoRotateInterval = null;
+        }
+    }
+
+    escapeHtml(unsafe) {
+        if (typeof unsafe !== 'string') return '';
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    refresh() {
+        this.stopAutoRotate();
+        this.loadAnnouncements();
+    }
+}
+
+// Simple initialization function that will work regardless of when it's called
+function initializeAnnouncements() {
+    // Only initialize once
+    if (window.announcementsCarousel) {
+        console.log('Announcements carousel already initialized');
+        return;
+    }
+
+    console.log('Initializing announcements carousel...');
+    window.announcementsCarousel = new AnnouncementsCarousel();
+    
+    // Expose refresh method globally
+    window.refreshAnnouncements = () => {
+        if (window.announcementsCarousel) {
+            window.announcementsCarousel.refresh();
+        }
+    };
+}
+
+// Multiple initialization attempts to ensure it works
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeAnnouncements);
+} else {
+    initializeAnnouncements();
+}
+
+// Also try after a short delay in case DOM isn't fully ready
+setTimeout(initializeAnnouncements, 500);
+
+// Expose globally for manual initialization
+window.initializeAnnouncements = initializeAnnouncements;
+        // Function to create floating particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            if (!container) return; // Safety check
+
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random size between 5px and 25px
+                const size = Math.random() * 20 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+
+                // Random animation duration
+                const duration = Math.random() * 20 + 10; // 10-30 seconds
+                particle.style.setProperty('--duration', `${duration}s`);
+
+                // Random horizontal travel distance
+                const travel = (Math.random() * 100 - 50); // -50% to +50%
+                particle.style.setProperty('--travel', `${travel}%`);
+
+                // Random opacity
+                const opacity = Math.random() * 0.5 + 0.2;
+                particle.style.setProperty('--opacity', opacity);
+
+                // Add to container with random delay
+                container.appendChild(particle);
+                particle.style.animationDelay = `${Math.random() * duration}s`;
+            }
+        }
+
+
+        // Initialize everything when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Global variable for user data
+            window.currentUser = null;
+
+            // Fetch user profile
+            try {
+               createParticles(); // Load posts and set up form
+                loadPosts();
+                setupPostForm();
+setupLostFoundModal();
+            } catch (err) {
+                console.warn('Could not initialize app:', err);
+            }
+        });
+    </script>
+    <!-- Navbar Script for interactivity -->
+    <script src="navbar-script.js"></script>
+
+    <!-- FullPage.js Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.js"></script>
+
+    <!-- Advanced Scrolling Animation Script -->
+    <script>
+        // Initialize fullPage.js
+        new fullpage('#fullpage', {
+            // Options
+            licenseKey: 'gplv3-license', // Using GPL v3 open-source license
+            autoScrolling: true,
+            scrollHorizontally: false,
+            navigation: true,
+            navigationPosition: 'right',
+            showActiveTooltip: true,
+            slidesNavigation: true,
+            controlArrows: true,
+            anchors: ['announcements', 'clubs', 'feed', 'posts-feed'],
+            navigationTooltips: ['Announcements', 'Clubs', 'Feed', 'Community Posts'],
+            scrollOverflow: true,
+
+            // Animations on scroll
+            afterLoad: function(origin, destination, direction) {
+                // Add animations when each section loads
+                const section = destination.item;
+                const elements = section.querySelectorAll('.content-container > *');
+
+                // Animate elements within the section
+                animateElements(elements);
+            },
+
+            // Before leaving section
+            onLeave: function(origin, destination, direction) {
+                // Optional: Add exit animations or actions here
+            }
+        });
+
+        // Animate elements with staggered delay
+        function animateElements(elements) {
+            const animations = ['fade-in-up', 'fade-in-down', 'fade-in-left', 'fade-in-right'];
+
+            elements.forEach((element, index) => {
+                // Clear any previous animations
+                element.classList.remove(...animations);
+
+                // Use different animations for variety
+                const animationClass = animations[index % animations.length];
+
+                // Add delay to create staggered effect
+                setTimeout(() => {
+                    element.classList.add(animationClass);
+                    element.style.opacity = '1';
+                }, 150 * index);
+            });
+        }
+
+        // Global variables
+        let currentUser = null;
+        let lostFoundCompleted = false;
+
+        async function loadPosts() {
+            try {
+                const response = await fetch('/homepage', {
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to load posts');
+                }
+
+                const data = await response.json();
+                renderPosts(data.posts);
+
+                // Update form with user info if available
+                if (data.user) {
+                    const usernameInput = document.querySelector('.username-input');
+                    const userAvatar = document.querySelector('.form-header .user-avatar');
+
+                    if (usernameInput) {
+                        usernameInput.value = data.user.username || data.user.full_name;
+                    }
+
+                    if (userAvatar && data.user.pfp) {
+                        userAvatar.src = `/${data.user.pfp}`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                const container = document.querySelector('.main-feed');
+                if (container) {
+                    const errorElem = document.createElement('p');
+                    errorElem.className = 'error-message';
+                    errorElem.textContent = 'Failed to load posts. Please try again later.';
+                    container.appendChild(errorElem);
+                }
+            }
+        }
+
+        function setupLostFoundModal() {
+            console.log('Setting up Lost & Found modal...');
+
+            // Find all possible select elements for tags
+            const possibleSelectors = [
+                '#topic-select',
+                '#tag-select',
+                'select[name="tag"]',
+                'select[name="topic"]',
+                '.post-form select',
+                '.tag-select'
+            ];
+
+            let tagSelect = null;
+            for (let selector of possibleSelectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    tagSelect = element;
+                    console.log(`Found tag select with selector: ${selector}`);
+                    break;
+                }
+            }
+
+            if (!tagSelect) {
+                console.error('No tag select element found! Tried selectors:', possibleSelectors);
+                return;
+            }
+
+            // Set up the change event listener
+            tagSelect.addEventListener('change', function(e) {
+                console.log('Tag selection changed to:', this.value);
+
+                if (this.value === 'lost&found' || this.value === 'lost_found' || this.value === 'lostfound') {
+                    showLostFoundModal();
+                } else {
+                    hideLostFoundModal();
+                    // Only reset completion status when changing away from lost&found
+                    lostFoundCompleted = false;
+                }
+            });
+
+            // Set up modal submit button
+            setupModalSubmitButton();
+        }
+
+        function showLostFoundModal() {
+            console.log('Attempting to show Lost & Found modal...');
+
+            // First try to find the backdrop (your actual structure)
+            let modalBackdrop = document.getElementById('lostFoundModalBackdrop');
+            let modal = document.getElementById('lostFoundModal');
+
+            if (modalBackdrop && modal) {
+                console.log('Found modal with backdrop structure');
+
+                // Reset completion status
+                lostFoundCompleted = false;
+
+                // Show the backdrop first
+                modalBackdrop.style.display = 'block';
+                modalBackdrop.style.visibility = 'visible';
+                modalBackdrop.style.opacity = '1';
+
+                // Make sure backdrop covers the screen
+                modalBackdrop.style.position = 'fixed';
+                modalBackdrop.style.top = '0';
+                modalBackdrop.style.left = '0';
+                modalBackdrop.style.width = '100%';
+                modalBackdrop.style.height = '100%';
+                modalBackdrop.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modalBackdrop.style.zIndex = '1000';
+
+                // Show the modal content
+                modal.style.display = 'block';
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+
+                // Center the modal
+                modal.style.position = 'fixed';
+                modal.style.top = '50%';
+                modal.style.left = '50%';
+                modal.style.transform = 'translate(-50%, -50%)';
+                modal.style.backgroundColor = 'white';
+                modal.style.padding = '20px';
+                modal.style.borderRadius = '8px';
+                modal.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+                modal.style.zIndex = '1001';
+                modal.style.maxWidth = '500px';
+                modal.style.width = '90%';
+
+                console.log('Modal should now be visible');
+                return;
+            }
+
+            // Fallback: try other possible selectors
+            const possibleModalSelectors = [
+                '#lostFoundModal',
+                '#lost-found-modal',
+                '.lost-found-modal',
+                '#lostfound-modal'
+            ];
+
+            let foundModal = null;
+            for (let selector of possibleModalSelectors) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    foundModal = element;
+                    console.log(`Found modal with selector: ${selector}`);
+                    break;
+                }
+            }
+
+            if (foundModal) {
+                // Reset completion status
+                lostFoundCompleted = false;
+
+                // Show the modal
+                foundModal.style.display = 'block';
+                foundModal.style.visibility = 'visible';
+                foundModal.style.opacity = '1';
+                foundModal.style.position = 'fixed';
+                foundModal.style.top = '50%';
+                foundModal.style.left = '50%';
+                foundModal.style.transform = 'translate(-50%, -50%)';
+                foundModal.style.backgroundColor = 'white';
+                foundModal.style.padding = '20px';
+                foundModal.style.borderRadius = '8px';
+                foundModal.style.zIndex = '1000';
+
+                console.log('Modal should now be visible');
+            } else {
+                console.error('Modal not found! Creating fallback modal...');
+                createFallbackModal();
+            }
+        }
+
+        function hideLostFoundModal() {
+            // Hide backdrop first
+            const modalBackdrop = document.getElementById('lostFoundModalBackdrop');
+            if (modalBackdrop) {
+                modalBackdrop.style.display = 'none';
+                modalBackdrop.style.visibility = 'hidden';
+                modalBackdrop.style.opacity = '0';
+            }
+
+            // Then hide the modal itself
+            const modal = document.querySelector('#lostFoundModal, #lost-found-modal, .lost-found-modal, #lostfound-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.style.visibility = 'hidden';
+                modal.style.opacity = '0';
+            }
+
+            // DON'T reset completion status when hiding after successful completion
+            // Only reset when canceling or changing tags
+        }
+
+        function createFallbackModal() {
+            console.log('Creating fallback modal...');
+
+            const modal = document.createElement('div');
+            modal.id = 'lostFoundModal';
+            modal.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 20px; border-radius: 8px; width: 500px; width: 90%;">
+                <h3>Lost & Found Information</h3>
+                <div style="margin: 10px 0;">
+                    <label><input type="radio" name="type" value="lost"> Lost Item</label><br>
+                    <label><input type="radio" name="type" value="found"> Found Item</label>
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Location:</label><br>
+                    <input type="text" name="location" style="width: 100%; padding: 5px;" placeholder="Where was it lost/found?">
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Contact Information:</label><br>
+                    <input type="text" name="contact" style="width: 100%; padding: 5px;" placeholder="Email or phone number">
+                </div>
+                <div style="margin: 10px 0;">
+                    <label>Description:</label><br>
+                    <textarea id="lost-found-response" style="width: 100%; padding: 5px; height: 80px;" placeholder="Describe the item..."></textarea>
+                </div>
+                <div style="text-align: right; margin-top: 15px;">
+                    <button id="modalCancel" style="margin-right: 10px; padding: 8px 16px;">Cancel</button>
+                    <button id="modalSubmit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px;">Submit</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+            document.body.appendChild(modal);
+
+            // Set up the submit button for the fallback modal
+            setupModalSubmitButton();
+
+            // Set up cancel button
+            document.getElementById('modalCancel').addEventListener('click', function() {
+                hideLostFoundModal();
+                // Reset the tag select to default
+                const tagSelect = document.querySelector('#topic-select, select[name="tag"], .post-form select');
+                if (tagSelect) {
+                    tagSelect.selectedIndex = 0;
+                }
+            });
+
+            // Show the modal
+            modal.style.display = 'block';
+        }
+
+        function setupModalSubmitButton() {
+            const modalSubmit = document.getElementById('modalSubmit');
+            if (modalSubmit) {
+                modalSubmit.addEventListener('click', function() {
+                    console.log('Modal submit clicked');
+                    const type = document.querySelector('input[name="type"]:checked');
+                    const location = document.querySelector('input[name="location"]');
+                    const contact = document.querySelector('input[name="contact"]');
+                    const description = document.getElementById('lost-found-response');
+                    const imageInput = document.getElementById("lost-found-image");
+
+                    if (!type || !location || !location.value.trim() || !contact || !contact.value.trim() || !description || !description.value.trim()) {
+                        alert('Please fill out all Lost & Found fields.');
+                        return;
+                    }
+
+                    // Format the content for the main post
+                    const formatted = `🔍 ${type.value === 'lost' ? 'Lost Item' : 'Found Item'}\n📍 Location: ${location.value}\n📞 Contact: ${contact.value}\n📝 Description: ${description.value}`;
+
+                    // Get the main textarea and set its value
+                    const mainTextarea = document.querySelector('.post-textarea');
+                    if (mainTextarea) {
+                        mainTextarea.value = formatted;
+                    }
+
+                    // Store the data for form submission
+                    window.lostFoundData = {
+                        type: type.value,
+                        location: location.value,
+                        contact: contact.value,
+                        description: description.value,
+                        imageFile: imageInput.files.length > 0 ? imageInput.files[0] : null
+                    };
+
+                    // Mark as completed and hide modal
+                    lostFoundCompleted = true;
+                    hideLostFoundModal();
+
+                    // Focus the main textarea so user can edit or post
+                    if (mainTextarea) {
+                        mainTextarea.focus();
+                    }
+                });
+            }
+        }
+
+        function setupPostForm() {
+            const postForm = document.querySelector('.post-form');
+            if (!postForm) return;
+
+            postForm.removeEventListener('submit', handleFormSubmit); // Remove any previous listener to avoid duplicates
+
+
+            postForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Prevent double submissions
+                if (isFormSubmitting) {
+                    console.log("Form already submitting, ignoring...");
+                    return;
+                }
+                isFormSubmitting = true;
+
+                const formData = new FormData(this);
+                const tagSelect = this.querySelector('select[name="tags"]');
+                const selectedTag = tagSelect ? tagSelect.value : null;
+
+                // Check if lost&found is selected but not completed
+                if ((selectedTag === 'lost&found') && !lostFoundCompleted) {
+                    alert('Please complete the Lost & Found information before submitting.');
+                    showLostFoundModal();
+
+                    return;
+                }
+
+                // Add lost & found data to form if completed
+                if (lostFoundCompleted && window.lostFoundData) {
+                    formData.append('lostfound_type', window.lostFoundData.type);
+                    formData.append('location', window.lostFoundData.location);
+                    formData.append('contact', window.lostFoundData.contact);
+                    formData.append('lost_found_response', window.lostFoundData.description);
+
+                    // Add the image file if one was selected in the modal
+                    if (window.lostFoundData.imageFile) {
+                        formData.append('image', window.lostFoundData.imageFile);
+                    }
+                }
+
+                try {
+                    const response = await fetch('/posts', {
+                        method: 'POST',
+                        body: formData,
+                        credentials: 'include'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to create post');
+                    }
+
+                    // Clear form and reset state
+                    clearForm();
+                    lostFoundCompleted = false;
+                    window.lostFoundData = null;
+                    await loadPosts();
+
+                } catch (error) {
+                    console.error('Error creating post:', error);
+                    alert('Failed to create post: ' + error.message);
+                }
+            });
+        }
+
+        // Helper function to clear form
+        function clearForm() {
+            // Clear main form
+            const postTextarea = document.querySelector('.post-textarea');
+            const imageUpload = document.getElementById('image-upload');
+            const fileNameDisplay = document.getElementById('selected-file-name');
+            const tagSelect = document.querySelector('#topic-select');
+
+            if (postTextarea) postTextarea.value = '';
+            if (imageUpload) imageUpload.value = '';
+            if (fileNameDisplay) fileNameDisplay.textContent = '';
+            if (tagSelect) tagSelect.selectedIndex = 0;
+
+            // Clear modal fields
+            const typeInputs = document.querySelectorAll('input[name="type"]');
+            typeInputs.forEach(input => input.checked = false);
+
+            const locationInput = document.querySelector('input[name="location"]');
+            if (locationInput) locationInput.value = '';
+
+            const contactInput = document.querySelector('input[name="contact"]');
+            if (contactInput) contactInput.value = '';
+
+            const descriptionInput = document.getElementById('lost-found-response');
+            if (descriptionInput) descriptionInput.value = '';
+
+            const lostFoundImageInput = document.getElementById('lost-found-image');
+            if (lostFoundImageInput) lostFoundImageInput.value = '';
+        }
+        // Function to render posts
+        function renderPosts(posts) {
+            if (!posts || !Array.isArray(posts)) {
+                console.error("No posts data available");
+                return;
+            }
+
+            const container = document.getElementById('posts-list');
+            if (!container) {
+                console.error("Main feed container not found");
+                return;
+            }
+
+            // Clear existing posts but keep form and title
+            const existingPosts = container.querySelectorAll('.post');
+            existingPosts.forEach(post => post.remove());
+
+            if (posts.length === 0) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.textContent = 'No posts yet. Be the first to post!';
+                emptyMessage.className = 'empty-posts-message';
+                container.appendChild(emptyMessage);
+                return;
+            }
+
+            // Create and append each post
+            posts.forEach(post => {
+                        const postElement = document.createElement('article');
+                        postElement.className = 'post';
+                        postElement.dataset.postId = post.id;
+
+                        const postDate = new Date(post.post_date).toLocaleString();
+
+                        postElement.innerHTML = `
+            <header>
+                <img class="user-avatar" src="${post.user_pfp}" alt="User avatar" />
+                <div class="post-header-text">
+                    <h3>${escapeHtml(post.username)}</h3>
+                    <span class="post-tag">${escapeHtml(post.tags || 'General')}</span>
+                </div>
+                <div class="more-options-wrapper">
+                    <button class="more-options" aria-label="More options">...</button>
+                    <ul class="options-menu">
+                        <li><button class="remove-post">Delete</button></li>
+                        <li><button class="report-post">Report</button></li>
+                    </ul>
+                </div>
+            </header>
+           <p class="post-content">${escapeHtml(post.content).replace(/\n/g, '<br>')}</p>
+            ${post.image_url ? `<img src="${post.image_url}" class="uploaded-image" alt="Post image" />` : ''}
+            
+            <p class="timestamp">Posted on ${postDate}</p>
+            <footer>
+                <button class="like-button ${post.user_liked ? 'liked' : ''}" 
+                        data-post-id="${post.id}">
+                    <i class="${post.user_liked ? 'fas' : 'far'} fa-thumbs-up"></i>
+                    <span class="like-count">${post.likes || 0}</span>
+                </button>
+                <button class="comment-button">
+                    <i class="far fa-comment-dots"></i>
+                </button>
+            </footer>
+            <div class="comment-section">
+                <textarea class="comment-input" placeholder="Write a comment..." maxlength="300"></textarea>
+                <button class="submit-comment">
+                    <i class="far fa-paper-plane"></i> Comment
+                </button>
+                <div class="comments-list"></div>
+            </div>
+        `;
+        
+        container.appendChild(postElement);
+    });
+    
+    // Set up interactions for the new posts
+    setupPostInteractions();
+}
+
+// Helper function to escape HTML (prevent XSS)
+function escapeHtml(unsafe) {
+    if (typeof unsafe !== 'string') return '';
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// Function to set up post interactions (likes, comments, etc.)
+function setupPostInteractions() {
+    // Like button functionality
+    document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', async function() {
+            const postId = this.dataset.postId;
+            const isLiked = this.classList.contains('liked');
+            const likeCountEl = this.querySelector('.like-count');
+            
+            try {
+                const response = await fetch('/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        action: 'toggle_like',
+                        post_id: postId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Update UI
+                    likeCountEl.textContent = data.likes;
+                    this.classList.toggle('liked', data.liked);
+                    
+                    // Update icon
+                    const icon = this.querySelector('i');
+                    icon.className = data.liked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up';
+                }
+            } catch (err) {
+                console.error('Error updating like:', err);
+            }
+        });
+    });
+    
+    // Comment button functionality
+    document.querySelectorAll('.comment-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentSection = post.querySelector('.comment-section');
+            commentSection.style.display = 
+                commentSection.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Submit comment functionality
+    document.querySelectorAll('.submit-comment').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            const commentInput = post.querySelector('.comment-input');
+            const commentsList = post.querySelector('.comments-list');
+            
+            const commentText = commentInput.value.trim();
+            if (!commentText) return;
+            
+            // Create comment element
+            const comment = document.createElement('div');
+            comment.className = 'comment-entry';
+            
+            // Get user info (or use placeholder)
+            const userPfp = currentUser && currentUser.pfp ? currentUser.pfp : 'https://c.animaapp.com/m9cq51g1Jevf3Y/img/image-9.png';
+            const userName = currentUser && currentUser.username ? currentUser.username : (currentUser && currentUser.full_name ? currentUser.full_name : 'username_');
+            
+            comment.innerHTML = `
+                <img src="${userPfp}" alt="Commenter avatar" class="comment-avatar" />
+                <div class="comment-body">
+                    <strong>${userName}</strong>
+                    <span class="comment-time">${new Date().toLocaleString()}</span>
+                    <br>
+                    <span class="comment-text">${escapeHtml(commentText).replace(/\n/g, '<br>')}</span>
+                    <div class="comment-actions">
+                        <button class="edit-comment">Edit</button>
+                        <button class="delete-comment">Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add edit/delete listeners
+            comment.querySelector('.edit-comment').addEventListener('click', function() {
+                const textSpan = comment.querySelector('.comment-text');
+                const newText = prompt('Edit your comment:', textSpan.textContent);
+                if (newText !== null) {
+                    textSpan.innerHTML = escapeHtml(newText).replace(/\n/g, '<br>');
+                }
+            });
+            
+            comment.querySelector('.delete-comment').addEventListener('click', function() {
+                comment.remove();
+            });
+            
+            commentsList.appendChild(comment);
+            commentInput.value = '';
+        });
+    });
+    
+    // More options functionality
+    document.querySelectorAll('.more-options').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const menu = this.nextElementSibling;
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Close menus when clicking elsewhere
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.options-menu').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    });
+    
+    // Remove post
+    document.querySelectorAll('.remove-post').forEach(button => {
+        button.addEventListener('click', function() {
+            const post = this.closest('.post');
+            post.remove();
+        });
+    });
+    
+    // Report post
+    document.querySelectorAll('.report-post').forEach(button => {
+        button.addEventListener('click', function() {
+            alert('🚩 This post has been reported.');
+        });
+    });
+}
+
+// Initialize everything when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing...');
+    
+    // Fetch user profile
+    fetch('/profile', { credentials: 'include' })
+        .then(res => {
+            if (!res.ok) throw new Error('Not logged in');
+            return res.json();
+        })
+        .then(user => {
+            // Store user data globally
+            currentUser = user;
+            
+            // Update navbar profile if it exists
+            const profileDiv = document.querySelector('.profile');
+            if (profileDiv) {
+                profileDiv.innerHTML = `
+                    <img src="/${user.pfp}" alt="Profile Picture" class="navbar-pfp profile" />
+                `;
+            }
+            
+            // Update form username and avatar
+            const formUserAvatar = document.querySelector('.form-header .user-avatar');
+            const usernameInput = document.querySelector('.form-header .username-input');
+            
+            if (formUserAvatar) {
+                formUserAvatar.src = `/${user.pfp}`;
+            }
+            
+            if (usernameInput) {
+                usernameInput.value = user.username || user.full_name;
+            }
+        })
+        .catch(err => {
+            console.warn('Could not load profile:', err);
+        });
+    
+    // Load posts and set up form
+    loadPosts();
+    setupLostFoundModal();
+    
+    // Load announcements
+    fetch('/api/announcements')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('announcement-list');
+            if (container) {
+                data.forEach(announcement => {
+                    const div = document.createElement('div');
+                    div.className = 'announcement';
+
+                    const title = document.createElement('h3');
+                    title.textContent = announcement.title;
+
+                    const content = document.createElement('p');
+                    content.textContent = announcement.content;
+
+                    div.appendChild(title);
+                    div.appendChild(content);
+
+                    container.appendChild(div);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching announcements:', error);
+        });
+    
+    // Expose functions globally for debugging
+    window.showLostFoundModal = showLostFoundModal;
+    window.hideLostFoundModal = hideLostFoundModal;
+    window.lostFoundCompleted = () => lostFoundCompleted;
+});
+ document.addEventListener('DOMContentLoaded', function() {
+            const brandSwitcher = document.getElementById('brandSwitcher');
+            const brandOptions = document.querySelectorAll('.brand-option');
+            
+            brandOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const brand = this.getAttribute('data-brand');
+                    
+                    // Remove active class from all options
+                    brandOptions.forEach(opt => opt.classList.remove('active'));
+                    
+                    // Add active class to clicked option
+                    this.classList.add('active');
+                    
+                    // Toggle the switcher background position
+                    if (brand === 'universe') {
+                        brandSwitcher.classList.add('universe-active');
+                    } else {
+                        brandSwitcher.classList.remove('universe-active');
+                    }
+                    
+                    // Optional: Trigger any additional functionality based on selection
+                    console.log(`Switched to: ${brand}`);
+                    
+                    // You can add custom events or callbacks here
+                    // For example, changing page content or making API calls
+                    handleBrandSwitch(brand);
+                });
+            });
+        });
+        
+        function handleBrandSwitch(brand) {
+            
+            if (brand === 'unihive') {
+window.location.href = '/homepage';
+            } else {
+                window.location.href = '/universe';
+            }
+        }
+    </script>
+</body>
+
+</html>
