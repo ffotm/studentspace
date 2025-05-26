@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=groups" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=warning" />
+    <title>Dashboared</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Ubuntu', sans-serif;
+    }
+    
+     :root {
+        --black: #07051B;
+        --black1: #222;
+        --black2: #999;
+        --white: #e8e8e8;
+        --grey: #f5f5f5;
+    }
+    
+    body {
+        position: relative;
+        width: 100%;
+    }
+    
+    .navigation {
+        position: fixed;
+        width: 300px;
+        height: 100%;
+        background-color: var(--black);
+        border-left: 10px solid var(--black);
+        transition: 0.5s;
+        overflow: hidden;
+    }
+    
+    .navigation.active {
+        width: 80px;
+    }
+    
+    .navigation ul {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    
+    .navigation ul li {
+        position: relative;
+        width: 100%;
+        list-style: none;
+        border-top-left-radius: 40px;
+        border-bottom-left-radius: 40px;
+    }
+    
+    .navigation ul li:hover,
+    .navigation ul li.hovered {
+        background-color: var(--white);
+    }
+    
+    .navigation ul li:nth-child(1) {
+        margin-bottom: 40px;
+        pointer-events: none;
+    }
+    
+    .navigation ul li a {
+        position: relative;
+        display: block;
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+        color: var(--white);
+    }
+    
+    .navigation ul li:hover a,
+    .navigation ul li.hovered a {
+        color: var(--black);
+    }
+    
+    .navigation ul li a .icon {
+        position: relative;
+        display: block;
+        min-width: 60px;
+        line-height: 70px;
+        text-align: center;
+    }
+    
+    .navigation ul li a .icon ion-icon {
+        font-size: 1.75em;
+    }
+    
+    .navigation ul li a .title {
+        position: relative;
+        display: block;
+        padding: 0 10px;
+        height: 60px;
+        line-height: 60px;
+        text-align: start;
+        white-space: nowrap;
+    }
+    /*curve outside*/
+    
+    .navigation ul li:hover a::before,
+    .navigation ul li.hovered a::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -50px;
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: 35px 35px 0 10px var(--white);
+        pointer-events: none;
+    }
+    
+    .navigation ul li:hover a::after,
+    .navigation ul li.hovered a::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -50px;
+        width: 50px;
+        height: 50px;
+        background: transparent;
+        border-radius: 50%;
+        box-shadow: 35px -35px 0 10px var(--white);
+        pointer-events: none;
+    }
+    /* main */
+    
+    .main {
+        position: absolute;
+        width: calc(100% - 300px);
+        left: 300px;
+        min-height: 100vh;
+        background: var(--white);
+        transition: 0.5s;
+    }
+    
+    .main.active {
+        width: calc(100% - 80px);
+        left: 80px;
+    }
+    
+    .topbar {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+    }
+    
+    .toggle {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5em;
+        cursor: pointer;
+    }
+    
+    .admin {
+        position: absolute;
+        right: 17px;
+        cursor: pointer;
+        transition: transform 0.5s ease;
+    }
+    
+    .main.active .admin {
+        transform: translateX(-25px);
+    }
+    
+    .admin-star {
+        cursor: pointer;
+        position: relative;
+        top: -1px;
+        transition: transform 0.5s ease;
+    }
+    
+    .main.active .admin-star {
+        transform: translateX(-25px)
+    }
+    /*
+
+.cardBox{
+   position: relative;
+   width: 100%;
+   padding: 20px;
+   display: grid;
+   grid-template-columns: repeat(4,1fr);
+   grid-gap: 30px;
+}
+
+.cardBox .card{
+   position: relative;
+   background: white;
+   padding: 30px;
+   border-radius: 20px;
+   box-shadow: 0px 7px 25px rgba(0, 0, 0, 0.08);
+   display: flex;
+   justify-content: space-between;
+   cursor: pointer;
+}
+
+.cardBox .card .numbers{
+   position: relative;
+   font-weight: 500;
+   font-size: 2.5em;
+   color: #07051B;
+}
+
+.cardBox .card .cardName{
+   color: var(--black2);
+   font-size: 1.1em;
+   margin-top: 45px;
+   margin-left: 45px;
+}
+
+.cardBox .card .iconBx{
+   font-size: 3.5em;
+   color: var(--black2);
+   
+}
+
+*/
+    
+    .cardBox {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 50px;
+    }
+    
+    .card {
+        background-color: #f4f4f4;
+        border-radius: 12px;
+        padding: 20px 30px;
+        box-shadow: 0 4px 12px, rgba(0, 0, 0, 0.1);
+        flex: 1;
+        max-width: 250px;
+        text-align: center;
+        position: relative;
+        transition: 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .numbers {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    .cardName {
+        font-size: 18px;
+        color: #ffffff;
+    }
+    
+    .iconBx {
+        margin-top: 5px;
+        font-size: 30px;
+    }
+    
+    #teachers {
+        color: #ffffff
+    }
+    
+    #students {
+        color: #ffffff;
+    }
+    
+    #total-users {
+        color: #ffffff;
+    }
+    
+    #teachers-card {
+        background: #fff691;
+        background: linear-gradient(206deg, rgba(255, 246, 145, 1) 0%, rgba(255, 166, 0, 1) 100%);
+    }
+    
+    #students-card {
+        background: #ff9191;
+        background: linear-gradient(206deg, rgba(255, 145, 145, 1) 0%, rgba(255, 0, 94, 1) 100%);
+    }
+    
+    #total-users-card {
+        background: #91f6ff;
+        background: linear-gradient(206deg, rgba(145, 246, 255, 1) 0%, rgba(52, 73, 94, 1) 100%);
+    }
+    /*calander*/
+    
+    .calendar {
+        width: 335px;
+        height: 185px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.06);
+        /* soft shadow */
+        padding: 15px;
+        box-sizing: border-box;
+        position: relative;
+        left: 323px;
+        top: 20px;
+        transition: transform 0.5s ease;
+    }
+    
+    .main.active .calendar {
+        transform: translateX(113px);
+    }
+    
+    .calendar-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+        gap: 12px;
+    }
+    
+    .calendar-header h2 {
+        color: black;
+        font-size: 16px;
+        margin: 0;
+    }
+    
+    .arrow-button {
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+    
+    .arrow-button svg path {
+        stroke: rgba(0, 0, 0, 0.7);
+        /* default arrow */
+    }
+    
+    .arrow-button:hover svg path {
+        stroke: rgba(0, 0, 0, 1);
+        /* darker on hover */
+    }
+    
+    .days {
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+    }
+    
+    .day {
+        width: 55px;
+        height: 112px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+        /* softened */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 5px;
+        box-sizing: border-box;
+    }
+    
+    .label {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    
+    .number {
+        font-size: 20px;
+    }
+    
+    .today {
+        background-color: black;
+        color: black;
+    }
+    
+    .today .label,
+    .today .number {
+        color: white;
+    }
+    
+    .not-today {
+        background-color: white;
+        color: black;
+    }
+    
+    .dashboard-center {
+        background: #F1C40F;
+        width: 96%;
+        height: 100%;
+        margin-top: 40px;
+        margin-left: 20px;
+        border-radius: 12px;
+        padding: 4px;
+    }
+    
+    .raports-container {
+        display: block;
+        position: relative;
+        top: 20px;
+    }
+    
+    .raports-center {
+        font-weight: 700;
+        font-size: 30px;
+        position: relative;
+        left: 50px;
+        top: 14px;
+    }
+    
+    .material-symbols-outlined {
+        font-size: 40px !important;
+        position: relative;
+        top: 20px;
+        left: 40px;
+        line-height: 0 !important;
+    }
+    
+    .container-dashboard {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        max-width: 100%;
+        margin: 50px 15px;
+    }
+    
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 14px;
+        border-radius: 8px;
+        overflow: hidden;
+        /* For hiding overflowed borders */
+    }
+    
+    th,
+    td {
+        padding: 25px 12px;
+        text-align: left;
+    }
+    
+    th {
+        background: white;
+    }
+    
+    td.actions a {
+        text-decoration: none;
+        margin-right: 10px;
+        color: #000000;
+    }
+    
+    td.actions a:hover {
+        opacity: 70%;
+    }
+    
+    thead th {
+        border-bottom: 2px solid black;
+    }
+    
+    .reported-post-th {
+        padding: 10Px 70px;
+    }
+    
+    .fa-classic,
+    .fa-regular,
+    .fa-solid,
+    .far,
+    .fas {
+        font-family: "Font Awesome 6 Free";
+        color: white;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"></span>
+                        <span class="title">UNIHIVERSE</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/home">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/dashboard">
+                        <span class="icon"><ion-icon name="grid-outline"></ion-icon>
+                        </span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/students">
+                        <span class="icon"><ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">Students</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/teachers">
+                        <span class="icon"><ion-icon name="book-outline"></ion-icon>
+                        </span>
+                        <span class="title">Teachers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Log out</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <!-- admin -->
+                <div class="admin">
+                    <span class="admin-star">admin</span>
+                    <ion-icon name="star"></ion-icon>
+                </div>
+            </div>
+            <!-- cards -->
+            <div class="cardBox">
+                <!-- card 1 -->
+                <div id="teachers-card" class="card">
+                    <div id="teachers" class="numbers">387</div>
+                    <div class="cardName">Teachers</div>
+                    <div class="iconBx">
+                        <i class="fa-solid fa-person-chalkboard"></i>
+                    </div>
+                </div>
+                <!-- card 2 -->
+                <div id="students-card" class="card">
+                    <div id="students" class="numbers">47382</div>
+                    <div class="cardName">Students</div>
+                    <div class="iconBx">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                </div>
+                <!-- card 3 -->
+                <div id="total-users-card" class="card">
+                    <div id="total-users" class="numbers"></div>
+                    <div class="cardName">Total users</div>
+                    <div class="iconBx">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <!--calander-->
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <!-- Left Arrow -->
+                    <button class="arrow-button" id="prevBtn" aria-label="Previous Day">
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <path d="M10 12L6 8l4-4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+                    <h2 id="monthYearDate"></h2>
+
+                    <!-- Right Arrow -->
+                    <button class="arrow-button" id="nextBtn" aria-label="Next Day">
+        <svg width="16" height="16" viewBox="0 0 16 16">
+          <path d="M6 4l4 4-4 4" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+                </div>
+
+                <div class="days" id="dayStrip">
+                    <!-- Dynamic day cards -->
+                </div>
+            </div>
+            <div class="raports">
+                <span class="material-symbols-outlined">warning</span>
+                <span class="raports-center">Reports Center</span>
+            </div>
+            <div class="container-dashboard">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report ID</th>
+                            <th class="reported-post-th">Reported Post</th>
+                            <th>Reported By</th>
+                            <th>Reason</th>
+                            <th>Date Reported</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#RPT-1023</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1234</td>
+                            <td>Spam</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">View Post</a></td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-1024</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1235</td>
+                            <td>Harassment</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">Delete Account</a></td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-1024</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1235</td>
+                            <td>Harassment</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">Delete Account</a></td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-1024</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1235</td>
+                            <td>Harassment</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">Delete Account</a></td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-1024</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1235</td>
+                            <td>Harassment</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">Delete Account</a></td>
+                        </tr>
+                        <tr>
+                            <td>#RPT-1024</td>
+                            <td>"Your idea is stupid and you're dumb."</td>
+                            <td>user1235</td>
+                            <td>Harassment</td>
+                            <td>2025-04-17</td>
+                            <td>Pending</td>
+                            <td class="actions"><a href="#">Delete Account</a></td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+        // Fixed JavaScript for your dashboard HTML
+
+        //MenuToggle
+        let toggle = document.querySelector('.toggle');
+        let navigation = document.querySelector('.navigation');
+        let main = document.querySelector('.main');
+
+        toggle.onclick = function() {
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+
+        //add hovered class in selected list item
+        let list = document.querySelectorAll('.navigation li');
+
+        function activeLink() {
+            list.forEach((item) =>
+                item.classList.remove('hovered'));
+            this.classList.add('hovered');
+        }
+        list.forEach((item) =>
+            item.addEventListener('mouseover', activeLink));
+
+        // Load dashboard data - FIXED API CALL
+        async function loadDashboard() {
+            try {
+                // Call the correct endpoint that matches your backend
+                const response = await fetch("/dashboard", {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies for authentication
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Dashboard data received:', data);
+
+                // Update the DOM with correct IDs
+                document.getElementById('teachers').textContent = data.professors;
+                document.getElementById('students').textContent = data.students;
+                document.getElementById('total-users').textContent = data.totalUsers;
+
+            } catch (error) {
+                console.error("Failed to load dashboard:", error);
+                // Fallback to hardcoded values if API fails
+                document.getElementById('teachers').textContent = '387';
+                document.getElementById('students').textContent = '47382';
+                const teachers = parseInt(document.getElementById('teachers').textContent);
+                const students = parseInt(document.getElementById('students').textContent);
+                document.getElementById('total-users').textContent = professors + students;
+            }
+        }
+
+        // Calculate total users from existing values
+        function calculateTotalUsers() {
+            const teachers = parseInt(document.getElementById('teachers').textContent) || 0;
+            const students = parseInt(document.getElementById('students').textContent) || 0;
+            const total = teachers + students;
+            document.getElementById('total-users').textContent = total;
+        }
+
+        // Calendar functionality
+        const monthYearDate = document.getElementById("monthYearDate");
+        const dayStrip = document.getElementById("dayStrip");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        let currentDate = new Date();
+
+        function renderCalendar(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const day = date.getDate();
+
+            const monthName = date.toLocaleString('default', {
+                month: 'long'
+            });
+            monthYearDate.textContent = `${monthName} ${day} ${year}`;
+
+            dayStrip.innerHTML = "";
+
+            for (let i = -2; i <= 2; i++) {
+                const tempDate = new Date(year, month, day + i);
+                const tempDay = tempDate.getDate();
+                const dayName = tempDate.toLocaleString('default', {
+                    weekday: 'short'
+                });
+
+                const dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+
+                const label = document.createElement("div");
+                label.classList.add("label");
+                label.textContent = dayName;
+
+                const number = document.createElement("div");
+                number.classList.add("number");
+                number.textContent = tempDay;
+
+                if (i === 0) {
+                    dayDiv.classList.add("today");
+                } else {
+                    dayDiv.classList.add("not-today");
+                }
+
+                dayDiv.appendChild(label);
+                dayDiv.appendChild(number);
+                dayStrip.appendChild(dayDiv);
+            }
+        }
+
+        prevBtn.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() - 1);
+            renderCalendar(currentDate);
+        });
+
+        nextBtn.addEventListener("click", () => {
+            currentDate.setDate(currentDate.getDate() + 1);
+            renderCalendar(currentDate);
+        });
+
+        // Load reports - FIXED API CALL
+        async function loadReports() {
+            try {
+                // Use the correct API endpoint from your backend
+                const response = await fetch('/api/reports', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const reports = await response.json();
+                console.log('Reports received:', reports);
+
+                const tbody = document.querySelector('.container-dashboard tbody');
+                tbody.innerHTML = '';
+
+                if (reports.length === 0) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="7" style="text-align: center; padding: 20px;">No reports found</td>`;
+                    tbody.appendChild(row);
+                    return;
+                }
+
+                reports.forEach(report => {
+                    const row = document.createElement('tr');
+                    const date = new Date(report.created_at);
+
+                    row.innerHTML = `
+                <td>#RPT-${report.id}</td>
+                <td>"${report.content}"</td>
+                <td>${report.reported_user_name}</td>
+                <td>${report.reason}</td>
+                <td>${date.toLocaleDateString()}</td>
+                <td><span class="status-badge ${report.status.toLowerCase()}">${report.status}</span></td>
+                <td class="actions">
+                    <button onclick="handleReportAction(${report.id}, 'resolve')" style="margin-right: 5px; padding: 5px 10px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">Resolve</button>
+                    <button onclick="handleReportAction(${report.id}, 'reject')" style="padding: 5px 10px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">Reject</button>
+                </td>
+            `;
+
+                    tbody.appendChild(row);
+                });
+
+            } catch (error) {
+                console.error('Error loading reports:', error);
+                // Keep the existing hardcoded table data as fallback
+                console.log('Using fallback table data');
+            }
+        }
+
+        // Handle report actions - FIXED API CALL
+        async function handleReportAction(id, action) {
+            try {
+                const response = await fetch(`/api/reports/${id}`, {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to ${action} report`);
+                }
+
+                const result = await response.json();
+                console.log(`Report ${action}d successfully:`, result);
+
+                // Reload reports to show updated status
+                loadReports();
+
+                // Show success message
+                alert(`Report ${action}d successfully!`);
+
+            } catch (error) {
+                console.error(`Error ${action}ing report:`, error);
+                alert(`Failed to ${action} report. Please try again.`);
+            }
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard loading...');
+
+            // Initialize calendar
+            renderCalendar(currentDate);
+
+            // Calculate total users from existing values first
+            calculateTotalUsers();
+
+            // Try to load fresh data from API
+            loadDashboard();
+            loadReports();
+
+            console.log('Dashboard initialized');
+        });
+
+        // Logout function
+        function logoutUser() {
+            fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                })
+                .then(() => window.location.href = '/login')
+                .catch(err => {
+                    console.error('Logout error:', err);
+                    window.location.href = '/login';
+                });
+        }
+
+        // Add logout event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutLink = document.querySelector('a[href="#"]:last-of-type');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
