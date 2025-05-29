@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Team</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #778DA9;
+            color: #0D1321;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Add a blurred background image for the body */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            /* Rearranged gradients: Dark corners, light center */
+            background: 
+                /* Dark Corners */
+                radial-gradient(ellipse 70% 80% at top left,     rgba(20, 60, 120, 0.7) 0%, transparent 60%),  /* Even More Pronounced Darker */
+                radial-gradient(ellipse 70% 80% at top right,    rgba(30, 60, 130, 0.6) 0%, transparent 60%),  /* Even More Pronounced Darker */
+                radial-gradient(ellipse 70% 80% at bottom left,  rgba(25, 70, 135, 0.6) 0%, transparent 60%), /* Even More Pronounced Darker */
+                radial-gradient(ellipse 70% 80% at bottom right, rgba(70, 110, 140, 0.5) 0%, transparent 60%), /* Even More Pronounced Darker */
+                /* Lighter Center / Mid */
+                radial-gradient(ellipse 50% 60% at 40% 40%,     rgba(144, 216, 217, 0.4) 0%, transparent 80%), /* Even More Pronounced Lighter */
+                radial-gradient(ellipse 50% 60% at 60% 60%,     rgba(178, 216, 242, 0.5) 0%, transparent 80%), /* Even More Pronounced Lighter */
+                radial-gradient(ellipse 40% 50% at 70% 50%,     rgba(224, 208, 195, 0.3) 0%, transparent 80%), /* Even More Pronounced Lighter */
+                /* Base */
+                #F9F5F0; /* Center/Base color */
+            filter: blur(0px);
+        }
+        
+        body.dark-mode::before {
+            background: 
+                /* Dark Corners - using dark mode colors */
+                radial-gradient(ellipse 70% 80% at top left,     rgba(13, 27, 42, 0.7) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 80% at top right,    rgba(27, 38, 59, 0.6) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 80% at bottom left,  rgba(65, 90, 119, 0.6) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 80% at bottom right, rgba(119, 141, 169, 0.5) 0%, transparent 60%),
+                /* Lighter Mid - using dark mode colors with reduced opacity */
+                radial-gradient(ellipse 50% 60% at 40% 40%,     rgba(27, 38, 59, 0.4) 0%, transparent 80%),
+                radial-gradient(ellipse 50% 60% at 60% 60%,     rgba(65, 90, 119, 0.5) 0%, transparent 80%),
+                radial-gradient(ellipse 40% 50% at 70% 50%,     rgba(119, 141, 169, 0.3) 0%, transparent 80%),
+                /* Base - darkest color */
+                #0D1B2A;
+            filter: blur(0px);
+            animation: subtleGlow 20s infinite alternate;
+        }
+        
+        @keyframes subtleGlow {
+            0% { background-position: 0% 0%; }
+            33% { background-position: 2% 1%; }
+            66% { background-position: 1% 2%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Enhanced background effects with animated gradients and patterns */
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: none;
+            animation: cloudShift 100s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes cloudShift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 0%; }
+        }
+        
+        body.dark-mode::after {
+            background: 
+                /* Light sparkles using light mode colors */
+                radial-gradient(ellipse at 80% 20%, rgba(178, 216, 242, 0.15) 0%, rgba(13,19,33,0) 50%),
+                radial-gradient(ellipse at 20% 40%, rgba(144, 216, 217, 0.12) 0%, rgba(13,19,33,0) 60%),
+                radial-gradient(ellipse at 40% 85%, rgba(224, 208, 195, 0.15) 0%, rgba(13,19,33,0) 50%),
+                radial-gradient(ellipse at 65% 55%, rgba(70, 110, 140, 0.12) 0%, rgba(13,19,33,0) 55%);
+            animation: cloudShift 120s linear infinite, sparkleShift 25s ease-in-out infinite alternate;
+        }
+        
+        @keyframes sparkleShift {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.3; }
+        }
+
+        .particles-container {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #0D1321;
+            color: #E0E1DD;
+        }
+
+        /* Navigation bar styling */
+        nav {
+            background-color: #0D1321;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 5px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            display: inline-block;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        nav ul li a.active {
+            background: #3E5C76;
+            color: white;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateX(-50%) scaleX(0);
+            transition: transform 0.3s;
+            border-radius: 2px;
+        }
+
+        nav ul li a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        nav ul li a:hover:not(.active) {
+            background: #2A3E5E; /* Slightly lighter blue for hover */
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-pic {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #3E5C76;
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            border-color: #6CA0DC;
+        }
+
+        /* Main content styling */
+        .submit-project-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        
+        /* New layout styling */
+        .form-layout-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .form-left-column {
+            flex: 1.3;
+            padding-right: 30px;
+        }
+        
+        .form-right-column {
+            flex: 0.7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 25px; /* Align with the first input field */
+        }
+        
+        /* Project photo styling */
+        .project-photo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .project-photo-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            height: 250px;
+            border: 2px dashed #3E5C76;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .project-photo-upload:hover {
+            border-color: #3E5C76;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .project-photo-upload i {
+            font-size: 32px;
+            color: #3E5C76;
+            margin-bottom: 10px;
+        }
+        
+        .project-photo-upload span {
+            font-size: 14px;
+            color: #21314a;
+            font-weight: 500;
+        }
+        
+        .photo-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .project-photo-preview {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #f5f7fa;
+            display: none;
+            position: relative;
+            margin: 0 auto;
+            border: 3px solid rgba(62, 92, 118, 0.3);
+            box-shadow: 0 4px 12px rgba(62, 92, 118, 0.1);
+        }
+        
+        .project-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .edit-photo-btn,
+        .remove-photo-btn {
+            background: #3E5C76;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+        
+        .edit-photo-btn i,
+        .remove-photo-btn i {
+            margin-left: 8px;
+        }
+        
+        .edit-photo-btn:hover {
+            background: #3E5C76;
+            transform: translateY(-2px);
+        }
+        
+        .remove-photo-btn {
+            background: rgba(255, 107, 107, 0.8);
+        }
+        
+        .remove-photo-btn:hover {
+            background: #FF6B6B;
+            transform: translateY(-2px);
+        }
+        
+        .photo-hint {
+            font-size: 12px;
+            color: #778DA9;
+            margin-top: 5px;
+        }
+        
+        /* Rating stars styling */
+        .rating-container {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 5px;
+        }
+        
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .star {
+            color: #ddd;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .star:hover,
+        .star.active {
+            color: #FFD700;
+        }
+        
+        .rating-label {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #778DA9;
+        }
+        
+        body.dark-mode .project-photo-upload {
+            background-color: rgba(65, 90, 119, 0.2);
+            border-color: #415a77;
+        }
+        
+        body.dark-mode .project-photo-upload:hover {
+            border-color: #6CA0DC;
+            background-color: rgba(65, 90, 119, 0.3);
+        }
+        
+        body.dark-mode .project-photo-upload i {
+            color: #6CA0DC;
+        }
+        
+        body.dark-mode .project-photo-upload span {
+            color: #e0e7ef;
+        }
+        
+        body.dark-mode .project-photo-preview {
+            background-color: rgba(65, 90, 119, 0.3);
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0D1321;
+            margin-bottom: 30px;
+            letter-spacing: 0.03em;
+        }
+
+        body.dark-mode .page-title {
+            color: #E0E1DD;
+        }
+
+        .submission-container {
+            background: rgba(255,255,255,0.80);
+            border-radius: 28px;
+            box-shadow: 0 8px 36px 0 rgba(62,92,118,0.14), 0 1.5px 8px 0 rgba(62,92,118,0.08);
+            border: 1.5px solid #e0e7ef;
+            padding: 40px;
+            backdrop-filter: blur(7px);
+            transition: box-shadow 0.22s, background 0.22s, border 0.22s;
+        }
+
+        body.dark-mode .submission-container {
+            background: rgba(27,38,59,0.97);
+            border: 1.5px solid #415a77;
+            color: #e0e7ef;
+            box-shadow: 0 8px 36px 0 rgba(30,40,60,0.22), 0 1.5px 8px 0 rgba(30,40,60,0.12);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid rgba(62, 92, 118, 0.3);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(62, 92, 118, 0.05);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #21314a;
+        }
+
+        body.dark-mode .form-group label {
+            color: #e0e7ef;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid #dde5f2;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            border-color: #3E5C76;
+            box-shadow: 0 0 0 3px rgba(62, 92, 118, 0.25);
+            outline: none;
+        }
+
+        body.dark-mode .form-control {
+            background-color: rgba(65, 90, 119, 0.2);
+            border-color: #415a77;
+            color: #e0e7ef;
+        }
+
+        body.dark-mode .form-control:focus {
+            border-color: #6CA0DC;
+            box-shadow: 0 0 0 3px rgba(108, 160, 220, 0.25);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .file-upload-container {
+            margin-bottom: 25px;
+            position: relative;
+            padding: 15px;
+            border: 1px solid rgba(62, 92, 118, 0.3);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(62, 92, 118, 0.05);
+        }
+
+        .file-upload-box {
+            width: 100%;
+            min-height: 180px;
+            border: 2px dashed #dde5f2;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            transition: border-color 0.3s, background-color 0.3s;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .file-upload-box:hover {
+            border-color: #3E5C76;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-mode .file-upload-box {
+            border-color: #415a77;
+            background-color: rgba(65, 90, 119, 0.2);
+        }
+
+        body.dark-mode .file-upload-box:hover {
+            border-color: #6CA0DC;
+            background-color: rgba(65, 90, 119, 0.3);
+        }
+
+        .file-upload-box i {
+            font-size: 50px;
+            color: #3E5C76;
+            margin-bottom: 15px;
+        }
+
+        body.dark-mode .file-upload-box i {
+            color: #6CA0DC;
+        }
+
+        .file-upload-text {
+            font-weight: 500;
+            color: #21314a;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .file-upload-text {
+            color: #e0e7ef;
+        }
+
+        .file-upload-hint {
+            font-size: 14px;
+            color: #778DA9;
+        }
+
+        body.dark-mode .file-upload-hint {
+            color: #a7bed3;
+        }
+
+        #fileUpload {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .uploaded-files {
+            margin-top: 20px;
+        }
+
+        .uploaded-file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #e9f1fb;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+        }
+
+        body.dark-mode .uploaded-file-item {
+            background-color: rgba(65, 90, 119, 0.4);
+        }
+
+        .uploaded-file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .uploaded-file-icon {
+            font-size: 24px;
+            color: #3E5C76;
+        }
+
+        body.dark-mode .uploaded-file-icon {
+            color: #6CA0DC;
+        }
+
+        .uploaded-file-name {
+            font-weight: 500;
+            color: #21314a;
+        }
+
+        body.dark-mode .uploaded-file-name {
+            color: #e0e7ef;
+        }
+
+        .uploaded-file-size {
+            font-size: 13px;
+            color: #778DA9;
+        }
+
+        body.dark-mode .uploaded-file-size {
+            color: #a7bed3;
+        }
+
+        .remove-file-btn {
+            color: #FF6B6B;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .remove-file-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Logo styling */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .project-logo {
+            max-height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .project-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Team members styling */
+        .team-members-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 15px;
+            border: 1px solid rgba(62, 92, 118, 0.3);
+            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(62, 92, 118, 0.05);
+        }
+
+        .team-member-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #e9f1fb;
+            border-radius: 30px;
+            padding: 8px 15px;
+            min-width: 150px;
+        }
+
+        body.dark-mode .team-member-box {
+            background-color: rgba(65, 90, 119, 0.4);
+        }
+
+        .member-name {
+            font-weight: 500;
+            color: #21314a;
+        }
+
+        body.dark-mode .member-name {
+            color: #e0e7ef;
+        }
+
+        .remove-member-btn {
+            color: #FF6B6B;
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .remove-member-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .add-member-btn {
+            background-color: #3E5C76;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .add-member-btn:hover {
+            background-color: #415a77;
+        }
+
+        body.dark-mode .add-member-btn {
+            background-color: #415a77;
+        }
+
+        body.dark-mode .add-member-btn:hover {
+            background-color: #3E5C76;
+        }
+
+        .submit-btn {
+            background: linear-gradient(90deg, #3E5C76 0%, #415a77 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 0 auto;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(62, 92, 118, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(90deg, #415a77 0%, #3E5C76 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(62, 92, 118, 0.4);
+        }
+
+        /* Particles animation */
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-20px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        /* Team Member Styles */
+        .team-member-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .team-member-box {
+            background-color: rgba(65, 90, 119, 0.4);
+        }
+        
+        .team-member-box:hover {
+            transform: translateX(5px);
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        body.dark-mode .team-member-box:hover {
+            background-color: rgba(65, 90, 119, 0.6);
+        }
+        
+        .remove-member-btn {
+            color: #e74c3c;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .remove-member-btn:hover {
+            transform: scale(1.2);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+        
+        .team-member-input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .team-members-container {
+            margin-top: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        
+        
+        .add-student-btn {
+            background-color: #3E5C76;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 5px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-student-btn:hover {
+            background-color: #415a77;
+            transform: scale(1.05);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #778DA9;
+            font-style: italic;
+        }
+
+        .team-members-container {
+            margin-bottom: 10px;
+        }
+        .add-member-btn {
+            background: #3E5C76;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .add-member-btn:hover {
+            background: #22334a;
+        }
+        #membersList li {
+            margin-bottom: 5px;
+            color: #3E5C76;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-container">
+        <!-- Particles will be generated by JS -->
+    </div>
+
+    <!-- No Navigation Bar -->
+
+    <!-- Main Content -->
+    <div class="submit-project-section">
+        <h1 class="page-title">Add New Team</h1>
+        
+        <div class="submission-container">
+            <form id="projectSubmissionForm">
+                <div class="form-layout-container">
+                    <div class="form-left-column">
+                        <div class="form-group">
+                            <label for="teamName">Team Name</label>
+                            <input type="text" id="teamName" class="form-control" placeholder="Enter team name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title</label>
+                            <input type="text" id="projectTitle" class="form-control" placeholder="Enter project title" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectDescription">Project Description</label>
+                            <textarea id="projectDescription" class="form-control" placeholder="Describe your project" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="supervisor">Supervisor</label>
+                            <input type="text" id="supervisor" class="form-control" placeholder="Enter supervisor name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-right-column">
+                        <div class="project-photo-container">
+                            <h3 class="photo-title">Project Logo</h3>
+                            <div class="project-photo-preview" id="photoPreview" style="display: block;">
+                                <img id="projectLogoImg" src="https://cdn-icons-png.flaticon.com/512/4300/4300059.png" alt="Project Logo">
+                            </div>
+                            <div class="photo-controls">
+                                <button class="edit-photo-btn" title="Change Logo">Change Logo <i class="fas fa-pen"></i></button>
+                                <button class="remove-photo-btn" title="Remove Logo">Reset <i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="project-photo-upload" style="display: none;">
+                                <i class="fas fa-folder-open"></i>
+                                <span>Select from Device</span>
+                                <p class="photo-hint">Choose an image for your project logo</p>
+                                <input type="file" id="projectPhoto" accept="image/*" class="photo-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="teamMembers">Team Members</label>
+                    <div class="team-members-container" id="teamMembersContainer" style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="newMemberInput" class="form-control" placeholder="Enter member name" style="flex: 1;">
+                        <button type="button" class="add-member-btn" id="addMemberBtn" style="padding: 8px 16px;">
+                            <i class="fas fa-plus"></i> Add Member
+                        </button>
+                    </div>
+                    <ul id="membersList" style="margin-top: 10px; padding-left: 20px;"></ul>
+                </div>
+                
+                
+                
+                <button type="submit" class="submit-btn">Add Team</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+      
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            updateThemeIcon();
+        }
+        
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            const colors = ['#3E5C76', '#6CA0DC', '#415a77', '#778DA9'];
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * 15 + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        
+        // Handle team members
+
+        const teamMembersContainer = document.getElementById('teamMembersContainer');
+        
+        // Mock student data (in a real application, this would come from a database)
+        const mockStudents = [
+            { id: 1, name: 'Ahmed Khalid', email: 'ahmed.k@university.edu' },
+            { id: 2, name: 'Sarah Johnson', email: 'sarah.j@university.edu' },
+            { id: 3, name: 'Mohammed Ali', email: 'mohammed.a@university.edu' },
+            { id: 4, name: 'Emma Wilson', email: 'emma.w@university.edu' },
+            { id: 5, name: 'John Smith', email: 'john.s@university.edu' },
+            { id: 6, name: 'Fatima Hassan', email: 'fatima.h@university.edu' },
+            { id: 7, name: 'David Chen', email: 'david.c@university.edu' },
+            { id: 8, name: 'Aisha Rahman', email: 'aisha.r@university.edu' },
+            { id: 9, name: 'Michael Brown', email: 'michael.b@university.edu' },
+            { id: 10, name: 'Zainab Ali', email: 'zainab.a@university.edu' }
+        ];
+        
+        
+        
+        
+        // Handle project photo upload
+        const projectPhoto = document.getElementById('projectPhoto');
+        const photoPreview = document.getElementById('photoPreview');
+        const photoUpload = document.querySelector('.project-photo-upload');
+        
+        // Initialize with the current photo
+        const currentRemoveBtn = photoPreview.querySelector('.remove-photo-btn');
+        const currentEditBtn = photoPreview.querySelector('.edit-photo-btn');
+        
+        if (currentRemoveBtn) {
+            currentRemoveBtn.addEventListener('click', () => {
+                // Reset to default logo
+                const img = photoPreview.querySelector('img');
+                if (img) {
+                    img.src = 'https://via.placeholder.com/250x250?text=Logo';
+                }
+                projectPhoto.value = '';
+            });
+        }
+        
+        if (currentEditBtn) {
+            currentEditBtn.addEventListener('click', () => {
+                // Show upload interface
+                photoPreview.style.display = 'none';
+                photoUpload.style.display = 'flex';
+            });
+        }
+        
+        projectPhoto.addEventListener('change', (event) => {
+            const files = event.target.files;
+            
+            if (files && files.length > 0) {
+                // Find first image file in the selected directory
+                let imageFile = null;
+                for (let i = 0; i < files.length; i++) {
+                    if (files[i].type.startsWith('image/')) {
+                        imageFile = files[i];
+                        break;
+                    }
+                }
+                
+                if (imageFile) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = (e) => {
+                        // Create image element
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        
+                        // Clear previous preview
+                        photoPreview.innerHTML = '';
+                        photoPreview.appendChild(img);
+                        photoPreview.style.display = 'block';
+                        photoUpload.style.display = 'none';
+                        
+                        // Add remove button
+                        const removeBtn = document.createElement('button');
+                        removeBtn.className = 'remove-photo-btn';
+                        removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                        photoPreview.appendChild(removeBtn);
+                        
+                        // Add remove functionality
+                        removeBtn.addEventListener('click', () => {
+                            photoPreview.style.display = 'none';
+                            photoUpload.style.display = 'flex';
+                            projectPhoto.value = '';
+                        });
+                    };
+                    
+                    reader.readAsDataURL(imageFile);
+                }
+            }
+        });
+        
+               
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            createParticles();
+        });
+
+
+
+
+
+        //save the informations in the db
+ // Store team members
+const teamMembers = [];
+
+// Elements
+const addMemberBtn = document.getElementById("addMemberBtn");
+const newMemberInput = document.getElementById("newMemberInput");
+const membersList = document.getElementById("membersList");
+const projectForm = document.getElementById("projectSubmissionForm");
+const projectPhotoInput = document.getElementById('projectPhoto');
+const projectLogoImg = document.getElementById('projectLogoImg');
+
+const editPhotoBtn = document.querySelector('.edit-photo-btn');
+const removePhotoBtn = document.querySelector('.remove-photo-btn');
+
+const defaultLogoSrc = 'https://cdn-icons-png.flaticon.com/512/4300/4300059.png';
+
+// Add member to the list
+addMemberBtn.addEventListener("click", () => {
+  const memberName = newMemberInput.value.trim();
+  if (memberName === "") {
+    alert("Please enter at least a member name!");
+    return;
+  }
+
+  teamMembers.push(memberName);
+
+  const li = document.createElement("li");
+  li.textContent = memberName;
+  membersList.appendChild(li);
+
+  newMemberInput.value = "";
+});
+
+// When "Change Logo" clicked, trigger file input
+editPhotoBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  projectPhotoInput.click();
+});
+
+// When a file is selected, preview it
+projectPhotoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      projectLogoImg.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert('Please select a valid image file.');
+    projectPhotoInput.value = '';
+  }
+});
+
+// When "Reset" clicked, revert to default image and clear file input
+removePhotoBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  projectLogoImg.src = defaultLogoSrc;
+  projectPhotoInput.value = '';
+});
+
+// Submit the form
+projectForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const teamName = document.getElementById("teamName").value.trim();
+  const projectTitle = document.getElementById("projectTitle").value.trim();
+  const projectDescription = document.getElementById("projectDescription").value.trim();
+  const supervisor = document.getElementById("supervisor").value.trim();
+
+  if (teamMembers.length === 0) {
+    alert("Please add at least one team member!");
+    return;
+  }
+
+  // Use the project logo URL (or default)
+  const projectLogoUrl = projectLogoImg.src || defaultLogoSrc;
+
+  // Prepare data to send as JSON
+  const projectData = {
+    team_name: teamName,
+    title: projectTitle,
+    description: projectDescription,
+    supervisor: supervisor,
+    team_members: teamMembers,
+    img: projectLogoUrl // Store URL as text
+  };
+
+  try {
+    const response = await fetch("http://localhost:5000/api/teacher/add_project", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(projectData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert(errorData.error || "An error occurred. Please try again.");
+      return;
+    }
+
+    const result = await response.json();
+    alert("Team and project created successfully!");
+
+    projectForm.reset();
+    teamMembers.length = 0;
+    membersList.innerHTML = "";
+    projectLogoImg.src = defaultLogoSrc;
+  } catch (error) {
+    console.error("Error submitting project:", error);
+    alert("An error occurred. Please check your console.");
+  }
+});
+
+
+    </script>
+</body>
+</html>

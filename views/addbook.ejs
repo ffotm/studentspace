@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Light Mode - UniHive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #778DA9;
+            color: #0D1321;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        /* Add a blurred background image for the body */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            /* Rearranged gradients: Dark corners, light center */
+            background: /* Lighter Blue Corners */
+            radial-gradient(ellipse 80% 90% at top left, rgba(62, 92, 118, 0.5) 0%, transparent 65%), /* Medium blue top left */
+            radial-gradient(ellipse 70% 80% at top right, rgba(91, 131, 166, 0.4) 0%, transparent 60%), /* Lighter blue top right */
+            radial-gradient(ellipse 75% 85% at bottom left, rgba(119, 141, 169, 0.45) 0%, transparent 65%), /* Light blue bottom left */
+            radial-gradient(ellipse 70% 80% at bottom right, rgba(152, 170, 189, 0.35) 0%, transparent 60%), /* Very light blue bottom right */
+            /* Soft Yellow Center / Mid - Eye-Friendly */
+            radial-gradient(ellipse 65% 75% at 50% 50%, rgba(255, 248, 214, 0.4) 0%, transparent 85%), /* Very soft cream yellow - gentler glow */
+            radial-gradient(ellipse 70% 80% at 45% 45%, rgba(253, 244, 189, 0.35) 10%, transparent 90%), /* Soft pastel yellow - muted and comfortable */
+            radial-gradient(ellipse 60% 70% at 55% 55%, rgba(242, 247, 224, 0.3) 5%, transparent 80%), /* Very soft yellow-green - reduced intensity */
+            /* Base */
+            #FFFDF0;
+            /* Very light cream color for the base */
+            filter: blur(0px);
+        }
+        
+        body.dark-mode::before {
+            background: /* Dark Corners - using dark mode colors */
+            radial-gradient(ellipse 70% 80% at top left, rgba(13, 27, 42, 0.7) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at top right, rgba(27, 38, 59, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom left, rgba(27, 38, 59, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom right, rgba(13, 27, 42, 0.5) 0%, transparent 60%), /* Center with darker blue tones */
+            radial-gradient(ellipse 50% 60% at 40% 40%, rgba(62, 92, 118, 0.4) 0%, transparent 80%), radial-gradient(ellipse 50% 60% at 60% 60%, rgba(119, 141, 169, 0.5) 0%, transparent 80%), radial-gradient(ellipse 40% 50% at 70% 50%, rgba(62, 92, 118, 0.3) 0%, transparent 80%), /* Base */
+            #0D1321;
+            /* Dark blue base color as per user preference */
+            filter: blur(0px);
+            animation: subtleGlow 20s infinite alternate;
+        }
+        
+        @keyframes subtleGlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            33% {
+                background-position: 2% 1%;
+            }
+            66% {
+                background-position: 1% 2%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Enhanced background effects with animated gradients and patterns */
+        
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: none;
+            animation: cloudShift 100s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes cloudShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 0%;
+            }
+        }
+        
+        body.dark-mode::after {
+            background: /* Light sparkles using yellow-green palette */
+            radial-gradient(ellipse at 80% 20%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 20% 40%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 60%), radial-gradient(ellipse at 40% 85%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 65% 55%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 55%);
+            animation: cloudShift 120s linear infinite, sparkleShift 25s ease-in-out infinite alternate;
+        }
+        
+        @keyframes sparkleShift {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Animated particles effect */
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatParticle var(--duration) ease-in-out infinite;
+        }
+        /* Yellow particles in dark mode */
+        
+        body.dark-mode .particle {
+            background: rgba(234, 248, 191, 0.5);
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            25% {
+                opacity: var(--opacity);
+            }
+            75% {
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translateY(-20vh) translateX(var(--travel));
+                opacity: 0;
+            }
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #0D1321;
+            color: #FFFDF0;
+        }
+        
+        .universe-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .center-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .brand-switcher {
+            display: flex;
+            align-items: center;
+            margin-right: 2rem;
+        }
+        
+        .brand-option {
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+        
+        .brand-option.active {
+            color: #778DA9;
+        }
+        
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        li {
+            margin-right: 2rem;
+        }
+        
+        a {
+            color: #FFFDF0;
+            text-decoration: none;
+        }
+        
+        a.active {
+            color: #778DA9;
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        #dark-mode-toggle {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .nav-icon {
+            font-size: 1.5rem;
+        }
+        
+        .notification-container {
+            margin-right: 1rem;
+        }
+        
+        .user-profile {
+            margin-right: 1rem;
+        }
+        
+        .profile {
+            width: 2rem;
+            height: 2rem;
+            background-color: #FFFDF0;
+            border-radius: 50%;
+        }
+        
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        
+        .book-detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .book-detail-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .book-detail-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+            color: #0D1321;
+        }
+        
+        .book-detail-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3E5C76, transparent);
+        }
+        
+        .book-detail-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            gap: 4rem;
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 600px;
+            /* Fixed height for the layout */
+        }
+        
+        .book-image-container {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .book-large-image {
+            width: 25rem;
+            height: 36rem;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(13, 19, 33, 0.3);
+        }
+        
+        .book-info-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            max-width: 600px;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+        }
+        
+        .book-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0D1321;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .book-info-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(13, 19, 33, 0.1);
+            padding-bottom: 1rem;
+        }
+        
+        .info-label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            color: #3E5C76;
+            min-width: 120px;
+        }
+        
+        .info-value {
+            font-size: 1.3rem;
+            color: #0D1321;
+            line-height: 1.4;
+            flex: 1;
+            text-align: right;
+        }
+        
+        .description-text {
+            line-height: 1.6;
+            font-size: 1.4rem;
+            text-align: left;
+            max-height: 180px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: rgba(62, 92, 118, 0.1);
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .full-width {
+            width: 100%;
+        }
+        
+        .book-info-section.full-width {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .book-info-section.full-width .info-label {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .book-info-section.full-width .info-value {
+            text-align: left;
+            width: 100%;
+        }
+        
+        .profile-contact {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3E5C76;
+            background-image: url('https://randomuser.me/api/portraits/women/44.jpg');
+            background-size: cover;
+            border: 2px solid #3E5C76;
+            box-shadow: 0 4px 8px rgba(13, 19, 33, 0.2);
+        }
+        
+        .username {
+            font-weight: 500;
+            color: #0D1321;
+            font-size: 1.5rem;
+        }
+        
+        .buy-button {
+            background-color: #3E5C76;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 1rem;
+            width: 100%;
+        }
+        
+        .buy-button:hover {
+            background-color: #0D1321;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+        }
+        
+        .return-button-container {
+            padding: 1.5rem 2rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .return-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background-color: #3E5C76;
+            color: white;
+            text-decoration: none;
+            border-radius: 2rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .return-button i {
+            margin-right: 0.5rem;
+        }
+        
+        .return-button:hover {
+            background-color: #0D1321;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+        }
+        
+        .return-button-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        
+        .owner-controls {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ced1e2, #e8f0ff);
+            border-radius: 15px;
+            border: 2px solid rgba(126, 142, 214, 0.2);
+        }
+        
+        .owner-controls h3 {
+            color: #778DA9;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .btn-edit {
+            background: #7378bb;
+            color: white;
+        }
+        
+        .btn-edit:hover {
+            background: #5a5f9c;
+            transform: translateY(-2px);
+        }
+        
+        .btn-delete {
+            background: #721c24;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #74343b;
+            transform: translateY(-2px);
+        }
+        
+        .edit-form {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .edit-form.active {
+            display: grid;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #778DA9;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        
+        .btn-save {
+            background: #3E5C76;
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background: #778DA9;
+        }
+        
+        .btn-cancel {
+            background: #666;
+            color: white;
+        }
+        
+        .btn-cancel:hover {
+            background: #555;
+        }
+        
+        .success-message,
+        .error-message {
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .not-owner-message {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid rgba(255, 193, 7, 0.3);
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .book-detail-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .book-detail-title {
+                font-size: 2rem;
+            }
+            .control-buttons {
+                justify-content: center;
+            }
+            .edit-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="particles-container">
+    </div>
+
+    <div class="return-button-container">
+        <a href="/books" class="return-button">
+            <i class="fa-solid fa-arrow-left"></i> Return to Books
+        </a>
+    </div>
+
+    <main>
+        <div class="book-detail-container">
+            <div class="book-detail-content">
+                <div class="book-detail-title">
+                    <%= bookTitle || "Book Title" %>
+                </div>
+                <div class="book-detail-layout">
+                    <div class="book-image-container">
+                        <img src="/<%= bookImage || 'placeholder.' %>" alt="Book Cover" class="book-large-image" />
+                    </div>
+                    <div class="book-info-container">
+                        <!-- Additional book details or description -->
+                        <p>
+                            <strong>description</strong>
+                            <%= bookDescription || "A brief description of the book goes here..." %>
+                        </p>
+                        <!-- Additional fields -->
+                        <p><strong>Author:</strong>
+                            <%= author || "Unknown" %>
+                        </p>
+                        <p><strong>Price:</strong> DA<span id="current-price">
+                            <%= price != null ? price : "N/A" %></span>
+                        </p>
+                        <p><strong>Owner:</strong>
+                            <%= owner || "Unknown" %>
+                        </p>
+                        <p><strong>Status:</strong><span id="current-status">
+                            <%= status || "Not specified" %>
+                        </span></p>
+                        <p><strong>Available Copies:</strong> <span id="current-copies"><%= available_copies || 1 %></span></p>
+                        <% if (typeof isOwner !== 'undefined' && isOwner) { %>
+                            <!-- Owner Controls -->
+                            <div class="owner-controls" id="owner-controls">
+                                <h3><i class="fa-solid fa-user-gear"></i> Owner Controls</h3>
+
+                                <div class="control-buttons">
+                                    <button class="btn btn-edit" onclick="toggleEditForm()">
+                                    <i class="fa-solid fa-edit"></i> Edit Book
+                                </button>
+                                    <button class="btn btn-delete" onclick="deleteBook()">
+                                    <i class="fa-solid fa-trash"></i> Delete Book
+                                </button>
+                                </div>
+
+                                <div class="success-message" id="success-message"></div>
+                                <div class="error-message" id="error-message"></div>
+
+                                <form class="edit-form" id="edit-form">
+                                    <div class="form-group">
+                                        <label for="edit-title">Title</label>
+                                        <input type="text" id="edit-title" value="<%= bookTitle || '' %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit-author">Author</label>
+                                        <input type="text" id="edit-author" value="<%= author || '' %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit-field">Field</label>
+                                        <input type="text" id="edit-field" value="<%= field || '' %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit-price">Price (DA)</label>
+                                        <input type="number" id="edit-price" step="0.01" min="0" value="<%= price || 0 %>" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit-status">Status</label>
+                                        <select id="edit-status" required>
+                                        <option value="Available" <%= (status === 'Available' || !status) ? 'selected' : '' %>>Available</option>
+                                        <option value="Sold" <%= status === 'Sold' ? 'selected' : '' %>>Sold</option>
+                                        <option value="Reserved" <%= status === 'Reserved' ? 'selected' : '' %>>Reserved</option>
+                                        <option value="Pending" <%= status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                                    </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edit-copies">Available Copies</label>
+                                        <input type="number" id="edit-copies" min="0" value="<%= available_copies || 1 %>" required>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="edit-description">Description</label>
+                                        <textarea id="edit-description" rows="4" required><%= bookDescription || '' %></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+                                        <button type="submit" class="btn btn-save">
+                                        <i class="fa-solid fa-save"></i> Save Changes
+                                    </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <% } else { %>
+                                <div class="not-owner-message">
+                                    <i class="fa-solid fa-info-circle"></i> Only the book owner can edit or delete this listing.
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="particles-container">
+            <% for(let i = 0; i < 30; i++) { %>
+                <div class="particle" style="--duration:<%= Math.random() * 20 + 10 %>s; --travel:<%= Math.random() * 100 - 50 %>vw; --opacity:<%= Math.random().toFixed(2) %>;"></div>
+                <% } %>
+        </div>
+    </main>
+    <!-- Pass data to JavaScript via hidden script tag -->
+    <script id="book-data" type="application/json">
+        <%- JSON.stringify({
+            id: typeof bookId !== 'undefined' ? bookId : null,
+            title: bookTitle || '',
+            author: author || '',
+            field: field || '',
+            price: typeof price !== 'undefined' ? price : 0,
+            description: bookDescription || '',
+            status: status || 'Available',
+            available_copies: typeof available_copies !== 'undefined' ? available_copies : 1,
+            isOwner: typeof isOwner !== 'undefined' ? isOwner : false
+        }) %>
+    </script>
+
+    <script>
+        // Get book data from JSON script tag
+        const bookData = JSON.parse(document.getElementById('book-data').textContent);
+
+        // Toggle edit form
+        function toggleEditForm() {
+            const editForm = document.getElementById('edit-form');
+            editForm.classList.toggle('active');
+            hideMessages();
+        }
+
+        // Cancel edit
+        function cancelEdit() {
+            const editForm = document.getElementById('edit-form');
+            editForm.classList.remove('active');
+            hideMessages();
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successEl = document.getElementById('success-message');
+            successEl.textContent = message;
+            successEl.style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorEl = document.getElementById('error-message');
+            errorEl.textContent = message;
+            errorEl.style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('success-message').style.display = 'none';
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        // Update book
+        async function updateBook(formData) {
+            try {
+                const response = await fetch('/books/' + bookData.id, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Book updated successfully!');
+
+                    // Update display values
+                    document.getElementById('current-price').textContent = formData.price;
+                    document.getElementById('current-status').textContent = formData.status || 'Available';
+                    document.getElementById('current-copies').textContent = formData.available_copies;
+                    document.querySelector('.book-detail-title').textContent = formData.title;
+
+                    // Update description
+                    const descriptionP = document.querySelector('.book-info-container p');
+                    descriptionP.innerHTML = '<strong>Description:</strong> ' + formData.description;
+
+                    // Hide edit form
+                    document.getElementById('edit-form').classList.remove('active');
+
+                    setTimeout(hideMessages, 3000);
+                } else {
+                    showError(result.error || 'Failed to update book');
+                }
+            } catch (error) {
+                console.error('Error updating book:', error);
+                showError('Failed to update book. Please try again.');
+            }
+        }
+
+        // Delete book
+        async function deleteBook() {
+            if (!confirm('Are you sure you want to delete this book? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/books/' + bookData.id, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Book deleted successfully! Redirecting...');
+                    setTimeout(function() {
+                        window.location.href = '/books';
+                    }, 2000);
+                } else {
+                    showError(result.error || 'Failed to delete book');
+                }
+            } catch (error) {
+                console.error('Error deleting book:', error);
+                showError('Failed to delete book. Please try again.');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('edit-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                title: document.getElementById('edit-title').value,
+                author: document.getElementById('edit-author').value,
+                field: document.getElementById('edit-field').value,
+                price: parseFloat(document.getElementById('edit-price').value),
+                description: document.getElementById('edit-description').value,
+                status: document.getElementById('edit-status').value,
+                available_copies: parseInt(document.getElementById('edit-copies').value)
+            };
+
+            updateBook(formData);
+        });
+    </script>
+</body>
+
+</html>

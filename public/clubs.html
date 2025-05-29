@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All University Clubs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts (Poppins) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" />
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts (Poppins) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- FullPage.js Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/4.0.20/fullpage.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <a href="/homepage" class="return-button">
+            <i class="fa-solid fa-arrow-left"></i> Return to homepage
+        </a>
+        <header>
+            <h1>All University Clubs Directory</h1>
+            <p>Discover all the amazing clubs and organizations available at our university</p>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search clubs by name or category...">
+                <i class="fas fa-search"></i>
+            </div>
+        </header>
+
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading clubs...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Failed to load clubs. Please try again later.</p>
+            <button onclick="fetchClubs()">Retry</button>
+        </div>
+
+        <div class="clubs-grid" id="clubsGrid">
+            <!-- Clubs will be populated here -->
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search"></i>
+            <p>No clubs found matching your search.</p>
+        </div>
+    </div>
+
+    <script>
+        let allClubs = [];
+
+        async function fetchClubs() {
+            const loading = document.getElementById('loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const clubsGrid = document.getElementById('clubsGrid');
+
+            try {
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                clubsGrid.innerHTML = '';
+
+                const response = await fetch('/api/clubs');
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch clubs');
+                }
+
+                const clubs = await response.json();
+                allClubs = clubs;
+
+                loading.style.display = 'none';
+                displayClubs(clubs);
+
+            } catch (error) {
+                console.error('Error fetching clubs:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        function displayClubs(clubs) {
+            const clubsGrid = document.getElementById('clubsGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (clubs.length === 0) {
+                noResults.style.display = 'block';
+                clubsGrid.innerHTML = '';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            clubsGrid.innerHTML = clubs.map(club => `
+                <div class="club-card">
+                    <div class="club-info">
+                        ${club.category ? `<div class="club-badge">${club.category}</div>` : ''}
+                        <h3>${club.name}</h3>
+                        <p>${club.description || 'No description available'}</p>
+                        <div class="club-details">
+                            ${club.member_count ? `<div><i class="fas fa-users"></i> ${club.member_count} members</div>` : ''}
+                            ${club.contact_email ? `<div><i class="fas fa-envelope"></i> <a href="mailto:${club.contact_email}">Contact</a></div>` : ''}
+                            ${club.social_media ? `<div><i class="fab fa-instagram"></i> <a href="${club.social_media}" target="_blank">Social Media</a></div>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function searchClubs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredClubs = allClubs.filter(club => 
+                club.name.toLowerCase().includes(searchTerm) ||
+                (club.description && club.description.toLowerCase().includes(searchTerm)) ||
+                (club.category && club.category.toLowerCase().includes(searchTerm))
+            );
+            displayClubs(filteredClubs);
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', searchClubs);
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', fetchClubs);
+    </script>
+</body>
+
+
+<style>
+    /* Base Styles */
+    
+    body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        color: #E0E1DD;
+        line-height: 1.6;
+        position: relative;
+        overflow-x: hidden;
+        background-color: #0D1321;
+        /* Fallback color if gradient fails */
+    }
+    
+    .return-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background-color: #3E5C76;
+        color: white;
+        text-decoration: none;
+        border-radius: 2rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .return-button-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+    }
+    
+    .return-button-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 100;
+    }
+    
+    .return-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background-color: #3E5C76;
+        color: white;
+        text-decoration: none;
+        border-radius: 2rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .return-button:hover {
+        background-color: #0D1321;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+    }
+    
+    header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    h1 {
+        color: #FFD972;
+        margin-bottom: 10px;
+    }
+    /* Search Bar */
+    
+    .search-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        max-width: 500px;
+        padding: 12px 20px;
+        border-radius: 30px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
+    
+    .search-bar i {
+        margin-left: -40px;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+    }
+    /* Loading and Error States */
+    
+    .loading,
+    .no-results,
+    .error-message {
+        text-align: center;
+        padding: 30px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .loading i,
+    .error-message i,
+    .no-results i {
+        font-size: 40px;
+        margin-bottom: 15px;
+        color: #FFD972;
+    }
+    
+    .error-message button {
+        background: #FFD972;
+        color: #0D1321;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 15px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    /* Clubs Grid */
+    
+    .clubs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+    
+    .club-card {
+        background: #1B263B;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        color: white;
+    }
+    
+    .club-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .club-badge {
+        background: #3E5C76;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    
+    .club-info {
+        padding: 20px;
+    }
+    
+    .club-info h3 {
+        margin: 0 0 10px;
+        color: white;
+        font-size: 1.3rem;
+    }
+    
+    .club-info p {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+    
+    .club-details {
+        margin-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 15px;
+    }
+    
+    .club-details div {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .club-details i {
+        margin-right: 8px;
+        color: #FFD972;
+        width: 18px;
+        text-align: center;
+    }
+    
+    .club-details a {
+        color: #FFD972;
+        text-decoration: none;
+    }
+    
+    .club-details a:hover {
+        text-decoration: underline;
+    }
+    
+    .club-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 15px;
+    }
+    
+    .tag {
+        background: rgba(255, 217, 114, 0.2);
+        color: #FFD972;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+    }
+</style>
+</body>
+
+</html>

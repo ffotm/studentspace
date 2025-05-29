@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lost&Found</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.1">
+    <meta name="description" content="Displays Items that were Found or Lost">
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="modern-style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Otomanopee+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lilita+One&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Oswald:wght@200..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Special+Gothic+Condensed+One&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+</head>
+<style>
+    .books-container .view-details-btn {
+        display: inline-block;
+        margin: 10px;
+        padding: 6px 12px;
+        background-color: #3E5C76;
+        color: white;
+        text-decoration: none;
+        border-radius: 15px;
+        font-weight: 500;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+    }
+    
+    .contact-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 12px;
+        background-color: #3E5C76;
+        color: white;
+        text-decoration: none;
+        border-radius: 15px;
+        font-weight: 500;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+    }
+    
+    .books-container .view-details-btn:hover .contact-btn {
+        background-color: #0D1321;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+    }
+    
+    .books-container .contact-btn:hover {
+        background-color: #0D1321;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(13, 19, 33, 0.25);
+    }
+    /* Animation keyframes */
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+    
+    @keyframes flipIn {
+        0% {
+            transform: perspective(400px) rotateY(90deg);
+            opacity: 0;
+        }
+        100% {
+            transform: perspective(400px) rotateY(0deg);
+            opacity: 1;
+        }
+    }
+    
+    body {
+        min-height: 100vh;
+        position: relative;
+        background-color: #778DA9;
+        color: #0D1321;
+        overflow-x: hidden;
+        transition: background 0.3s, color 0.3s;
+        animation: fadeIn 1s ease-out forwards;
+    }
+    
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: -1;
+        background: radial-gradient(ellipse 80% 90% at top left, rgba(62, 92, 118, 0.5) 0%, transparent 65%), radial-gradient(ellipse 70% 80% at top right, rgba(91, 131, 166, 0.4) 0%, transparent 60%), radial-gradient(ellipse 75% 85% at bottom left, rgba(119, 141, 169, 0.45) 0%, transparent 65%), radial-gradient(ellipse 70% 80% at bottom right, rgba(152, 170, 189, 0.35) 0%, transparent 60%), radial-gradient(ellipse 65% 75% at 50% 50%, rgba(255, 248, 214, 0.4) 0%, transparent 85%), radial-gradient(ellipse 70% 80% at 45% 45%, rgba(253, 244, 189, 0.35) 10%, transparent 90%), radial-gradient(ellipse 60% 70% at 55% 55%, rgba(242, 247, 224, 0.3) 5%, transparent 80%), #FFFDF0;
+        filter: blur(0px);
+    }
+    
+    body.dark-mode::before {
+        background: radial-gradient(ellipse 70% 80% at top left, rgba(13, 27, 42, 0.7) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at top right, rgba(27, 38, 59, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom left, rgba(27, 38, 59, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom right, rgba(13, 27, 42, 0.5) 0%, transparent 60%), radial-gradient(ellipse 50% 60% at 40% 40%, rgba(62, 92, 118, 0.4) 0%, transparent 80%), radial-gradient(ellipse 50% 60% at 60% 60%, rgba(119, 141, 169, 0.5) 0%, transparent 80%), radial-gradient(ellipse 40% 50% at 70% 50%, rgba(62, 92, 118, 0.3) 0%, transparent 80%), #0D1321;
+        filter: blur(0px);
+        animation: subtleGlow 20s infinite alternate;
+    }
+    
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 30px 35px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+        transform: translateZ(40px) rotateY(0deg);
+        animation: cardFloat 3s infinite ease-in-out;
+    }
+    
+    @keyframes subtleGlow {
+        0% {
+            background-position: 0% 0%;
+        }
+        33% {
+            background-position: 2% 1%;
+        }
+        66% {
+            background-position: 1% 2%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+    
+    body::after {
+        content: '';
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        z-index: -2;
+        background: none;
+        animation: cloudShift 100s linear infinite;
+        pointer-events: none;
+    }
+    
+    @keyframes cloudShift {
+        0% {
+            background-position: 0% 0%;
+        }
+        100% {
+            background-position: 100% 0%;
+        }
+    }
+    
+    body.dark-mode::after {
+        background: radial-gradient(ellipse at 80% 20%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 20% 40%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 60%), radial-gradient(ellipse at 40% 85%, rgba(255, 248, 214, 0.15) 0%, rgba(255, 238, 147, 0) 50%), radial-gradient(ellipse at 65% 55%, rgba(234, 248, 191, 0.12) 0%, rgba(255, 238, 147, 0) 55%);
+        animation: cloudShift 120s linear infinite, sparkleShift 25s ease-in-out infinite alternate;
+    }
+    
+    @keyframes sparkleShift {
+        0% {
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 0.8;
+        }
+        100% {
+            opacity: 0.3;
+        }
+    }
+    
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+    
+    .particles-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -3;
+        overflow: hidden;
+        pointer-events: none;
+    }
+    
+    .particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        opacity: 0;
+        animation: floatParticle var(--duration) ease-in-out infinite;
+    }
+    
+    body.dark-mode .particle {
+        background: rgba(234, 248, 191, 0.5);
+    }
+    
+    @keyframes floatParticle {
+        0% {
+            transform: translateY(100vh) translateX(0);
+            opacity: 0;
+        }
+        25% {
+            opacity: var(--opacity);
+        }
+        75% {
+            opacity: var(--opacity);
+        }
+        100% {
+            transform: translateY(-20vh) translateX(var(--travel));
+            opacity: 0;
+        }
+    }
+    /* Styles for Lost/Found Toggle */
+    
+    .lost-found-toggle {
+        text-align: center;
+        margin-bottom: 20px;
+        /* Space below the toggle */
+        margin-top: 20px;
+        /* Space above the toggle */
+    }
+    
+    .lost-found-toggle .toggle-option {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1.2em;
+        color: #3E5C76;
+        /* Non-active is blue */
+        border-bottom: 3px solid transparent;
+        /* Thicker underline for better visibility */
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        margin: 0 15px;
+        /* Slightly more space between options */
+        font-weight: 500;
+        /* Medium weight for non-active */
+        animation: slideUp 0.6s ease-out forwards;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .lost-found-toggle .toggle-option:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    .lost-found-toggle .toggle-option:nth-child(2) {
+        animation-delay: 0.3s;
+    }
+    
+    .lost-found-toggle .toggle-option.active {
+        color: #FFA000;
+        /* Active is yellow/orange */
+        border-bottom-color: #FFA000;
+        /* Active is yellow/orange */
+        font-weight: 700;
+        /* Bold for active */
+    }
+    /* Dark mode specific adjustments if needed, though current colors might work well */
+    
+    body.dark-mode .lost-found-toggle .toggle-option {
+        color: #3E5C76;
+        /* Consistent non-active blue */
+    }
+    
+    body.dark-mode .lost-found-toggle .toggle-option.active {
+        color: #FFA000;
+        /* Consistent active yellow/orange */
+        border-bottom-color: #FFA000;
+        /* Consistent active yellow/orange */
+    }
+    /* Overriding .lign styles for proper title and button alignment */
+    
+    .lign {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        /* Align button to the left */
+        align-items: center !important;
+        /* Vertically align items in .lign */
+        width: 100% !important;
+        /* Ensure it spans width */
+        margin-left: 0 !important;
+        /* Align to page left edge, remove lostfound.css offset */
+        margin-top: 20px !important;
+        /* Reduced from 180px in lostfound.css */
+        position: relative !important;
+        /* Keep original position from lostfound.css */
+        gap: 20px !important;
+        /* Sensible gap between title and button */
+        padding: 0 40px !important;
+        /* Padding on left/right of .lign for content alignment */
+        box-sizing: border-box !important;
+        /* Include padding in width calculation */
+    }
+    /* Modern floating card container */
+    /* Flipping Cards Styles */
+    
+    .flip-card {
+        background-color: transparent;
+        height: 340px;
+        perspective: 1200px;
+        margin: 0 auto;
+        animation: fadeIn 0.8s ease-out forwards;
+        opacity: 0;
+        position: relative;
+        z-index: 1;
+        width: 246px;
+        height: 340px;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    /* Staggered animation delay for cards */
+    
+    .flip-card:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    .flip-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .flip-card:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    
+    .flip-card:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    
+    .flip-card:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+    
+    .flip-card:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+    
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform-style: preserve-3d;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 30px 35px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+        transform: translateZ(40px) rotateY(0deg);
+        animation: cardFloat 3s infinite ease-in-out;
+    }
+    
+    @keyframes cardFloat {
+        0% {
+            transform: translateZ(40px) rotateY(0deg) translateY(0);
+        }
+        50% {
+            transform: translateZ(40px) rotateY(0deg) translateY(-5px);
+        }
+        100% {
+            transform: translateZ(40px) rotateY(0deg) translateY(0);
+        }
+    }
+    
+    .flip-card:hover .flip-card-inner {
+        box-shadow: 0 35px 70px rgba(0, 0, 0, 0.35), 0 20px 40px rgba(62, 92, 118, 0.25), 0 0 60px rgba(62, 92, 118, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        transform: rotateY(180deg) translateZ(50px);
+        animation: cardSpin 1.5s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes cardSpin {
+        0% {
+            transform: rotateY(0deg) translateZ(40px);
+        }
+        100% {
+            transform: rotateY(180deg) translateZ(50px);
+        }
+    }
+    
+    .flip-card-front,
+    .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 20px;
+        padding: 30px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    /* Standard (light mode) flip card front */
+    
+    .flip-card-front {
+        background-color: #FFFFFF;
+        color: #0D1321;
+        background-image: radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 50%), linear-gradient(to bottom left, #FFFFFF, #F5F5F5);
+        box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+    }
+    /* Dark mode specific card front styles */
+    
+    body.dark-mode .flip-card-front {
+        background-color: #778DA9;
+        background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2));
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    }
+    
+    .flip-card-front img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-bottom: 30px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+    
+    .flip-card-front h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    /* Add shimmer effect */
+    
+    .flip-card-front::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(62, 92, 118, 0) 70%);
+        transform: rotate(30deg);
+        z-index: 1;
+        pointer-events: none;
+        animation: shimmer 8s infinite linear;
+    }
+    
+    @keyframes shimmer {
+        0% {
+            transform: rotate(0deg) translateX(-10%);
+            opacity: 0.5;
+        }
+        50% {
+            transform: rotate(180deg) translateX(10%);
+            opacity: 0.8;
+        }
+        100% {
+            transform: rotate(360deg) translateX(-10%);
+            opacity: 0.5;
+        }
+    }
+    
+    .flip-card-back {
+        background-color: #778DA9;
+        color: white;
+        transform: rotateY(180deg);
+        background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .flip-card-back p {
+        margin: 8px 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        color: white;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .books-container {
+        /* This class will now be on the modal div */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 70px 30px;
+        margin: 60px auto 120px;
+        padding: 0 0 50px;
+        max-width: 1400px;
+    }
+    
+    .view-details-btn {
+        margin-top: 20px;
+        padding: 10px 24px;
+        background-color: #F1F1F1;
+        color: #1B263B;
+        border: none;
+        border-radius: 30px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .view-details-btn:hover {
+        background-color: #FFFFFF;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+    }
+    /* Styles for the profile icon in the navbar */
+    
+    .right-nav .user-profile {
+        display: flex;
+        align-items: center;
+        margin-left: 15px;
+        /* Adjust spacing as needed */
+    }
+    
+    .right-nav .user-profile .profile {
+        width: 36px;
+        /* Standard icon size */
+        height: 36px;
+        background-color: #ccc;
+        /* Placeholder background */
+        border-radius: 50%;
+        /* Circular shape */
+        cursor: pointer;
+        /* Add a default user icon image or use Font Awesome if available */
+        /* background-image: url('path/to/default-profile-icon.png'); */
+        /* background-size: cover; */
+        /* background-position: center; */
+        display: flex;
+        /* For centering content like an icon font if added later */
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        /* For a potential Font Awesome icon */
+        font-size: 18px;
+        /* For a potential Font Awesome icon */
+    }
+    /* Example: If you want to use a Font Awesome user icon as a fallback */
+    /* .right-nav .user-profile .profile::before {
+            content: "\f007"; 
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+        } */
+    
+    .page-footer {
+        background-color: #0D1B2A;
+        color: #E0E1DD;
+        padding: 40px 20px;
+        margin-top: 60px;
+    }
+    
+    footer {
+        display: block;
+        unicode-bidi: isolate;
+    }
+    
+    .brand-switcher {
+        display: flex;
+        background-color: #3E5C76;
+        border-radius: 25px;
+        padding: 5px;
+        position: relative;
+        height: 40px;
+        width: 220px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-right: 20px;
+    }
+    
+    .brand-switcher::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        width: calc(50% - 5px);
+        height: calc(100% - 10px);
+        background-color: #0D1321;
+        border-radius: 20px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+    }
+    
+    .brand-switcher.universe-active::after {
+        transform: translateX(100%);
+    }
+    
+    .brand-option {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #E0E1DD;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+        transition: color 0.3s ease;
+        border-radius: 20px;
+    }
+    
+    .brand-option:hover {
+        color: #FFD972;
+    }
+    
+    .brand-option.active {
+        color: #FFD972;
+    }
+</style>
+
+<body>
+    <!--HEADER -->
+
+    <body>
+        <div class="particles-container"></div>
+        <!-- rest of your content -->
+        <nav>
+            <div class="universe-text">UNIHIVERSE</div>
+
+            <div class="center-nav">
+                <div class="brand-switcher" id="brandSwitcher">
+                    <div class="brand-option active" data-brand="unihive">UniHive</div>
+                    <div class="brand-option " data-brand="universe">Universe</div>
+                </div>
+
+                <ul>
+                    <li><a href="/homepage">Feed</a></li>
+                    <li><a href="/lostnfound" class="active">Lost&Found</a></li>
+                    <li><a href="/books">Books Shop</a></li>
+                </ul>
+            </div>
+
+            <div class="right-nav">
+                <button id="dark-mode-toggle">
+                <i id="theme-icon" class="fa-solid fa-sun nav-icon"></i>
+            </button>
+                <div class="notification-container">
+                    <i class="fa-solid fa-bell nav-icon" id="notification-bell"></i>
+                </div>
+                <div class="user-profile">
+                    <div class="profile" aria-label="User profile"></div>
+                </div>
+            </div>
+        </nav>
+        <!--END HEADER-->
+
+
+        <section class="main-feed-header">
+            <h1 class="page-heading">Lost & Found</h1>
+        </section>
+        <div class="lost-found-toggle">
+            <span class="toggle-option active" data-type="lost">Find your lost Objects</span>
+            <span class="toggle-option" data-type="found">Discover found Objects</span>
+        </div>
+
+        </div>
+        <div class="books-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 70px 30px; margin: 60px auto 120px; padding: 0 0 50px; max-width: 1400px;">
+            <!-- Book 1 -->
+
+            <div class="new-container" id="newcont">
+                <!--add nex card here-->
+
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="page-footer">
+            <div class="footer-top">
+                <div class="footer-about">
+                    <h3 class="footer-logo">Helping students connect, share, and thrive</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                        </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Fast Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Feed</a></li>
+                        <li><a href="#">Lost&Found</a></li>
+                        <li><a href="#">Book Shop</a></li>
+                        <li><a href="#">Switch to UniVerse</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links-column">
+                    <h3 class="footer-title">Informations</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Report a Bug</a></li>
+                        <li><a href="#">UniHiVerse@univ-blida.dz</a></li>
+                        <li><a href="#">Support:14h-18h</Hours:14h-18h></a></li>
+                        <li><a href="#">Conditions</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="contact-info">
+                    <h3 class="footer-title">Contactez-nous</h3>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg> University Of Saad Dahleb
+                    </p>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                    </svg> By TeenTechTitans
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 UniHive. All rights reserved.</p>
+            </div>
+        </footer>
+        <script>
+            // Lost & Found Frontend JavaScript - Display Only Mode
+            document.addEventListener('DOMContentLoaded', function() {
+                const booksContainer = document.querySelector('.books-container');
+                const searchInput = document.getElementById('searchInput');
+                const locationFilter = document.getElementById('locationFilter');
+
+                let currentType = 'lost'; // Default to 'lost' items
+                let currentSearchQuery = '';
+                let currentLocationFilter = '';
+
+                // Initialize the page
+                init();
+
+                function init() {
+                    setupEventListeners();
+                    setupLostFoundToggle();
+                    loadItems();
+                    createParticles();
+                }
+
+                function setupEventListeners() {
+                    // Search functionality
+                    if (searchInput) {
+                        searchInput.addEventListener('input', debounce(handleSearch, 300));
+                    }
+
+                    // Location filter
+                    if (locationFilter) {
+                        locationFilter.addEventListener('change', handleLocationFilter);
+                    }
+
+                    // Keyboard shortcuts
+                    document.addEventListener('keydown', function(e) {
+                        if (e.ctrlKey && e.key === 'f') {
+                            e.preventDefault();
+                            if (searchInput) {
+                                searchInput.focus();
+                            }
+                        }
+                    });
+                }
+
+                function handleSearch(e) {
+                    currentSearchQuery = e.target.value.trim();
+                    searchItems();
+                }
+
+                function handleLocationFilter(e) {
+                    currentLocationFilter = e.target.value;
+                    searchItems();
+                }
+
+                async function searchItems() {
+                    try {
+                        const params = new URLSearchParams();
+
+                        if (currentSearchQuery) {
+                            params.append('q', currentSearchQuery);
+                        }
+
+                        if (currentType) {
+                            params.append('type', currentType);
+                        }
+
+                        if (currentLocationFilter) {
+                            params.append('location', currentLocationFilter);
+                        }
+
+                        const url = currentSearchQuery || currentLocationFilter ?
+                            `/api/lostfound/search?${params.toString()}` :
+                            `/api/lostfound?type=${currentType}`;
+
+                        const response = await fetch(url);
+
+                        if (!response.ok) {
+                            throw new Error('Failed to search items');
+                        }
+
+                        const items = await response.json();
+                        displayItems(items);
+
+                    } catch (error) {
+                        console.error('Error searching items:', error);
+                        showNotification('Failed to search items', 'error');
+                    }
+                }
+
+                async function loadItems(type = null) {
+                    try {
+                        const typeParam = type || currentType;
+                        const response = await fetch(`/api/lostfound?type=${typeParam}`);
+
+                        if (!response.ok) {
+                            throw new Error('Failed to load items');
+                        }
+
+                        const items = await response.json();
+                        displayItems(items);
+
+                    } catch (error) {
+                        console.error('Error loading items:', error);
+                        showNotification('Failed to load items', 'error');
+                    }
+                }
+
+                function displayItems(items) {
+                    // Clear existing items
+                    booksContainer.innerHTML = '';
+
+                    if (items.length === 0) {
+                        const noItemsMessage = document.createElement('div');
+                        noItemsMessage.className = 'no-items-message';
+                        noItemsMessage.innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #666;">
+                    <i class="fa-solid fa-search" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                    <h3>No ${currentType} items found</h3>
+                    <p>No items match your current search criteria.</p>
+                </div>
+            `;
+                        booksContainer.appendChild(noItemsMessage);
+                        return;
+                    }
+
+                    // Add items to DOM
+                    items.forEach(item => {
+                        addCardToDOM(item);
+                    });
+
+                    // Update results count
+                    updateResultsCount(items.length);
+                }
+
+                function addCardToDOM(item) {
+                    const card = document.createElement("div");
+                    card.className = "flip-card";
+                    card.dataset.itemId = item.id;
+                    card.dataset.postId = item.post_id;
+
+                    // Use the lost&found specific image or fall back to post image
+                    const imageSrc = item.image_path || item.post_image || getDefaultImage(item.content);
+
+                    // Extract object name from content (first few words or keywords)
+                    const objectName = extractObjectName(item.content);
+
+                    card.innerHTML = `
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <img src="${imageSrc}" alt="${objectName}" 
+                         style="width:100%; height:80%; border-radius:5px; object-fit: cover;"
+                         onerror="this.src='${getDefaultImage(item.content)}'">
+                    <div class="item-type-badge ${item.type}">
+                        ${item.type === 'lost' ? '🔍 Lost' : '✨ Found'}
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <div class="card-header">
+                        <div class="user-info">
+                            <span class="post-date">${formatDate(item.created_at)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="item-details">
+                        <div class="item-meta">
+                            <p><i class="fa-solid fa-location-dot"></i> <strong>Location:</strong> ${escapeHtml(item.location)}</p>
+                            <p><i class="fa-solid fa-envelope"></i> <strong>Contact:</strong> ${escapeHtml(item.contact)}</p>
+                            <p><i class="fa-solid fa-hashtag"></i> <strong>item:</strong> ${escapeHtml(item.description)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button onclick="viewPostDetails(${item.post_id})" class="view-details-btn">
+                            <i class="fa-solid fa-eye"></i> View Details
+                        </button>
+                        <button onclick="contactOwner('${item.contact}', '${escapeHtml(objectName)}')" 
+                                class="contact-btn view-details-btn">
+                            <i class="fa-solid fa-message"></i> Contact
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                    booksContainer.appendChild(card);
+                }
+
+                function setupLostFoundToggle() {
+                    const toggleOptions = document.querySelectorAll('.lost-found-toggle .toggle-option');
+
+                    if (toggleOptions.length === 0) {
+                        console.warn('Lost/Found toggle elements not found.');
+                        return;
+                    }
+
+                    toggleOptions.forEach(option => {
+                        option.addEventListener('click', function() {
+                            // Remove active class from all options
+                            toggleOptions.forEach(opt => opt.classList.remove('active'));
+                            // Add active class to the clicked option
+                            this.classList.add('active');
+
+                            // Update current type and reload items
+                            currentType = this.dataset.type;
+
+                            // If there's an active search, search with new type, otherwise load normally
+                            if (currentSearchQuery || currentLocationFilter) {
+                                searchItems();
+                            } else {
+                                loadItems(currentType);
+                            }
+                        });
+                    });
+                }
+
+                // Global functions for card actions
+                window.viewPostDetails = function(postId) {
+                    // Navigate to the original post in the feed
+                    window.location.href = `/homepage?post=${postId}`;
+                };
+
+                window.contactOwner = function(contact, objectName) {
+                    if (contact.includes('@')) {
+                        // It's an email
+                        const subject = encodeURIComponent(`Regarding ${objectName} - Lost & Found`);
+                        const body = encodeURIComponent(`Hi,\n\nI saw your post about the ${objectName} on the Lost & Found board. Please let me know if it's still available.\n\nThanks!`);
+                        window.location.href = `mailto:${contact}?subject=${subject}&body=${body}`;
+                    } else {
+                        // It's a phone number or other contact
+                        if (contact.match(/^\+?[\d\s\-\(\)]+$/)) {
+                            // Looks like a phone number
+                            window.location.href = `tel:${contact.replace(/\D/g, '')}`;
+                        } else {
+                            // Copy to clipboard
+                            navigator.clipboard.writeText(contact).then(() => {
+                                showNotification(`Contact info copied: ${contact}`, 'success');
+                            }).catch(() => {
+                                showNotification(`Contact: ${contact}`, 'info');
+                            });
+                        }
+                    }
+                };
+
+                // Utility functions
+                function extractObjectName(content) {
+                    // Simple extraction - get first few words or look for common lost items
+                    const words = content.toLowerCase().split(/\s+/);
+                    const commonItems = ['wallet', 'keys', 'phone', 'earphones', 'umbrella', 'jacket', 'computer', 'laptop', 'necklace', 'ring', 'watch', 'bag', 'backpack', 'book', 'glasses'];
+
+                    // Look for common items in the content
+                    for (const item of commonItems) {
+                        if (content.toLowerCase().includes(item)) {
+                            return item.charAt(0).toUpperCase() + item.slice(1);
+                        }
+                    }
+
+                    // Fallback to first few words
+                    return words.slice(0, 3).join(' ').charAt(0).toUpperCase() + words.slice(0, 3).join(' ').slice(1);
+                }
+
+                function truncateText(text, maxLength) {
+                    if (text.length <= maxLength) return escapeHtml(text);
+                    return escapeHtml(text.substring(0, maxLength)) + '...';
+                }
+
+                function escapeHtml(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                }
+
+                function formatDate(dateString) {
+                    const date = new Date(dateString);
+                    const now = new Date();
+                    const diffTime = Math.abs(now - date);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                    if (diffDays === 1) {
+                        return 'Yesterday';
+                    } else if (diffDays <= 7) {
+                        return `${diffDays} days ago`;
+                    } else {
+                        return date.toLocaleDateString();
+                    }
+                }
+
+                function getDefaultImage(content) {
+                    // Return appropriate default image based on content
+                    const defaultImages = {
+                        'wallet': '/images/defaults/wallet.jpg',
+                        'keys': '/images/defaults/keys.jpg',
+                        'phone': '/images/defaults/phone.jpg',
+                        'earphones': '/images/defaults/earphones.jpg',
+                        'umbrella': '/images/defaults/umbrella.png',
+                        'jacket': '/images/defaults/jacket.webp',
+                        'computer': '/images/defaults/computer.jpg',
+                        'laptop': '/images/defaults/computer.jpg',
+                        'necklace': '/images/defaults/necklace.jpg',
+                        'glasses': '/images/defaults/glasses.jpg'
+                    };
+
+                    const lowerContent = content.toLowerCase();
+                    for (const [key, image] of Object.entries(defaultImages)) {
+                        if (lowerContent.includes(key)) {
+                            return image;
+                        }
+                    }
+
+                    return '/generic.png';
+                }
+
+                function updateResultsCount(count) {
+                    let countElement = document.getElementById('resultsCount');
+                    if (!countElement) {
+                        countElement = document.createElement('div');
+                        countElement.id = 'resultsCount';
+                        countElement.className = 'results-count';
+
+                        const header = document.querySelector('.main-feed-header');
+                        if (header) {
+                            header.appendChild(countElement);
+                        }
+                    }
+
+                    countElement.textContent = `${count} ${currentType} item${count !== 1 ? 's' : ''} found`;
+                }
+
+                function showNotification(message, type = 'info') {
+                    // Create notification element
+                    const notification = document.createElement('div');
+                    notification.className = `notification notification-${type}`;
+                    notification.textContent = message;
+
+                    // Style the notification
+                    notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            ${type === 'success' ? 'background-color: #10b981;' : ''}
+            ${type === 'error' ? 'background-color: #ef4444;' : ''}
+            ${type === 'info' ? 'background-color: #3b82f6;' : ''}
+        `;
+
+                    document.body.appendChild(notification);
+
+                    // Remove notification after 5 seconds
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        notification.style.transform = 'translateX(100%)';
+                        setTimeout(() => {
+                            if (notification.parentNode) {
+                                notification.parentNode.removeChild(notification);
+                            }
+                        }, 300);
+                    }, 5000);
+                }
+
+                function debounce(func, wait) {
+
+
+
+
+
+
+
+
+                    let timeout;
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func(...args);
+                        };
+                        clearTimeout(timeout);
+                        timeout = setTimeout(later, wait);
+                    };
+                }
+
+                // Create floating particles (existing function)
+                function createParticles() {
+                    const container = document.querySelector('.particles-container');
+                    if (!container) return;
+
+                    const particleCount = 50;
+
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.classList.add('particle');
+
+                        const size = Math.random() * 20 + 5;
+                        particle.style.width = `${size}px`;
+                        particle.style.height = `${size}px`;
+
+                        const posX = Math.random() * 100;
+                        particle.style.left = `${posX}%`;
+
+                        const duration = Math.random() * 20 + 10;
+                        particle.style.setProperty('--duration', `${duration}s`);
+
+                        const travel = (Math.random() * 100 - 50);
+                        particle.style.setProperty('--travel', `${travel}%`);
+
+                        const opacity = Math.random() * 0.5 + 0.2;
+                        particle.style.setProperty('--opacity', opacity);
+
+                        container.appendChild(particle);
+                        particle.style.animationDelay = `${Math.random() * duration}s`;
+                    }
+                }
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                const brandSwitcher = document.getElementById('brandSwitcher');
+                const brandOptions = document.querySelectorAll('.brand-option');
+
+                brandOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const brand = this.getAttribute('data-brand');
+
+                        // Remove active class from all options
+                        brandOptions.forEach(opt => opt.classList.remove('active'));
+
+                        // Add active class to clicked option
+                        this.classList.add('active');
+
+                        // Toggle the switcher background position
+                        if (brand === 'universe') {
+                            brandSwitcher.classList.add('universe-active');
+                        } else {
+                            brandSwitcher.classList.remove('universe-active');
+                        }
+
+                        // Optional: Trigger any additional functionality based on selection
+                        console.log(`Switched to: ${brand}`);
+
+                        // You can add custom events or callbacks here
+                        // For example, changing page content or making API calls
+                        handleBrandSwitch(brand);
+                    });
+                });
+            });
+
+            function handleBrandSwitch(brand) {
+
+                if (brand === 'unihive') {
+                    window.location.href = '/homepage';
+                } else {
+                    window.location.href = '/universe';
+                }
+            }
+        </script>
+    </body>
+
+</html>
