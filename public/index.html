@@ -3298,14 +3298,17 @@ function setupPostInteractions() {
 
                     this.carousel.innerHTML = '';
                     this.indicators.innerHTML = '';
-
+                    const FALLBACK_IMAGES = [
+                        'https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+                        'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+                        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'
+                    ];
                     this.announcements.forEach((announcement, index) => {
                                 // Create announcement slide
                                 const slide = document.createElement('div');
                                 slide.className = `announcement-item ${index === 0 ? 'active' : ''}`;
 
-                                const imageUrl = announcement.image_url ||
-                                    announcement.image
+                                const imageUrl = announcement.image_url || announcement.image || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
 
                                 slide.innerHTML = `
                 <img src="${imageUrl}" alt="${this.escapeHtml(announcement.title || 'University announcement')}" />
