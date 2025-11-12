@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniHiVerse</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #778DA9;
+            color: #0D1321;
+            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+        /* Add a blurred background image for the body */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            /* Rearranged gradients: Dark corners, light center */
+            background: /* Dark Corners */
+            radial-gradient(ellipse 70% 80% at top left, rgba(20, 60, 120, 0.7) 0%, transparent 60%), /* Even More Pronounced Darker */
+            radial-gradient(ellipse 70% 80% at top right, rgba(30, 60, 130, 0.6) 0%, transparent 60%), /* Even More Pronounced Darker */
+            radial-gradient(ellipse 70% 80% at bottom left, rgba(25, 70, 135, 0.6) 0%, transparent 60%), /* Even More Pronounced Darker */
+            radial-gradient(ellipse 70% 80% at bottom right, rgba(70, 110, 140, 0.5) 0%, transparent 60%), /* Even More Pronounced Darker */
+            /* Lighter Center / Mid */
+            radial-gradient(ellipse 50% 60% at 40% 40%, rgba(144, 216, 217, 0.4) 0%, transparent 80%), /* Even More Pronounced Lighter */
+            radial-gradient(ellipse 50% 60% at 60% 60%, rgba(178, 216, 242, 0.5) 0%, transparent 80%), /* Even More Pronounced Lighter */
+            radial-gradient(ellipse 40% 50% at 70% 50%, rgba(224, 208, 195, 0.3) 0%, transparent 80%), /* Even More Pronounced Lighter */
+            /* Base */
+            #F9F5F0;
+            /* Center/Base color */
+            filter: blur(0px);
+        }
+        
+        body.dark-mode::before {
+            background: /* Dark Corners - using dark mode colors */
+            radial-gradient(ellipse 70% 80% at top left, rgba(13, 27, 42, 0.7) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at top right, rgba(27, 38, 59, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom left, rgba(65, 90, 119, 0.6) 0%, transparent 60%), radial-gradient(ellipse 70% 80% at bottom right, rgba(119, 141, 169, 0.5) 0%, transparent 60%), /* Lighter Mid - using dark mode colors with reduced opacity */
+            radial-gradient(ellipse 50% 60% at 40% 40%, rgba(27, 38, 59, 0.4) 0%, transparent 80%), radial-gradient(ellipse 50% 60% at 60% 60%, rgba(65, 90, 119, 0.5) 0%, transparent 80%), radial-gradient(ellipse 40% 50% at 70% 50%, rgba(119, 141, 169, 0.3) 0%, transparent 80%), /* Base - darkest color */
+            /* Base color */
+            #0D1B2A;
+            filter: blur(0px);
+            animation: subtleGlow 20s infinite alternate;
+        }
+        
+        @keyframes subtleGlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            33% {
+                background-position: 2% 1%;
+            }
+            66% {
+                background-position: 1% 2%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Enhanced background effects with animated gradients and patterns */
+        
+        body::after {
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.22) 0%, rgba(62, 92, 118, 0.18) 25%, rgba(13, 19, 33, 0.8) 60%, #0D1321 100%), radial-gradient(circle at 20% 70%, rgba(62, 92, 118, 0.20) 0%, rgba(13, 19, 33, 0.8) 60%, transparent 100%);
+            animation: gradientShift 15s ease infinite;
+            pointer-events: none;
+        }
+        
+        body.dark-mode::after {
+            background: radial-gradient(circle at 60% 20%, rgba(255, 255, 255, 0.12) 0%, rgba(62, 92, 118, 0.12) 25%, rgba(13, 19, 33, 0.93) 60%, #0D1321 100%), radial-gradient(circle at 20% 70%, rgba(62, 92, 118, 0.13) 0%, rgba(13, 19, 33, 0.93) 60%, transparent 100%);
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        
+        @keyframes subtleGlow {
+            0% {
+                background-position: 0% 0%;
+            }
+            33% {
+                background-position: 2% 1%;
+            }
+            66% {
+                background-position: 1% 2%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+        /* Animated particles effect */
+        
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: floatParticle var(--duration) ease-in-out infinite;
+        }
+        
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            25% {
+                opacity: var(--opacity);
+            }
+            75% {
+                opacity: var(--opacity);
+            }
+            100% {
+                transform: translateY(-100px) translateX(var(--travel));
+                opacity: 0;
+            }
+        }
+        /* Animated stars effect */
+        
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -4;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+        }
+        
+        .star.bright {
+            box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.8);
+        }
+        
+        .star.blue {
+            background: #a1c4fd;
+            box-shadow: 0 0 4px 1px rgba(161, 196, 253, 0.6);
+        }
+        
+        .star.gold {
+            background: #ffeaa7;
+            box-shadow: 0 0 4px 1px rgba(255, 234, 167, 0.6);
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: rotate(var(--angle));
+            pointer-events: none;
+            opacity: 0;
+            z-index: -3;
+            animation: shootingStar var(--shooting-duration) linear infinite;
+            animation-delay: var(--shooting-delay);
+        }
+        
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: scale(0.7);
+            }
+            50% {
+                opacity: var(--star-opacity);
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes twinkleSlow {
+            0%,
+            100% {
+                opacity: 0.05;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: var(--star-opacity);
+                transform: scale(1.1);
+            }
+        }
+        
+        @keyframes twinkleFast {
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: var(--star-opacity);
+                transform: scale(1.2);
+            }
+        }
+        
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(calc(-1 * var(--travel-distance))) translateY(0) rotate(var(--angle));
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(var(--travel-distance)) translateY(0) rotate(var(--angle));
+                opacity: 0;
+            }
+        }
+        /* Geometric shapes background */
+        
+        .geometric-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -5;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(62, 92, 118, 0.3);
+            pointer-events: none;
+            opacity: 0.2;
+            animation: rotate var(--rotate-duration) linear infinite;
+        }
+        
+        .shape.circle {
+            border-radius: 50%;
+        }
+        
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: var(--size) solid transparent;
+            border-right: var(--size) solid transparent;
+            border-bottom: calc(var(--size) * 1.732) solid rgba(62, 92, 118, 0.15);
+            background: transparent;
+        }
+        
+        .shape.square {
+            border-radius: 4px;
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        /* Color wave effect */
+        
+        .color-waves {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -6;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.05;
+        }
+        
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(62, 92, 118, 0.3) 0%, rgba(62, 92, 118, 0) 70%);
+            animation: waveMove var(--wave-duration) ease-in-out infinite alternate;
+        }
+        
+        @keyframes waveMove {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        /* Nebula effect */
+        
+        .nebula {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -7;
+            background: radial-gradient(circle at 30% 40%, rgba(118, 62, 92, 0.05) 0%, rgba(0, 0, 0, 0) 50%), radial-gradient(circle at 70% 60%, rgba(62, 118, 92, 0.05) 0%, rgba(0, 0, 0, 0) 50%);
+            filter: blur(40px);
+            animation: nebulaShift 30s ease infinite alternate;
+            pointer-events: none;
+        }
+        
+        @keyframes nebulaShift {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+        /* Interactive glow effect that follows cursor */
+        
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(62, 92, 118, 0.4) 0%, rgba(62, 92, 118, 0.1) 40%, rgba(62, 92, 118, 0) 70%);
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        /* Navigation Bar */
+        
+        nav {
+            background-color: rgba(204, 225, 244, 0.3);
+            /* Light mode: Transparent light blue */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(27, 38, 59, 0.1);
+            /* Subtle dark border */
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: background-color 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+        }
+        
+        nav.scrolled {
+            background-color: rgba(13, 19, 33, 0.85) !important;
+            /* Keep dark semi-transparent when scrolled */
+            backdrop-filter: blur(10px);
+            /* Keep blur */
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+            /* Light border when scrolled */
+        }
+        /* Ensure dark mode retains original nav background */
+        
+        body.dark-mode nav {
+            background-color: rgba(13, 19, 33, 0.75);
+            /* Dark mode: Transparent dark blue */
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+            /* Subtle light border */
+        }
+        
+        .universe-text {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0D1321;
+            /* Darker color for better readability */
+            position: absolute;
+            left: 30px;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .universe-text {
+            color: #EDEDED;
+            filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.2));
+        }
+        
+        .logo-container {
+            margin-right: 20px;
+        }
+        
+        .brand-switcher {
+            display: flex;
+            align-items: center;
+            background: rgba(27, 38, 59, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            margin-right: 10px;
+            box-shadow: 0 2px 8px rgba(13, 19, 33, 0.15), 0 0 0 rgba(62, 92, 118, 0);
+            position: relative;
+            transition: all 0.3s ease;
+            height: 40px;
+            animation: glow 3s infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% {
+                box-shadow: 0 2px 8px rgba(13, 19, 33, 0.15), 0 0 0 rgba(62, 92, 118, 0);
+            }
+            50% {
+                box-shadow: 0 2px 12px rgba(13, 19, 33, 0.2), 0 0 15px rgba(62, 92, 118, 0.2);
+            }
+            100% {
+                box-shadow: 0 2px 8px rgba(13, 19, 33, 0.15), 0 0 0 rgba(62, 92, 118, 0);
+            }
+        }
+        /* Force the toggle to look the same in both modes */
+        
+        body.dark-mode .brand-switcher {
+            background: rgba(27, 38, 59, 0.1) !important;
+            color: #1B263B !important;
+        }
+        
+        body.dark-mode .brand-option {
+            color: #1B263B !important;
+        }
+        
+        body.dark-mode .brand-option.active {
+            color: #FFFFFF !important;
+        }
+        
+        body.dark-mode .toggle-indicator {
+            background: linear-gradient(135deg, #3E5C76, #6CA0DC) !important;
+        }
+        
+        .brand-option {
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #0D1321;
+            /* Darker blue color for light mode */
+            z-index: 1;
+            position: relative;
+        }
+        
+        .brand-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .brand-option.active {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+            50% {
+                text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+        
+        body.dark-mode .brand-option {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .brand-option.active {
+            color: #FFFFFF;
+        }
+        
+        .brand-switcher::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            width: calc(50% - 5px);
+            height: calc(100% - 10px);
+            background: linear-gradient(135deg, #3E5C76, #6CA0DC);
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(.68, -0.55, .27, 1.55);
+            z-index: 0;
+            box-shadow: 0 0 15px rgba(62, 92, 118, 0.3);
+            animation: gradientMove 3s infinite alternate;
+        }
+        
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .brand-option:nth-child(2).active~.brand-switcher::after {
+            transform: translateX(100%);
+        }
+        /* Force the highlight to be on Universe position */
+        
+        .brand-switcher::after {
+            left: calc(50% + 5px) !important;
+        }
+        
+        .left-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            gap: 10px;
+        }
+        
+        nav ul li {
+            display: inline-block;
+            list-style: none;
+            opacity: 0;
+            transform: translateY(-40px) scale(0.95);
+            animation: navPillIn 0.7s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+        }
+        
+        nav ul li:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        nav ul li:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+        
+        nav ul li:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+        
+        nav ul li:nth-child(4) {
+            animation-delay: 0.65s;
+        }
+        
+        @keyframes navPillIn {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 32px;
+            border-radius: 50px;
+            transition: all 0.25s cubic-bezier(.68, -0.55, .27, 1.55);
+            font-size: 15px;
+            display: block;
+            background: #3E5C76;
+            box-shadow: 0 2px 8px rgba(62, 92, 118, 0.08);
+            opacity: 0.92;
+            border: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        nav ul li a.active {
+            background: #EDEDED;
+            color: #181d2f;
+            opacity: 1;
+            box-shadow: 0 0 18px rgba(62, 92, 118, 0.16);
+        }
+        
+        nav ul li a.active::after {
+            display: none;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 4px;
+            background: #EDEDED;
+            border-radius: 2px;
+            transition: transform 0.35s cubic-bezier(.68, -0.55, .27, 1.55);
+            z-index: 0;
+        }
+        
+        nav ul li a:hover::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+        
+        nav ul li a:hover:not(.active) {
+            background: #46698a;
+            color: #fff;
+            opacity: 1;
+            box-shadow: 0 4px 16px rgba(62, 92, 118, 0.13);
+            animation: pillPulse 0.33s;
+        }
+        
+        @keyframes pillPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .right-nav {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 20px;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            color: #E0E1DD;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .nav-icon:hover {
+            color: #FFD972;
+        }
+        
+        .profile {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #E0E1DD;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .profile img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 217, 114, 0.5);
+        }
+        /* Profile Dropdown Styles */
+        
+        .profile-dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 280px;
+            background-color: #E0E1DD;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .profile-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #F0F0F0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid #FFFFFF;
+        }
+        
+        .profile-header-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0D1321;
+            margin: 0;
+        }
+        
+        .profile-header-info p {
+            font-size: 14px;
+            color: #778DA9;
+            margin: 5px 0 0;
+        }
+        
+        .profile-menu {
+            padding: 15px;
+        }
+        
+        .profile-box {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-bottom: 8px;
+        }
+        
+        .profile-box:last-child {
+            margin-bottom: 0;
+        }
+        
+        .profile-box:hover {
+            background-color: #F0F0F0;
+        }
+        
+        .profile-box i {
+            font-size: 18px;
+            color: #0D1321;
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .profile-box span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0D1321;
+        }
+        /* Notification Box Styles */
+        
+        .notification-container {
+            position: relative;
+        }
+        
+        .notification-box {
+            position: absolute;
+            top: 60px;
+            right: -20px;
+            width: 320px;
+            background-color: #E0E1DD;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification-box.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(13, 19, 33, 0.1);
+        }
+        
+        .notification-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+            color: #0D1321;
+        }
+        
+        .notification-count {
+            background-color: #0D1321;
+            color: #EDEDED;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .notification-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .notification-item {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            background-color: rgba(13, 19, 33, 0.05);
+            color: #0D1321;
+        }
+        
+        .notification-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .notification-item:hover {
+            background-color: rgba(13, 19, 33, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .notification-item.unread {
+            border-left: 3px solid #0D1321;
+        }
+        
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(13, 19, 33, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .notification-icon i {
+            font-size: 16px;
+            color: #0D1321;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-text {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #0D1321;
+        }
+        
+        .notification-time {
+            margin: 5px 0 0;
+            font-size: 12px;
+            opacity: 0.7;
+            color: #0D1321;
+        }
+        
+        .notification-footer {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(13, 19, 33, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .notification-footer a {
+            color: #0D1321;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            background-color: rgba(13, 19, 33, 0.05);
+        }
+        
+        .notification-footer a:hover {
+            background-color: rgba(13, 19, 33, 0.1);
+            transform: translateY(-2px);
+        }
+        /* Dark Mode Styles */
+        
+        body.dark-mode .profile-dropdown {
+            background: #1B263B;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        body.dark-mode .profile-header {
+            background: #0D1321;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .profile-header-info h4 {
+            color: #EDEDED;
+        }
+        
+        body.dark-mode .profile-header-info p {
+            color: #CCCCCC;
+        }
+        
+        body.dark-mode .profile-box:hover {
+            background: #0D1321;
+        }
+        
+        body.dark-mode .profile-box i,
+        body.dark-mode .profile-box span {
+            color: #EDEDED;
+        }
+        
+        body.dark-mode .notification-box {
+            background-color: #415A77;
+            color: #E0E1DD;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .notification-header {
+            border-bottom: 1px solid rgba(13, 19, 33, 0.1);
+        }
+        
+        body.dark-mode .notification-header h3 {
+            color: #E0E1DD;
+        }
+        
+        body.dark-mode .notification-count {
+            background-color: #3E5C76;
+            color: #EDEDED;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .notification-item {
+            background-color: rgba(13, 19, 33, 0.05);
+            color: #E0E1DD;
+        }
+        
+        body.dark-mode .notification-item:hover {
+            background-color: rgba(13, 19, 33, 0.1);
+        }
+        
+        body.dark-mode .notification-item.unread {
+            border-left: 3px solid #3E5C76;
+        }
+        
+        body.dark-mode .notification-icon {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .notification-icon i {
+            color: #E0E1DD;
+        }
+        
+        body.dark-mode .notification-text,
+        body.dark-mode .notification-time {
+            color: #E0E1DD;
+        }
+        
+        body.dark-mode .notification-footer {
+            border-top: 1px solid rgba(13, 19, 33, 0.1);
+        }
+        
+        body.dark-mode .notification-footer a {
+            background-color: rgba(13, 19, 33, 0.05);
+            color: #E0E1DD;
+        }
+        
+        body.dark-mode .notification-footer a:hover {
+            background-color: rgba(13, 19, 33, 0.3);
+        }
+        /* Overlay for dropdowns */
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        /* Welcome Section */
+        
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .universe-title {
+            font-size: 7rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #EDEDED;
+            text-shadow: 0 0 20px rgba(62, 92, 118, 0.9), 0 0 40px rgba(62, 92, 118, 0.5);
+            letter-spacing: 5px;
+            transform: translateY(-30px);
+            opacity: 0;
+            background: linear-gradient(to right, #0D1B2A, #3E5C76, #a1c4fd, #3E5C76, #0D1B2A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: textShimmer 8s linear infinite, fadeInDown 1.2s ease-out forwards 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .welcome-header {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #EDEDED;
+            text-shadow: 0 0 15px rgba(62, 92, 118, 0.8), 0 0 30px rgba(62, 92, 118, 0.4);
+            letter-spacing: 3px;
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: fadeInDown 1s ease-out forwards 0.7s;
+            background: linear-gradient(to right, #EDEDED, #a1c4fd, #EDEDED);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: textShimmer 5s linear infinite, fadeInDown 1s ease-out forwards 0.7s;
+        }
+        
+        @media (max-width: 768px) {
+            .universe-title {
+                font-size: 4.5rem;
+            }
+            .welcome-header {
+                font-size: 2rem;
+            }
+        }
+        
+        .welcome-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            max-width: 800px;
+            color: #0D1B2A;
+            /* Dark navy blue for light mode */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards 1s;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        /* Light color for dark mode */
+        
+        body.dark-mode .welcome-text {
+            color: #EDEDED;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        /* Exploration Options Styles */
+        
+        .exploration-options {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1200px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out forwards 1.5s;
+        }
+        
+        .exploration-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #0D1B2A;
+            text-align: center;
+            background: linear-gradient(to right, #0D1B2A, #3E5C76, #0D1B2A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        body.dark-mode .exploration-title {
+            background: linear-gradient(to right, #E0E1DD, #a1c4fd, #E0E1DD);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .options-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .option-card {
+            background: rgba(224, 225, 221, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(13, 19, 33, 0.15);
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        body.dark-mode .option-card {
+            background: rgba(27, 38, 59, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(62, 92, 118, 0.3);
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(13, 19, 33, 0.2);
+        }
+        
+        .option-card i {
+            font-size: 3rem;
+            color: #3E5C76;
+            margin-bottom: 20px;
+        }
+        
+        body.dark-mode .option-card i {
+            color: #a1c4fd;
+        }
+        
+        .option-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #0D1B2A;
+        }
+        
+        body.dark-mode .option-card h3 {
+            color: #E0E1DD;
+        }
+        
+        .option-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #1B263B;
+        }
+        
+        body.dark-mode .option-card p {
+            color: #EDEDED;
+        }
+        
+        .option-btn {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #3E5C76, #1B263B);
+            color: #FFFFFF;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(27, 38, 59, 0.2);
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(27, 38, 59, 0.3);
+            background: linear-gradient(135deg, #1B263B, #3E5C76);
+        }
+        
+        @media (max-width: 768px) {
+            .options-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .option-card {
+                width: 90%;
+                max-width: 350px;
+                margin-bottom: 20px;
+            }
+        }
+        
+        .welcome-text::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #3E5C76, transparent);
+        }
+        
+        @keyframes textShimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <!-- Background Effects -->
+    <div class="particles-container"></div>
+    <div class="stars-container"></div>
+    <div class="geometric-shapes"></div>
+    <div class="color-waves"></div>
+    <div class="nebula"></div>
+    <div class="cursor-glow"></div>
+
+    <!-- Navigation Bar -->
+    <nav>
+
+        <div class="universe-text">UniHiVerse</div>
+        <div class="left-nav">
+            <div class="logo-container">
+                <div class="brand-switcher" id="brand-switcher">
+                    <div class="brand-option" data-brand="unihive">UniHive</div>
+                    <div class="brand-option active" data-brand="universe">UniVerse</div>
+                </div>
+
+            </div>
+            <ul>
+                <li><a href="/universe/home" class="active">Home</a></li>
+                <li><a href="/universe/tasks">Tasks</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="supervisor">Supervisor</a></li>
+            </ul>
+        </div>
+        <div class="right-nav">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button id="dark-mode-toggle" style="background: none; border: none; cursor: pointer; margin: 0 5px;">
+                  <i id="theme-icon" class="fa-solid fa-sun nav-icon" style="color: #0D1321;"></i>
+                </button>
+                <div class="notification-container" style="margin: 0 5px;">
+                    <i class="fa-solid fa-bell nav-icon" id="notification-bell" style="color: #0D1321;"></i>
+                    <div class="notification-box">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <span class="notification-count">3</span>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">New feedback on Project Alpha</p>
+                                    <p class="notification-time">2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="notification-item unread">
+                                <div class="notification-icon">
+                                    <i class="fa-solid fa-user-group"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Team meeting scheduled for tomorrow</p>
+                                    <p class="notification-time">Yesterday</p>
+                                </div>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-icon">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <p class="notification-text">Project deadline extended by 3 days</p>
+                                    <p class="notification-time">3 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notification-footer">
+                            <a href="#">Mark All as Read</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile" style="margin: 0 5px;">
+                    <img src="images.jpg" alt="Profile">
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-header">
+                        <img src="Teen_Titans_3.jpg" alt="Profile Photo">
+                        <div class="profile-header-info">
+                            <h4>John Doe</h4>
+                            <p>Student</p>
+                        </div>
+                    </div>
+                    <div class="profile-menu">
+                        <div class="profile-box settings-box" id="settings-box">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Settings</span>
+                        </div>
+                        <div class="profile-box logout-box" id="logout-box">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Logout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Welcome Section -->
+    <div class="welcome-container">
+        <h1 class="universe-title">UniVerse</h1>
+        <h2 class="welcome-header">WELCOME TO THE COSMOS</h2>
+        <p class="welcome-text">
+            Here, you'll find a cosmos of inspiration, resources, and support to propel your academic journey to the stars. Let's embark on this adventure together and make your university experience truly out of this world.
+        </p>
+
+        <!-- Exploration Options -->
+        <div class="exploration-options">
+            <h2 class="exploration-title">Begin Your Journey</h2>
+            <div class="options-container">
+                <div class="option-card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h3>Discover Past Projects</h3>
+                    <p>Explore innovative projects created by previous students to inspire your own academic journey.</p>
+                    <a href="previous_project.html" class="option-btn">Browse Projects</a>
+                </div>
+                <div class="option-card">
+                    <i class="fa-solid fa-user-tie"></i>
+                    <h3>Find Your Supervisor</h3>
+                    <p>Connect with top-rated supervisors who can guide you through your academic endeavors.</p>
+                    <a href="supervisor.html" class="option-btn">View Supervisors</a>
+                </div>
+                <div class="option-card">
+                    <i class="fa-solid fa-tasks"></i>
+                    <h3>Manage Your Projects</h3>
+                    <p>Collaborate with your team and supervisors through our intuitive task management system.</p>
+                    <a href="task.html" class="option-btn">Task Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        function updateThemeIcon() {
+            const notificationBellIcon = document.getElementById('notification-bell');
+
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+
+                // Lighten icon colors in dark mode
+                themeIcon.style.color = '#FFFFFF';
+                notificationBellIcon.style.color = '#FFFFFF';
+
+                // Remove inline styles from icons to use CSS styles
+                document.querySelectorAll('.nav-icon').forEach(icon => {
+                    if (icon !== themeIcon && icon !== notificationBellIcon) {
+                        icon.style.color = '#FFFFFF';
+                    }
+                });
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+
+                // Darken icon colors in light mode
+                themeIcon.style.color = '#0D1321';
+                notificationBellIcon.style.color = '#0D1321';
+            }
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            updateThemeIcon();
+        });
+
+        // Initialize dark mode based on localStorage
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                updateThemeIcon();
+            } else {
+                // Ensure icons are properly styled in light mode on initial load
+                const notificationBellIcon = document.getElementById('notification-bell');
+                themeIcon.style.color = '#0D1321';
+                notificationBellIcon.style.color = '#0D1321';
+            }
+        });
+
+        // Brand switcher functionality
+        const brandOptions = document.querySelectorAll('.brand-option');
+
+        brandOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                brandOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                const brand = option.getAttribute('data-brand');
+                console.log(`Switching to ${brand}`);
+                // Add functionality to switch between brands
+            });
+        });
+
+        // Notification functionality
+        const notificationBell = document.getElementById('notification-bell');
+        const notificationBox = document.querySelector('.notification-box');
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        document.body.appendChild(overlay);
+
+        notificationBell.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notificationBox.classList.toggle('show');
+            profileDropdown.classList.remove('show');
+            overlay.classList.toggle('show');
+        });
+
+        // Profile dropdown functionality
+        const profile = document.querySelector('.profile');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        const settingsBox = document.getElementById('settings-box');
+        const logoutBox = document.getElementById('logout-box');
+
+        profile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('show');
+            notificationBox.classList.remove('show');
+            overlay.classList.toggle('show');
+        });
+
+        settingsBox.addEventListener('click', () => {
+            console.log('Settings clicked');
+            // Add settings functionality here
+        });
+
+        logoutBox.addEventListener('click', () => {
+            console.log('Logout clicked');
+            // Add logout functionality here
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', () => {
+            notificationBox.classList.remove('show');
+            profileDropdown.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+        notificationBox.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        profileDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Create particles
+        function createParticles() {
+            const container = document.querySelector('.particles-container');
+            container.innerHTML = '';
+
+            const particleCount = Math.floor(window.innerWidth / 20);
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const duration = Math.random() * 20 + 10;
+                const opacity = Math.random() * 0.5 + 0.1;
+                const travel = (Math.random() - 0.5) * 200;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.setProperty('--duration', `${duration}s`);
+                particle.style.setProperty('--opacity', opacity);
+                particle.style.setProperty('--travel', `${travel}px`);
+
+                container.appendChild(particle);
+            }
+        }
+
+        // Create stars
+        function createStars() {
+            const container = document.querySelector('.stars-container');
+            container.innerHTML = '';
+
+            // Increase star count for a denser starfield
+            const starCount = Math.floor(window.innerWidth / 3);
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                // Add variety to star types
+                const starType = Math.random();
+                if (starType > 0.85) {
+                    star.classList.add('bright');
+                } else if (starType > 0.7) {
+                    star.classList.add('blue');
+                } else if (starType > 0.55) {
+                    star.classList.add('gold');
+                }
+
+                const size = Math.random() * 3 + 0.5; // Slightly larger size range
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+
+                // Varied animation durations
+                const animationType = Math.random();
+                let duration, animationName;
+
+                if (animationType > 0.7) {
+                    duration = Math.random() * 3 + 1; // Faster twinkling
+                    animationName = 'twinkleFast';
+                } else if (animationType > 0.4) {
+                    duration = Math.random() * 5 + 2; // Regular twinkling
+                    animationName = 'twinkle';
+                } else {
+                    duration = Math.random() * 8 + 4; // Slower twinkling
+                    animationName = 'twinkleSlow';
+                }
+
+                const opacity = Math.random() * 0.7 + 0.3;
+
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${posX}px`;
+                star.style.top = `${posY}px`;
+                star.style.setProperty('--twinkle-duration', `${duration}s`);
+                star.style.setProperty('--star-opacity', opacity);
+                star.style.animation = `${animationName} ${duration}s ease-in-out infinite`;
+
+                container.appendChild(star);
+            }
+
+            // Add shooting stars
+            const shootingStarCount = 12; // Number of shooting stars
+
+            for (let i = 0; i < shootingStarCount; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+
+                const angle = Math.random() * 60 - 30; // Angle between -30 and 30 degrees
+                const size = Math.random() * 80 + 40; // Length of shooting star trail
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * (window.innerHeight * 0.7); // Keep in upper 70% of screen
+                const duration = Math.random() * 6 + 4; // Duration of animation
+                const delay = Math.random() * 15; // Random delay
+                const travelDistance = Math.random() * 200 + 300; // How far it travels
+
+                shootingStar.style.width = `${size}px`;
+                shootingStar.style.height = `2px`;
+                shootingStar.style.left = `${posX}px`;
+                shootingStar.style.top = `${posY}px`;
+                shootingStar.style.setProperty('--angle', `${angle}deg`);
+                shootingStar.style.setProperty('--shooting-duration', `${duration}s`);
+                shootingStar.style.setProperty('--shooting-delay', `${delay}s`);
+                shootingStar.style.setProperty('--travel-distance', `${travelDistance}px`);
+
+                container.appendChild(shootingStar);
+            }
+        }
+
+        // Create geometric shapes
+        function createShapes() {
+            const container = document.querySelector('.geometric-shapes');
+            container.innerHTML = '';
+
+            const shapeCount = Math.floor(window.innerWidth / 100);
+            const shapeTypes = ['circle', 'triangle', 'square'];
+
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+                shape.classList.add('shape', shapeType);
+
+                const size = Math.random() * 60 + 20;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const duration = Math.random() * 100 + 50;
+                const opacity = Math.random() * 0.2 + 0.05;
+
+                shape.style.setProperty('--size', `${size}px`);
+                shape.style.width = `${size}px`;
+                shape.style.height = `${size}px`;
+                shape.style.left = `${posX}px`;
+                shape.style.top = `${posY}px`;
+                shape.style.opacity = opacity;
+                shape.style.setProperty('--rotate-duration', `${duration}s`);
+
+                container.appendChild(shape);
+            }
+        }
+
+        // Create cursor glow effect
+        function initCursorGlow() {
+            const cursorGlow = document.querySelector('.cursor-glow');
+
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.opacity = '1';
+                cursorGlow.style.left = `${e.clientX}px`;
+                cursorGlow.style.top = `${e.clientY}px`;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursorGlow.style.opacity = '0';
+            });
+        }
+
+        // Initialize background effects
+        window.addEventListener('load', () => {
+            createParticles();
+            createStars();
+            createShapes();
+            initCursorGlow();
+
+            // Recreate elements on window resize
+            window.addEventListener('resize', () => {
+                createParticles();
+                createStars();
+                createShapes();
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const brandSwitcher = document.getElementById('brand-switcher');
+            const brandOptions = document.querySelectorAll('.brand-option');
+
+            brandOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const brand = this.getAttribute('data-brand');
+
+                    // Remove active class from all options
+                    brandOptions.forEach(opt => opt.classList.remove('active'));
+
+                    // Add active class to clicked option
+                    this.classList.add('active');
+
+                    // Toggle the switcher background position
+                    if (brand === 'universe') {
+                        brandSwitcher.classList.add('universe-active');
+                    } else {
+                        brandSwitcher.classList.remove('universe-active');
+                    }
+
+                    // Optional: Trigger any additional functionality based on selection
+                    console.log(`Switched to: ${brand}`);
+
+                    // You can add custom events or callbacks here
+                    // For example, changing page content or making API calls
+                    handleBrandSwitch(brand);
+                });
+            });
+        });
+
+        function handleBrandSwitch(brand) {
+
+            if (brand === 'unihive') {
+                window.location.href = '/homepage';
+            } else {
+                window.location.href = '/universe/home';
+            }
+        }
+    </script>
+</body>
+
+</html>

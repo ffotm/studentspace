@@ -1,0 +1,60 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
+:root {
+    --icons-color: rgba(41, 41, 41, 1);
+background-color: #000;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    color: #333;
+    line-height: 1.5;
+    font-family: "Poppins", sans-serif;
+}
+
+html {
+    font-size: 16px;
+}
+
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+button:active,
+a:active {
+    outline: none;
+    box-shadow: none;
+}
+
+button:focus-visible {
+    outline: none !important;
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+a {
+    text-decoration: none;
+}
